@@ -1,4 +1,3 @@
-"use client";
 import "./App.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -7,10 +6,11 @@ import { Input } from "./components/ui/input";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogClose,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import { MoreHorizontalIcon } from "lucide-react";
 import { TrashIcon } from "lucide-react";
@@ -52,70 +52,75 @@ function App() {
           </DialogTrigger>
           <DialogContent className="rounded-3xl">
             <DialogHeader>
-              <DialogTitle>Add new Todo</DialogTitle>
-              <DialogDescription>
-                <form className="flex flex-col gap-3">
-                  <Input
-                    type="text"
-                    value={todoInput}
-                    onChange={(e) => setTodoInput(e.target.value)}
-                    placeholder="Add todo"
-                    className="rounded-xl border-none"
-                  />
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant={"outline"}
-                        className={cn(
-                          "w-[280px] border-none rounded-xl justify-start text-left font-normal",
-                          !date && "text-muted-foreground"
-                        )}
-                      >
-                        <CalendarIcon className="mr-2 h-4 w-4" />
-                        {date ? format(date, "PPP") : <span>Pick a date</span>}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0">
-                      <Calendar
-                        mode="single"
-                        selected={date}
-                        onSelect={setDate}
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                  <Button
-                    className="rounded-xl"
-                    onClick={async (e) => {
-                      e.preventDefault();
-                      await axios
-                        .post("http://localhost:5000/todos", {
-                          description: todoInput,
-                        })
-                        .then(() => setTodoInput(""));
-                    }}
-                  >
-                    Add
-                  </Button>
-                </form>
-              </DialogDescription>
+              <DialogTitle>Add Todo</DialogTitle>
             </DialogHeader>
+            <form className="flex flex-col gap-3 mt-8">
+              <Input
+                type="text"
+                value={todoInput}
+                onChange={(e) => setTodoInput(e.target.value)}
+                placeholder="Add todo"
+                className="rounded-xl  border-[0.5px] "
+              />
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-[280px] border-none rounded-xl justify-start text-left font-normal",
+                      !date && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {date ? format(date, "PPP") : <span>Pick a date</span>}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={date}
+                    onSelect={setDate}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+            </form>
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button
+                  className="rounded-xl bg-blue-700 hover:bg-blue-800"
+                  onMouseUp={async (e) => {
+                    e.preventDefault();
+                    setTodoInput("");
+                    await axios.post("http://localhost:5000/todos", {
+                      description: todoInput,
+                    });
+                  }}
+                >
+                  Add
+                </Button>
+              </DialogClose>
+            </DialogFooter>
           </DialogContent>
         </Dialog>
         <div className="flex flex-col gap-3 bg-white flex-1 rounded-2xl">
           {data.map((todo: { todo_id: number; description: string }) => (
             <div
               key={todo.todo_id}
-              className="border-[0.2px] p-3 rounded-xl flex items-center justify-between"
+              className="border-[0.2px] p-3 rounded-xl flex items-start justify-between"
             >
               <div className="flex gap-2">
                 <input
-                  className="accent-black"
+                  className="accent-black self-start mt-[5px]"
                   type="checkbox"
                   name="todo"
                   id={String(todo.todo_id)}
                 />
-                <label htmlFor={String(todo.todo_id)} key={todo.todo_id}>
+                <label
+                  htmlFor={String(todo.todo_id)}
+                  className="p-0 flex leading-6"
+                  key={todo.todo_id}
+                >
                   {todo.description}
                 </label>
               </div>
@@ -123,11 +128,11 @@ function App() {
                 <PopoverTrigger>
                   <MoreHorizontalIcon
                     size={16}
-                    className="text-slate-500 hover:text-slate-900 transition-colors duration-300"
+                    className="mt-[5px] text-slate-500 hover:text-slate-900 transition-colors duration-300"
                   />
                 </PopoverTrigger>
                 <PopoverContent className="flex flex-col  w-fit p-2 rounded-xl">
-                  <div className="flex cursor-pointer items-center p-2 gap-2 hover:bg-slate-50 rounded-lg">
+                  <div className="flex text-slate-600 hover:text-slate-900 transition-colors duration-300 cursor-pointer items-center p-2 gap-2 hover:bg-slate-50 rounded-lg">
                     <PencilIcon size={16} />
                     <p>Edit</p>
                   </div>
@@ -137,7 +142,7 @@ function App() {
                         `http://localhost:5000/todos/${todo.todo_id}`
                       );
                     }}
-                    className="flex cursor-pointer items-center p-2 gap-2 hover:bg-slate-50 rounded-lg"
+                    className="flex text-slate-600 hover:text-slate-900 cursor-pointer items-center p-2 gap-2 hover:bg-slate-50 rounded-lg"
                   >
                     <TrashIcon size={16} />
                     <p>Delete</p>
