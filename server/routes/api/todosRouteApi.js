@@ -20,7 +20,7 @@ router.post("/", async (req, res) => {
 
 // GET ALL TODOS
 router.get("/", async (req, res) => {
-  const todos = await pool.query("SELECT * FROM todos");
+  const todos = await pool.query("SELECT * FROM todos ORDER BY todo_id");
   res.json(todos.rows);
 });
 
