@@ -2,7 +2,7 @@ import { Star } from "lucide-react";
 import { MoreHorizontalIcon } from "lucide-react";
 import { TrashIcon } from "lucide-react";
 import axios from "axios";
-import MyDialog from "./MyDialog";
+import EditDialog from "./EditDialog";
 
 import {
   Popover,
@@ -21,12 +21,12 @@ type Props = {
   todo: Todo;
 };
 
-const Todo = (props: Props) => {
-  const [pinned, setPinned] = useState(props.todo.pinned);
+const Todo = ({ todo }: Props) => {
+  const [pinned, setPinned] = useState(todo.pinned);
 
   return (
     <div
-      key={props.todo.todo_id}
+      key={todo.todo_id}
       className="border-[0.2px] p-3 rounded-xl flex items-start justify-between"
     >
       <div className="flex gap-2">
@@ -34,14 +34,14 @@ const Todo = (props: Props) => {
           className="accent-black self-start mt-[5.5px]"
           type="checkbox"
           name="todo"
-          id={String(props.todo.todo_id)}
+          id={String(todo.todo_id)}
         />
         <label
-          htmlFor={String(props.todo.todo_id)}
+          htmlFor={String(todo.todo_id)}
           className="p-0 flex  leading-6"
-          key={props.todo.todo_id}
+          key={todo.todo_id}
         >
-          {props.todo.description}
+          {todo.description}
         </label>
       </div>
       <div className="flex gap-1 mt-[5px] self-start">
@@ -54,13 +54,11 @@ const Todo = (props: Props) => {
               : "text-slate-500  hover:text-slate-900",
           ].join(" ")}
           onClick={async () => {
-            await axios.put(
-              `http://localhost:5000/todos/${props.todo.todo_id}`,
-              {
-                description: props.todo.description,
-                pinned: !props.todo.pinned,
-              }
-            );
+            await axios
+              .put(`http://localhost:5000/todos/${todo.todo_id}`, {
+                pinned: !todo.pinned,
+              })
+              .then(() => setPinned(!pinned));
           }}
         />
         <Popover>
@@ -71,11 +69,11 @@ const Todo = (props: Props) => {
             />
           </PopoverTrigger>
           <PopoverContent className="flex flex-col  w-fit p-2 rounded-xl">
-            <MyDialog title="Edit" method="put" />
+            <EditDialog todo={todo} />
             <div
               onClick={async () => {
                 await axios.delete(
-                  `http://localhost:5000/todos/${props.todo.todo_id}`
+                  `http://localhost:5000/todos/${todo.todo_id}`
                 );
               }}
               className="flex text-slate-600 hover:text-slate-900 cursor-pointer items-center justify-start p-2 gap-2 hover:bg-slate-50 rounded-lg"

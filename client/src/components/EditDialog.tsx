@@ -27,38 +27,36 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-type Props = {
-  title: string;
-  method: string;
+type Todo = {
+  todo_id: number;
+  description: string;
+  pinned: boolean;
 };
 
-const MyDialog = ({ title, method }: Props) => {
+type Props = {
+  todo: Todo;
+};
+
+const AddDialog = ({ todo }: Props) => {
   const [todoInput, setTodoInput] = useState("");
 
   const [date, setDate] = React.useState<Date>();
 
   return (
     <Dialog>
-      {title.toLowerCase() == "add" ? (
-        <DialogTrigger className="w-fit px-4 text-sm text-white rounded-full bg-blue-700 hover:bg-blue-800 h-9">
-          Add Todo
-        </DialogTrigger>
-      ) : (
-        <DialogTrigger className="flex text-slate-600 hover:text-slate-900 cursor-pointer items-center p-2 gap-2 hover:bg-slate-50 rounded-lg">
-          <PencilIcon size={16} />
-          <p>Edit</p>
-        </DialogTrigger>
-      )}
+      <DialogTrigger className="flex text-slate-600 hover:text-slate-900 cursor-pointer items-center p-2 gap-2 hover:bg-slate-50 rounded-lg">
+        <PencilIcon size={16} />
+        <p>Edit</p>
+      </DialogTrigger>
       <DialogContent className="rounded-3xl">
         <DialogHeader>
-          <DialogTitle>{title} Todo</DialogTitle>
+          <DialogTitle>Edit Todo</DialogTitle>
         </DialogHeader>
         <form className="flex flex-col gap-3 mt-8">
           <Input
             type="text"
             value={todoInput}
             onChange={(e) => setTodoInput(e.target.value)}
-            placeholder={`${title} todo`}
             className="rounded-xl  border-[0.5px] "
           />
           <Popover>
@@ -91,18 +89,12 @@ const MyDialog = ({ title, method }: Props) => {
               onMouseUp={async (e) => {
                 e.preventDefault();
                 setTodoInput("");
-                if (method.toLowerCase() == "post") {
-                  await axios.post("http://localhost:5000/todos", {
-                    description: todoInput,
-                  });
-                } else if (method.toLowerCase() == "put") {
-                  await axios.put("http://localhost:5000/todos", {
-                    description: todoInput,
-                  });
-                }
+                await axios.put(`http://localhost:5000/todos/${todo.todo_id}`, {
+                  description: todoInput,
+                });
               }}
             >
-              {title}
+              Edit
             </Button>
           </DialogClose>
         </DialogFooter>
@@ -111,4 +103,4 @@ const MyDialog = ({ title, method }: Props) => {
   );
 };
 
-export default MyDialog;
+export default AddDialog;

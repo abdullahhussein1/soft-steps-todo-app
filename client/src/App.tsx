@@ -5,7 +5,7 @@ import axios from "axios";
 
 import { Oval } from "react-loader-spinner";
 
-import MyDialog from "./components/MyDialog";
+import AddDialog from "./components/AddDialog";
 import Todo from "./components/Todo";
 
 function App() {
@@ -17,9 +17,6 @@ function App() {
     description: string;
     pinned: boolean;
   };
-
-  const pinnedTodos = todos.filter((todo: Todo) => todo.pinned == true);
-  // const unPinnedTodos = todos.filter((todo) => todo.pinned != true);
 
   const fetchData = async () => {
     const result = await axios
@@ -39,7 +36,7 @@ function App() {
     <div className="min-h-screen flex flex-col justify-center items-center">
       <div className="container w-5/6  rounded-3xl min-h-[600px] p-10 max-w-md flex flex-col gap-5 ">
         {/* add todo dialog */}
-        <MyDialog title="Add" method="post" />
+        <AddDialog />
         <div className="flex flex-col gap-3 bg-white flex-1 rounded-2xl">
           <h1 className="font-bold text-lg border-b-[2px] ">todos</h1>
           <Oval
@@ -54,7 +51,7 @@ function App() {
             strokeWidthSecondary={5}
           />
           {todos.map((todo: Todo) => (
-            <Todo todo={todo} />
+            <Todo key={todo.todo_id} todo={todo} />
           ))}
         </div>
       </div>
