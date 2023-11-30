@@ -35,16 +35,23 @@ type Todo = {
 
 type Props = {
   todo: Todo;
+  todoDescription: string;
+  setTodoDescription: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const AddDialog = ({ todo }: Props) => {
-  const [todoInput, setTodoInput] = useState("");
+const AddDialog = ({ todo, todoDescription, setTodoDescription }: Props) => {
+  const [todoInput, setTodoInput] = useState(todoDescription);
 
   const [date, setDate] = React.useState<Date>();
 
   return (
     <Dialog>
-      <DialogTrigger className="flex text-slate-600 hover:text-slate-900 cursor-pointer items-center p-2 gap-2 hover:bg-slate-50 rounded-lg">
+      <DialogTrigger
+        onMouseUp={() => {
+          setTodoInput(todoDescription);
+        }}
+        className="flex text-slate-600 hover:text-slate-900 cursor-pointer items-center p-2 gap-2 hover:bg-slate-50 rounded-lg"
+      >
         <PencilIcon size={16} />
         <p>Edit</p>
       </DialogTrigger>
@@ -88,10 +95,11 @@ const AddDialog = ({ todo }: Props) => {
               className="rounded-xl bg-blue-700 hover:bg-blue-800"
               onMouseUp={async (e) => {
                 e.preventDefault();
-                setTodoInput("");
+                setTodoDescription(todoInput);
                 await axios.put(`http://localhost:5000/todos/${todo.todo_id}`, {
                   description: todoInput,
                 });
+                setTodoDescription(todoInput);
               }}
             >
               Edit

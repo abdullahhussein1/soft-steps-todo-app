@@ -23,6 +23,7 @@ type Props = {
 
 const Todo = ({ todo }: Props) => {
   const [pinned, setPinned] = useState(todo.pinned);
+  const [todoDescription, setTodoDescription] = useState(todo.description);
 
   return (
     <div
@@ -41,7 +42,7 @@ const Todo = ({ todo }: Props) => {
           className="p-0 flex  leading-6"
           key={todo.todo_id}
         >
-          {todo.description}
+          {todoDescription}
         </label>
       </div>
       <div className="flex gap-1 mt-[5px] self-start">
@@ -69,7 +70,11 @@ const Todo = ({ todo }: Props) => {
             />
           </PopoverTrigger>
           <PopoverContent className="flex flex-col  w-fit p-2 rounded-xl">
-            <EditDialog todo={todo} />
+            <EditDialog
+              todo={todo}
+              todoDescription={todoDescription}
+              setTodoDescription={setTodoDescription}
+            />
             <div
               onClick={async () => {
                 await axios.delete(
