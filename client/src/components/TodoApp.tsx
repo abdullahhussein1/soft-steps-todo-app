@@ -11,7 +11,7 @@ type TodoType = {
   pinned: boolean;
 };
 
-const TodoBoard = () => {
+const TodoApp = () => {
   const [todos, setTodos] = useState<TodoType[]>([]);
   const [isLoaderVisible, setIsLoaderVisible] = useState<boolean>(true);
 
@@ -44,4 +44,4 @@ const TodoBoard = () => {
   );
 };
 
-export default TodoBoard;
+export default TodoApp;

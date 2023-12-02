@@ -1,9 +1,9 @@
 import "./App.css";
 
-import TodoBoard from "./components/TodoBoard";
+import TodoApp from "./components/TodoApp";
 
 function App() {
-  return <TodoBoard />;
+  return <TodoApp />;
 }
 
 export default App;
