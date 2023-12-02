@@ -12,7 +12,7 @@ router.post("/", async (req, res) => {
       [description]
     );
 
-    res.state(201).json(newTodo.rows[0]);
+    res.status(201).json(newTodo.rows[0]);
   } catch (err) {
     console.error(err);
   }

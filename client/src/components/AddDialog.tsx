@@ -26,7 +26,12 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-const AddDialog = () => {
+type Props = {
+  todos: object[];
+  setTodos: React.Dispatch<React.SetStateAction<object>>;
+};
+
+const AddDialog = ({ todos, setTodos }: Props) => {
   const [todoInput, setTodoInput] = useState("");
 
   const [date, setDate] = React.useState<Date>();
@@ -78,9 +83,15 @@ const AddDialog = () => {
               onMouseUp={async (e) => {
                 e.preventDefault();
                 setTodoInput("");
-                await axios.post("http://localhost:5000/todos", {
-                  description: todoInput,
-                });
+                // FIXME - todo_id should be the same as in the database
+
+                const newTodo = await axios.post(
+                  "http://localhost:5000/todos",
+                  {
+                    description: todoInput,
+                  }
+                );
+                setTodos([...todos, newTodo.data]);
               }}
             >
               Add

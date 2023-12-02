@@ -19,9 +19,11 @@ type Todo = {
 
 type Props = {
   todo: Todo;
+  todos: object[];
+  setTodos: React.Dispatch<React.SetStateAction<object>>;
 };
 
-const Todo = ({ todo }: Props) => {
+const Todo = ({ todo, todos, setTodos }: Props) => {
   const [pinned, setPinned] = useState(todo.pinned);
   const [todoDescription, setTodoDescription] = useState(todo.description);
 
@@ -77,6 +79,7 @@ const Todo = ({ todo }: Props) => {
             />
             <div
               onClick={async () => {
+                setTodos(todos.filter((curr) => curr.todo_id != todo.todo_id));
                 await axios.delete(
                   `http://localhost:5000/todos/${todo.todo_id}`
                 );
