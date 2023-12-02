@@ -19,8 +19,8 @@ type Todo = {
 
 type Props = {
   todo: Todo;
-  todos: object[];
-  setTodos: React.Dispatch<React.SetStateAction<object>>;
+  todos: Todo[];
+  setTodos: React.Dispatch<React.SetStateAction<object[]>>;
 };
 
 const Todo = ({ todo, todos, setTodos }: Props) => {
