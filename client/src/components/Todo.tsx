@@ -24,13 +24,16 @@ type Props = {
 };
 
 const Todo = ({ todo, todos, setTodos }: Props) => {
-  const [pinned, setPinned] = useState(todo.pinned);
+  const [isPinned, setIsPinned] = useState(todo.pinned);
   const [todoDescription, setTodoDescription] = useState(todo.description);
 
   return (
     <div
       key={todo.todo_id}
-      className="border-[0.2px] p-3 rounded-xl flex items-start justify-between"
+      className={[
+        "border-[0.2px] p-3 rounded-xl flex items-start justify-between",
+        isPinned && "bg-slate-50",
+      ].join(" ")}
     >
       <div className="flex gap-2">
         <input
@@ -52,7 +55,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
           size={15}
           className={[
             " transition-colors duration-300",
-            pinned
+            isPinned
               ? "text-yellow-500 fill-yellow-500  hover:text-yellow-600 hover:fill-yellow-600"
               : "text-slate-500  hover:text-slate-900",
           ].join(" ")}
@@ -61,7 +64,19 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
               .put(`http://localhost:5000/todos/${todo.todo_id}`, {
                 pinned: !todo.pinned,
               })
-              .then(() => setPinned(!pinned));
+              .then(() => {
+                const mapTodos = todos.map((tdo) => {
+                  if (tdo.todo_id == todo.todo_id) {
+                    return {
+                      ...tdo,
+                      pinned: !tdo.pinned,
+                    };
+                  }
+                  return tdo;
+                });
+                setTodos(mapTodos);
+              });
+            setIsPinned(!isPinned);
           }}
         />
         <Popover>

@@ -36,8 +36,8 @@ function App() {
     <div className="min-h-screen flex flex-col justify-center items-center">
       <div className="container w-5/6  rounded-3xl min-h-[600px] p-10 max-w-md flex flex-col gap-5 ">
         <AddDialog todos={todos} setTodos={setTodos} />
-        <div className="flex flex-col gap-3 bg-white flex-1 rounded-2xl">
-          <h1 className="font-bold text-lg border-b-[2px] ">todos</h1>
+        <div className="flex flex-col gap-2 bg-white flex-1 rounded-2xl">
+          <h1 className="font-bold text-lg border-b-[2px] mb-2 ">todos</h1>
           <Oval
             height={30}
             width={30}
@@ -49,14 +49,26 @@ function App() {
             strokeWidth={5}
             strokeWidthSecondary={5}
           />
-          {todos.map((todo: Todo) => (
-            <Todo
-              key={todo.todo_id}
-              todo={todo}
-              todos={todos}
-              setTodos={setTodos}
-            />
-          ))}
+          {todos
+            .filter((todo: Todo) => todo.pinned)
+            .map((todo: Todo) => (
+              <Todo
+                key={todo.todo_id}
+                todo={todo}
+                todos={todos}
+                setTodos={setTodos}
+              />
+            ))}
+          {todos
+            .filter((todo: Todo) => !todo.pinned)
+            .map((todo: Todo) => (
+              <Todo
+                key={todo.todo_id}
+                todo={todo}
+                todos={todos}
+                setTodos={setTodos}
+              />
+            ))}
         </div>
       </div>
     </div>

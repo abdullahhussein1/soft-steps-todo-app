@@ -26,9 +26,15 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
+type Todo = {
+  todo_id: number;
+  description: string;
+  pinned: boolean;
+};
+
 type Props = {
-  todos: object[];
-  setTodos: React.Dispatch<React.SetStateAction<object>>;
+  todos: Todo[];
+  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
 };
 
 const AddDialog = ({ todos, setTodos }: Props) => {
@@ -83,8 +89,6 @@ const AddDialog = ({ todos, setTodos }: Props) => {
               onMouseUp={async (e) => {
                 e.preventDefault();
                 setTodoInput("");
-                // FIXME - todo_id should be the same as in the database
-
                 const newTodo = await axios.post(
                   "http://localhost:5000/todos",
                   {
