@@ -13,9 +13,9 @@ type TodoType = {
 
 const TodoBoard = () => {
   const [todos, setTodos] = useState<TodoType[]>([]);
-  const [isLoaderVisible, setIsLoaderVisible] = useState(true);
+  const [isLoaderVisible, setIsLoaderVisible] = useState<boolean>(true);
 
-  const fetchData = async () => {
+  const fetchTodos = async () => {
     const result = await axios
       .get("http://localhost:5000/todos")
       .then((response) => response.data)
@@ -25,8 +25,9 @@ const TodoBoard = () => {
       });
     setTodos(result);
   };
+
   useEffect(() => {
-    fetchData();
+    fetchTodos();
   }, []);
 
   return (
