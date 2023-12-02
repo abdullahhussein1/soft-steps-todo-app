@@ -11,16 +11,16 @@ import {
 } from "@/components/ui/popover";
 import { useState } from "react";
 
-type Todo = {
+type TodoType = {
   todo_id: number;
   description: string;
   pinned: boolean;
 };
 
 type Props = {
-  todo: Todo;
-  todos: Todo[];
-  setTodos: React.Dispatch<React.SetStateAction<object[]>>;
+  todo: TodoType;
+  todos: TodoType[];
+  setTodos: React.Dispatch<React.SetStateAction<TodoType[]>>;
 };
 
 const Todo = ({ todo, todos, setTodos }: Props) => {
