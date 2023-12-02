@@ -59,7 +59,7 @@ const AddDialog = ({ todo, todoDescription, setTodoDescription }: Props) => {
         <DialogHeader>
           <DialogTitle>Edit Todo</DialogTitle>
         </DialogHeader>
-        <form className="flex flex-col gap-3 mt-8">
+        <div className="flex flex-col gap-3 mt-8">
           <Input
             type="text"
             value={todoInput}
@@ -88,7 +88,7 @@ const AddDialog = ({ todo, todoDescription, setTodoDescription }: Props) => {
               />
             </PopoverContent>
           </Popover>
-        </form>
+        </div>
         <DialogFooter>
           <DialogClose asChild>
             <Button
