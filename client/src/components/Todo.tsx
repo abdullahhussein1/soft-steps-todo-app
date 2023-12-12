@@ -42,7 +42,6 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
       ].join(" ")}
     >
       {/* TODO - add date and show */}
-      {/* TODO - add functionality for checkbox */}
       <div className={[
         "flex gap-2",
         isChecked && !todo.completed &&

@@ -1,5 +1,7 @@
 import { Oval } from "react-loader-spinner";
 import Todo from "./Todo";
+import axios from "axios";
+
 
 type TodoType = {
   todo_id: number;
@@ -49,7 +51,17 @@ const TodoList = ({ todos, setTodos, isLoaderVisible }: Props) => {
             setTodos={setTodos}
           />
         ))}
-      <h1 className="font-bold text-lg border-b-[2px] mb-2 ">history</h1>
+      <div className="flex justify-between border-b-[2px] mb-2 items-center mt-5"><h1 className="font-bold text-lg  ">history</h1>
+      <button className="hover:bg-red-50  m-1 text-slate-500 px-2 rounded-lg hover:text-red-500 transition-colors h-7" onClick={()=>{
+        {todos
+          .filter((todo) => todo.completed)
+          .forEach(async(todo) => {
+            setTodos(todos.filter((todo)=> !todo.completed))
+            await axios.delete(
+              `http://localhost:5000/todos/${todo.todo_id}`
+            );
+          })}
+      }}>clear all</button></div>
       {todos
         .filter((todo) => todo.completed)
         .map((todo) => (
