@@ -44,7 +44,7 @@ const AddTodoDialog = ({ todos, setTodos }: Props) => {
 
   return (
     <Dialog>
-      <DialogTrigger className="w-fit px-4 text-sm text-white rounded-full bg-blue-700 hover:bg-blue-800 h-9">
+      <DialogTrigger className="w-full px-4 text-sm text-white rounded-full bg-slate-700 hover:bg-slate-800 h-9">
         Add Todo
       </DialogTrigger>
       <DialogContent className="rounded-3xl">

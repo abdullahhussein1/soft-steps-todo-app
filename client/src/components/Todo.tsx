@@ -35,20 +35,24 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
     <div
       key={todo.todo_id}
       className={[
-        "border-[0.2px] p-3 rounded-xl opacity-100  flex items-start skew-y-0 justify-between  overflow-clip",
+        "shrink-0 border-[0.2px] p-3 rounded-xl opacity-100 flex  skew-y-0 justify-between  overflow-clip",
         isPinned && "bg-slate-50",
-        isChecked && !todo.completed &&
+        isChecked &&
+          !todo.completed &&
           "delay-1000 translate-x-48 duration-700 transition-all",
       ].join(" ")}
     >
       {/* TODO - add date and show */}
-      <div className={[
-        "flex gap-2",
-        isChecked && !todo.completed &&
-          "delay-1000 translate-x-48 duration-700 transition-all",
-      ].join(" ")}>
+      <div
+        className={[
+          "flex gap-2",
+          isChecked &&
+            !todo.completed &&
+            "delay-1000 translate-x-48 duration-700 transition-all",
+        ].join(" ")}
+      >
         <input
-          className={"accent-gray-500 self-start mt-[5.5px]"}
+          className={"accent-gray-500  self-start mt-[5.5px]"}
           type="checkbox"
           checked={isChecked}
           onChange={async () => {
@@ -62,20 +66,18 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
                     return {
                       ...tdo,
                       completed: !tdo.completed,
-                      pinned: false
+                      pinned: false,
                     };
                   }
                   return tdo;
                 });
-                if(!todo.completed) {
-                  setTimeout(()=>setTodos(mapTodos),1200)
-                }else{
-                  setTodos(mapTodos)
+                if (!todo.completed) {
+                  setTimeout(() => setTodos(mapTodos), 1200);
+                } else {
+                  setTodos(mapTodos);
                 }
-                  
               });
             setIsChecked(!isChecked);
-            
           }}
           name="todo"
           id={String(todo.todo_id)}

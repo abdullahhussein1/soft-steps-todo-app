@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 
 import axios from "axios";
 
-import AddTodoDialog from "./AddTodoDialog";
 import TodoList from "./TodoList";
 
 type TodoType = {
@@ -33,8 +32,7 @@ const TodoApp = () => {
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center">
-      <div className="container w-5/6  rounded-3xl min-h-[600px] p-10 max-w-md flex flex-col gap-5 ">
-        <AddTodoDialog todos={todos} setTodos={setTodos} />
+      <div className="container w-5/6   rounded-3xl min-h-[600px] p-10 max-w-md flex flex-col gap-5 ">
         <TodoList
           todos={todos}
           setTodos={setTodos}
