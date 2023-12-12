@@ -30,7 +30,7 @@ const TodoList = ({ todos, setTodos, isLoaderVisible }: Props) => {
         strokeWidthSecondary={5}
       />
       {todos
-        .filter((todo) => todo.pinned)
+        .filter((todo) => todo.pinned && !todo.completed)
         .map((todo) => (
           <Todo
             key={todo.todo_id}
@@ -40,7 +40,18 @@ const TodoList = ({ todos, setTodos, isLoaderVisible }: Props) => {
           />
         ))}
       {todos
-        .filter((todo) => !todo.pinned)
+        .filter((todo) => !todo.pinned && !todo.completed)
+        .map((todo) => (
+          <Todo
+            key={todo.todo_id}
+            todo={todo}
+            todos={todos}
+            setTodos={setTodos}
+          />
+        ))}
+      <h1 className="font-bold text-lg border-b-[2px] mb-2 ">history</h1>
+      {todos
+        .filter((todo) => todo.completed)
         .map((todo) => (
           <Todo
             key={todo.todo_id}

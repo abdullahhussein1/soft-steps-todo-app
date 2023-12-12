@@ -55,7 +55,7 @@ const AddTodoDialog = ({
         onMouseUp={() => {
           setTodoInput(todoDescription);
         }}
-        className="flex text-slate-600 hover:text-slate-900 cursor-pointer items-center p-2 gap-2 hover:bg-slate-50 rounded-lg"
+        className={todo.completed ? 'hidden' : "flex text-slate-600 hover:text-slate-900 cursor-pointer items-center p-2 gap-2 hover:bg-slate-50 rounded-lg"}
       >
         <PencilIcon size={16} />
         <p>Edit</p>

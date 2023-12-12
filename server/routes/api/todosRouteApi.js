@@ -42,26 +42,26 @@ router.get("/:id", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { description, pinned } = req.body;
+    const { description, pinned, completed } = req.body;
 
-    if (description === undefined) {
+    if (description === undefined && completed===undefined && pinned !==undefined) {
       await pool.query(
         "UPDATE todos SET  pinned = $1 WHERE todo_id = $2 RETURNING *",
         [pinned, id]
       );
       res.json({ msg: "pinned updated" });
-    } else if (pinned === undefined) {
+    } else if (pinned === undefined && completed===undefined && description !==undefined) {
       await pool.query(
         "UPDATE todos SET  description = $1 WHERE todo_id = $2 RETURNING *",
         [description, id]
       );
       res.json({ msg: "description updated" });
-    } else {
+    } else if (pinned === undefined && description === undefined && completed !==undefined) {
       await pool.query(
-        "UPDATE todos SET description = $1, pinned = $2 WHERE todo_id = $3 RETURNING *",
-        [description, pinned, id]
+        "UPDATE todos SET completed = $1, pinned=false WHERE todo_id = $2 RETURNING *",
+        [completed, id]
       );
-      res.json({ msg: "Todo updated" });
+      res.json({ msg: "description updated" });
     }
   } catch (err) {
     console.error(err);

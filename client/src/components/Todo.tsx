@@ -29,34 +29,54 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
   const [todoDescription, setTodoDescription] = useState<string>(
     todo.description
   );
-  const [isChecked, setIsChecked] = useState<boolean>(false);
+  const [isChecked, setIsChecked] = useState<boolean>(todo.completed);
 
   return (
     <div
       key={todo.todo_id}
       className={[
-        "border-[0.2px] p-3 rounded-xl flex items-start justify-between",
+        "border-[0.2px] p-3 rounded-xl opacity-100  flex items-start skew-y-0 justify-between  overflow-clip",
         isPinned && "bg-slate-50",
+        isChecked && !todo.completed &&
+          "delay-1000 translate-x-48 duration-700 transition-all",
       ].join(" ")}
     >
       {/* TODO - add date and show */}
       {/* TODO - add functionality for checkbox */}
-      <div className="flex gap-2">
+      <div className={[
+        "flex gap-2",
+        isChecked && !todo.completed &&
+          "delay-1000 translate-x-48 duration-700 transition-all",
+      ].join(" ")}>
         <input
           className={"accent-gray-500 self-start mt-[5.5px]"}
           type="checkbox"
           checked={isChecked}
           onChange={async () => {
-            await axios.put(`http://localhost:5000/todos/${todo.todo_id}`, {
-              pinned: !todo.completed,
-            });
+            await axios
+              .put(`http://localhost:5000/todos/${todo.todo_id}`, {
+                completed: !todo.completed,
+              })
+              .then(() => {
+                const mapTodos = todos.map((tdo) => {
+                  if (tdo.todo_id == todo.todo_id) {
+                    return {
+                      ...tdo,
+                      completed: !tdo.completed,
+                      pinned: false
+                    };
+                  }
+                  return tdo;
+                });
+                if(!todo.completed) {
+                  setTimeout(()=>setTodos(mapTodos),1200)
+                }else{
+                  setTodos(mapTodos)
+                }
+                  
+              });
             setIsChecked(!isChecked);
-            setTimeout(() => {
-              const mapTodos = todos.filter(
-                (tdo) => tdo.todo_id != todo.todo_id
-              );
-              setTodos(mapTodos);
-            }, 2000);
+            
           }}
           name="todo"
           id={String(todo.todo_id)}
