@@ -27,19 +27,24 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-type Todo = {
+type TodoType = {
   todo_id: number;
   description: string;
   pinned: boolean;
+  completed: boolean;
 };
 
 type Props = {
-  todo: Todo;
+  todo: TodoType;
   todoDescription: string;
   setTodoDescription: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const AddDialog = ({ todo, todoDescription, setTodoDescription }: Props) => {
+const AddTodoDialog = ({
+  todo,
+  todoDescription,
+  setTodoDescription,
+}: Props) => {
   const [todoInput, setTodoInput] = useState(todoDescription);
 
   const [date, setDate] = React.useState<Date>();
@@ -111,4 +116,4 @@ const AddDialog = ({ todo, todoDescription, setTodoDescription }: Props) => {
   );
 };
 
-export default AddDialog;
+export default AddTodoDialog;

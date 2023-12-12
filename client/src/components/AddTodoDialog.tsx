@@ -30,6 +30,7 @@ type TodoType = {
   todo_id: number;
   description: string;
   pinned: boolean;
+  completed: boolean;
 };
 
 type Props = {
@@ -37,7 +38,7 @@ type Props = {
   setTodos: React.Dispatch<React.SetStateAction<TodoType[]>>;
 };
 
-const AddDialog = ({ todos, setTodos }: Props) => {
+const AddTodoDialog = ({ todos, setTodos }: Props) => {
   const [todoInput, setTodoInput] = useState<string>("");
   const [date, setDate] = React.useState<Date>();
 
@@ -106,4 +107,4 @@ const AddDialog = ({ todos, setTodos }: Props) => {
   );
 };
 
-export default AddDialog;
+export default AddTodoDialog;

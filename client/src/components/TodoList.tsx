@@ -5,6 +5,7 @@ type TodoType = {
   todo_id: number;
   description: string;
   pinned: boolean;
+  completed: boolean;
 };
 
 type Props = {

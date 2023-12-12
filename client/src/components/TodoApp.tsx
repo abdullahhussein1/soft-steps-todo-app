@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 
 import axios from "axios";
 
-import AddDialog from "./AddDialog";
+import AddTodoDialog from "./AddTodoDialog";
 import TodoList from "./TodoList";
 
 type TodoType = {
   todo_id: number;
   description: string;
   pinned: boolean;
+  completed: boolean;
 };
 
 const TodoApp = () => {
@@ -33,7 +34,7 @@ const TodoApp = () => {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center">
       <div className="container w-5/6  rounded-3xl min-h-[600px] p-10 max-w-md flex flex-col gap-5 ">
-        <AddDialog todos={todos} setTodos={setTodos} />
+        <AddTodoDialog todos={todos} setTodos={setTodos} />
         <TodoList
           todos={todos}
           setTodos={setTodos}
