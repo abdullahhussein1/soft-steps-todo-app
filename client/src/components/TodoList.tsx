@@ -2,7 +2,6 @@ import { Oval } from "react-loader-spinner";
 import Todo from "./Todo";
 import axios from "axios";
 
-// import AddTodoDialog from "./AddTodoDialog";
 import { useState } from "react";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -38,8 +37,8 @@ const TodoList = ({ todos, setTodos, isLoaderVisible }: Props) => {
           value="Todos"
           className="flex flex-col justify-start col-span-full "
         >
-          <div className="flex flex-col relative  h-[440px]">
-            <h1 className="font-bold  text-lg border-b-[2px]  mt-4">todos</h1>
+          <div className="flex flex-col relative h-[440px]">
+            <h1 className="font-bold text-lg border-b-[2px]  mt-4">todos</h1>
             <Oval
               height={30}
               width={30}
@@ -104,9 +103,9 @@ const TodoList = ({ todos, setTodos, isLoaderVisible }: Props) => {
         </TabsContent>
         <TabsContent
           value="History"
-          className="flex p-2 flex-col w-full gap-2 h-[460px]  col-span-full  relative"
+          className="flex flex-col w-full gap-2 h-[460px]  col-span-full  relative"
         >
-          <div className="flex justify-between  border-b-[2px] mt-4 mb-2 items-center ">
+          <div className="flex justify-between  border-b-[2px]   items-center ">
             <h1 className="font-bold text-lg  ">history</h1>
             <button
               className="hover:bg-red-50  m-1 text-slate-500 px-2 rounded-lg hover:text-red-500 transition-colors h-7"
