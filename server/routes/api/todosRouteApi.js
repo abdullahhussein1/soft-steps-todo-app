@@ -6,10 +6,10 @@ const router = Router();
 // CREATE TODO
 router.post("/", async (req, res) => {
   try {
-    const { description } = req.body;
+    const { title } = req.body;
     const newTodo = await pool.query(
-      "INSERT INTO todos(description) VALUES($1) RETURNING *",
-      [description]
+      "INSERT INTO todos(title) VALUES($1) RETURNING *",
+      [title]
     );
 
     res.status(201).json(newTodo.rows[0]);
@@ -20,7 +20,7 @@ router.post("/", async (req, res) => {
 
 // GET ALL TODOS
 router.get("/", async (req, res) => {
-  const todos = await pool.query("SELECT * FROM todos ORDER BY todo_id");
+  const todos = await pool.query("SELECT * FROM todos ORDER BY id");
   res.json(todos.rows);
 });
 
@@ -28,9 +28,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const todo = await pool.query("SELECT * FROM todos WHERE todo_id = $1", [
-      id,
-    ]);
+    const todo = await pool.query("SELECT * FROM todos WHERE id = $1", [id]);
 
     res.json(todo.rows[0]);
   } catch (err) {
@@ -42,26 +40,38 @@ router.get("/:id", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { description, pinned, completed } = req.body;
+    const { title, pinned, completed } = req.body;
 
-    if (description === undefined && completed===undefined && pinned !==undefined) {
+    if (
+      title === undefined &&
+      completed === undefined &&
+      pinned !== undefined
+    ) {
       await pool.query(
-        "UPDATE todos SET  pinned = $1 WHERE todo_id = $2 RETURNING *",
+        "UPDATE todos SET  pinned = $1 WHERE id = $2 RETURNING *",
         [pinned, id]
       );
       res.json({ msg: "pinned updated" });
-    } else if (pinned === undefined && completed===undefined && description !==undefined) {
+    } else if (
+      pinned === undefined &&
+      completed === undefined &&
+      title !== undefined
+    ) {
       await pool.query(
-        "UPDATE todos SET  description = $1 WHERE todo_id = $2 RETURNING *",
-        [description, id]
+        "UPDATE todos SET  title = $1 WHERE id = $2 RETURNING *",
+        [title, id]
       );
-      res.json({ msg: "description updated" });
-    } else if (pinned === undefined && description === undefined && completed !==undefined) {
+      res.json({ msg: "title updated" });
+    } else if (
+      pinned === undefined &&
+      title === undefined &&
+      completed !== undefined
+    ) {
       await pool.query(
-        "UPDATE todos SET completed = $1, pinned=false WHERE todo_id = $2 RETURNING *",
+        "UPDATE todos SET completed = $1, pinned=false WHERE id = $2 RETURNING *",
         [completed, id]
       );
-      res.json({ msg: "description updated" });
+      res.json({ msg: "title updated" });
     }
   } catch (err) {
     console.error(err);
@@ -74,7 +84,7 @@ router.delete("/:id", async (req, res) => {
     const { id } = req.params;
 
     const deletedTodo = await pool.query(
-      "DELETE FROM todos WHERE todo_id = $1 RETURNING *",
+      "DELETE FROM todos WHERE id = $1 RETURNING *",
       [id]
     );
 

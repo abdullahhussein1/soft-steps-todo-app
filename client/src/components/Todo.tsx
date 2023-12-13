@@ -12,8 +12,8 @@ import {
 import { useState } from "react";
 
 type TodoType = {
-  todo_id: number;
-  description: string;
+  id: number;
+  title: string;
   pinned: boolean;
   completed: boolean;
 };
@@ -26,14 +26,12 @@ type Props = {
 
 const Todo = ({ todo, todos, setTodos }: Props) => {
   const [isPinned, setIsPinned] = useState<boolean>(todo.pinned);
-  const [todoDescription, setTodoDescription] = useState<string>(
-    todo.description
-  );
+  const [todoTitle, setTodoTitle] = useState<string>(todo.title);
   const [isChecked, setIsChecked] = useState<boolean>(todo.completed);
 
   return (
     <div
-      key={todo.todo_id}
+      key={todo.id}
       className={[
         "shrink-0 border-[0.2px] p-3 rounded-xl opacity-100 flex  skew-y-0 justify-between  overflow-clip",
         isPinned && "bg-slate-50",
@@ -57,12 +55,12 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
           checked={isChecked}
           onChange={async () => {
             await axios
-              .put(`http://localhost:5000/todos/${todo.todo_id}`, {
+              .put(`http://localhost:5000/todos/${todo.id}`, {
                 completed: !todo.completed,
               })
               .then(() => {
                 const mapTodos = todos.map((tdo) => {
-                  if (tdo.todo_id == todo.todo_id) {
+                  if (tdo.id == todo.id) {
                     return {
                       ...tdo,
                       completed: !tdo.completed,
@@ -80,17 +78,17 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
             setIsChecked(!isChecked);
           }}
           name="todo"
-          id={String(todo.todo_id)}
+          id={String(todo.id)}
         />
         <label
-          htmlFor={String(todo.todo_id)}
+          htmlFor={String(todo.id)}
           className={[
             "p-0 flex leading-6",
             isChecked && "line-through text-gray-500",
           ].join(" ")}
-          key={todo.todo_id}
+          key={todo.id}
         >
-          {todoDescription}
+          {todoTitle}
         </label>
       </div>
       <div className="flex gap-1 mt-[5px] self-start">
@@ -106,12 +104,12 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
           ].join(" ")}
           onClick={async () => {
             await axios
-              .put(`http://localhost:5000/todos/${todo.todo_id}`, {
+              .put(`http://localhost:5000/todos/${todo.id}`, {
                 pinned: !todo.pinned,
               })
               .then(() => {
                 const mapTodos = todos.map((tdo) => {
-                  if (tdo.todo_id == todo.todo_id) {
+                  if (tdo.id == todo.id) {
                     return {
                       ...tdo,
                       pinned: !tdo.pinned,
@@ -134,15 +132,13 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
           <PopoverContent className="flex flex-col  w-fit p-2 rounded-xl">
             <EditTodoDialog
               todo={todo}
-              todoDescription={todoDescription}
-              setTodoDescription={setTodoDescription}
+              todoTitle={todoTitle}
+              setTodoTitle={setTodoTitle}
             />
             <div
               onClick={async () => {
-                setTodos(todos.filter((curr) => curr.todo_id != todo.todo_id));
-                await axios.delete(
-                  `http://localhost:5000/todos/${todo.todo_id}`
-                );
+                setTodos(todos.filter((curr) => curr.id != todo.id));
+                await axios.delete(`http://localhost:5000/todos/${todo.id}`);
               }}
               className="flex text-slate-600 hover:text-slate-900 cursor-pointer items-center justify-start p-2 gap-2 hover:bg-slate-50 rounded-lg"
             >

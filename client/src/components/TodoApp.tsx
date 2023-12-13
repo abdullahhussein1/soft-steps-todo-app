@@ -5,8 +5,8 @@ import axios from "axios";
 import TodoList from "./TodoList";
 
 type TodoType = {
-  todo_id: number;
-  description: string;
+  id: number;
+  title: string;
   pinned: boolean;
   completed: boolean;
 };

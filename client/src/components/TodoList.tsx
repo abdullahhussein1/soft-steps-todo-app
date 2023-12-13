@@ -2,7 +2,7 @@ import { Oval } from "react-loader-spinner";
 import Todo from "./Todo";
 import axios from "axios";
 
-import AddTodoDialog from "./AddTodoDialog";
+// import AddTodoDialog from "./AddTodoDialog";
 import { useState } from "react";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -10,8 +10,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 type TodoType = {
-  todo_id: number;
-  description: string;
+  id: number;
+  title: string;
   pinned: boolean;
   completed: boolean;
 };
@@ -56,7 +56,7 @@ const TodoList = ({ todos, setTodos, isLoaderVisible }: Props) => {
                 .filter((todo) => todo.pinned && !todo.completed)
                 .map((todo) => (
                   <Todo
-                    key={todo.todo_id}
+                    key={todo.id}
                     todo={todo}
                     todos={todos}
                     setTodos={setTodos}
@@ -66,7 +66,7 @@ const TodoList = ({ todos, setTodos, isLoaderVisible }: Props) => {
                 .filter((todo) => !todo.pinned && !todo.completed)
                 .map((todo) => (
                   <Todo
-                    key={todo.todo_id}
+                    key={todo.id}
                     todo={todo}
                     todos={todos}
                     setTodos={setTodos}
@@ -91,7 +91,7 @@ const TodoList = ({ todos, setTodos, isLoaderVisible }: Props) => {
                 const newTodo = await axios.post(
                   "http://localhost:5000/todos",
                   {
-                    description: todoInput,
+                    title: todoInput,
                   }
                 );
                 setTodos([...todos, newTodo.data]);
@@ -117,7 +117,7 @@ const TodoList = ({ todos, setTodos, isLoaderVisible }: Props) => {
                     .forEach(async (todo) => {
                       setTodos(todos.filter((todo) => !todo.completed));
                       await axios.delete(
-                        `http://localhost:5000/todos/${todo.todo_id}`
+                        `http://localhost:5000/todos/${todo.id}`
                       );
                     });
                 }
@@ -131,7 +131,7 @@ const TodoList = ({ todos, setTodos, isLoaderVisible }: Props) => {
               .filter((todo) => todo.completed)
               .map((todo) => (
                 <Todo
-                  key={todo.todo_id}
+                  key={todo.id}
                   todo={todo}
                   todos={todos}
                   setTodos={setTodos}

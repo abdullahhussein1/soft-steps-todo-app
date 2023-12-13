@@ -28,24 +28,20 @@ import {
 } from "@/components/ui/popover";
 
 type TodoType = {
-  todo_id: number;
-  description: string;
+  id: number;
+  title: string;
   pinned: boolean;
   completed: boolean;
 };
 
 type Props = {
   todo: TodoType;
-  todoDescription: string;
-  setTodoDescription: React.Dispatch<React.SetStateAction<string>>;
+  todoTitle: string;
+  setTodoTitle: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const AddTodoDialog = ({
-  todo,
-  todoDescription,
-  setTodoDescription,
-}: Props) => {
-  const [todoInput, setTodoInput] = useState(todoDescription);
+const AddTodoDialog = ({ todo, todoTitle, setTodoTitle }: Props) => {
+  const [todoInput, setTodoInput] = useState(todoTitle);
 
   const [date, setDate] = React.useState<Date>();
 
@@ -53,9 +49,13 @@ const AddTodoDialog = ({
     <Dialog>
       <DialogTrigger
         onMouseUp={() => {
-          setTodoInput(todoDescription);
+          setTodoInput(todoTitle);
         }}
-        className={todo.completed ? 'hidden' : "flex text-slate-600 hover:text-slate-900 cursor-pointer items-center p-2 gap-2 hover:bg-slate-50 rounded-lg"}
+        className={
+          todo.completed
+            ? "hidden"
+            : "flex text-slate-600 hover:text-slate-900 cursor-pointer items-center p-2 gap-2 hover:bg-slate-50 rounded-lg"
+        }
       >
         <PencilIcon size={16} />
         <p>Edit</p>
@@ -100,11 +100,11 @@ const AddTodoDialog = ({
               className="rounded-xl bg-blue-700 hover:bg-blue-800"
               onMouseUp={async (e) => {
                 e.preventDefault();
-                setTodoDescription(todoInput);
-                await axios.put(`http://localhost:5000/todos/${todo.todo_id}`, {
-                  description: todoInput,
+                setTodoTitle(todoInput);
+                await axios.put(`http://localhost:5000/todos/${todo.id}`, {
+                  title: todoInput,
                 });
-                setTodoDescription(todoInput);
+                setTodoTitle(todoInput);
               }}
             >
               Edit

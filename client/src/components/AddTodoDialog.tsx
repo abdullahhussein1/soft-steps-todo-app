@@ -27,8 +27,8 @@ import {
 } from "@/components/ui/popover";
 
 type TodoType = {
-  todo_id: number;
-  description: string;
+  id: number;
+  title: string;
   pinned: boolean;
   completed: boolean;
 };
@@ -92,7 +92,7 @@ const AddTodoDialog = ({ todos, setTodos }: Props) => {
                 const newTodo = await axios.post(
                   "http://localhost:5000/todos",
                   {
-                    description: todoInput,
+                    title: todoInput,
                   }
                 );
                 setTodos([...todos, newTodo.data]);
