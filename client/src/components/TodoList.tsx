@@ -11,8 +11,13 @@ import { Button } from "@/components/ui/button";
 type TodoType = {
   id: number;
   title: string;
+  note: string;
   pinned: boolean;
   completed: boolean;
+  remind_date: Date;
+  created_at: Date;
+  updated_at: Date;
+  deleted_at: Date;
 };
 
 type Props = {
@@ -80,7 +85,7 @@ const TodoList = ({ todos, setTodos, isLoaderVisible }: Props) => {
               value={todoInput}
               onChange={(e) => setTodoInput(e.target.value)}
               placeholder={`Add todo`}
-              className="rounded-xl  border-[0.5px]"
+              className="rounded-xl border-[0.5px]"
             />
             <Button
               className="rounded-xl bg-blue-700 hover:bg-blue-800"

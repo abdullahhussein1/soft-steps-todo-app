@@ -29,8 +29,13 @@ import {
 type TodoType = {
   id: number;
   title: string;
+  note: string;
   pinned: boolean;
   completed: boolean;
+  remind_date: Date;
+  created_at: Date;
+  updated_at: Date;
+  deleted_at: Date;
 };
 
 type Props = {
@@ -57,7 +62,7 @@ const AddTodoDialog = ({ todos, setTodos }: Props) => {
             value={todoInput}
             onChange={(e) => setTodoInput(e.target.value)}
             placeholder={`Add todo`}
-            className="rounded-xl  border-[0.5px] "
+            className="rounded-xl border-[0.5px] "
           />
           <Popover>
             <PopoverTrigger asChild>

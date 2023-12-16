@@ -7,8 +7,13 @@ import TodoList from "./TodoList";
 type TodoType = {
   id: number;
   title: string;
+  note: string;
   pinned: boolean;
   completed: boolean;
+  remind_date: Date;
+  created_at: Date;
+  updated_at: Date;
+  deleted_at: Date;
 };
 
 const TodoApp = () => {
