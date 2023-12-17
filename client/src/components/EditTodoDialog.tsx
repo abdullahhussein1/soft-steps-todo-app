@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
 import * as React from "react";
-import { format, formatDistance } from "date-fns";
+import { format, formatDistanceToNow } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
 import { Calendar as CalendarIcon } from "lucide-react";
 
@@ -105,19 +105,21 @@ const AddTodoDialog = ({
             id="note"
           />
 
-          <p className="text-sm text-slate-500 font-light">
-            {"updated " +
-              formatDistance(new Date(todo.updated_at), new Date(), {
-                addSuffix: true,
-              })}
-          </p>
+          {todo.updated_at && (
+            <p className="text-sm text-slate-500 font-light">
+              {"updated " +
+                formatDistanceToNow(new Date(todo.updated_at), {
+                  addSuffix: true,
+                })}
+            </p>
+          )}
 
           <Popover>
             <PopoverTrigger asChild>
               <Button
                 variant={"outline"}
                 className={cn(
-                  "w-[280px] border-none rounded-xl justify-start text-left font-normal",
+                  "w-fit px-3 border-none rounded-xl justify-start text-left font-normal",
                   !date && "text-muted-foreground"
                 )}
               >
@@ -140,28 +142,39 @@ const AddTodoDialog = ({
         </div>
         <DialogFooter>
           <DialogClose asChild>
-            <Button
-              className="rounded-xl bg-blue-700 hover:bg-blue-800"
-              onMouseUp={async (e) => {
-                e.preventDefault();
-                await axios.put(`http://localhost:5000/todos/${todo.id}`, {
-                  title: todoInput,
-                  note: todoNoteInput,
-                  remind_date: date
-                    ? date.toLocaleString("en-US", {
-                        timeZone: "Asia/Baghdad",
-                      })
-                    : null,
-                  updated_at: new Date().toLocaleString("en-US", {
-                    timeZone: "Asia/Baghdad",
-                  }),
-                });
-                setTodoTitle(todoInput);
-                setTodoNote(todoNoteInput);
-              }}
-            >
-              Edit
-            </Button>
+            <div className="flex flex-col gap-1 items-center sm:flex-row">
+              <Button
+                className="rounded-full bg-blue-700 sm:order-2 flex-auto w-full hover:bg-blue-800"
+                onMouseUp={async (e) => {
+                  e.preventDefault();
+                  await axios.put(`http://localhost:5000/todos/${todo.id}`, {
+                    title: todoInput,
+                    note: todoNoteInput,
+                    remind_date:
+                      date && date != todo.remind_date
+                        ? date.toLocaleString("en-US", {
+                            timeZone: "Asia/Baghdad",
+                          })
+                        : null,
+                    updated_at:
+                      date != todo.remind_date ||
+                      todoInput != todoTitle ||
+                      todoNoteInput != todoNote
+                        ? new Date().toLocaleString("en-US", {
+                            timeZone: "Asia/Baghdad",
+                          })
+                        : null,
+                  });
+                  setTodoTitle(todoInput);
+                  setTodoNote(todoNoteInput);
+                }}
+              >
+                Update
+              </Button>
+              <Button className="bg-transparent sm:order-1 w-24 hover:bg-slate-100  rounded-full  text-slate-500">
+                Close
+              </Button>
+            </div>
           </DialogClose>
         </DialogFooter>
       </DialogContent>

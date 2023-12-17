@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import EditTodoDialog from "./EditTodoDialog";
 import { Star } from "lucide-react";
+import { Calendar } from "lucide-react";
+import { format, isThisWeek, isToday, isTomorrow } from "date-fns";
 
 type TodoType = {
   id: number;
@@ -28,6 +30,20 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
   const [isChecked, setIsChecked] = useState<boolean>(todo.completed);
   const [isOpen, setIsOpen] = useState(false);
 
+  const formatRemindDate = (remindDate: Date) => {
+    if (isToday(remindDate)) {
+      return "today";
+    } else if (isTomorrow(remindDate)) {
+      return "tomorrow";
+    } else if (isThisWeek(remindDate)) {
+      // Use the day of the week for other days within this week
+      return format(remindDate, "EEEE");
+    } else {
+      // Show the full date for dates outside this week
+      return format(remindDate, "MM/dd/yyyy");
+    }
+  };
+
   return (
     <div
       key={todo.id}
@@ -39,7 +55,6 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
           "delay-1000 translate-x-48 duration-700 transition-all",
       ].join(" ")}
     >
-      {/* TODO - add date and show */}
       <div
         className={[
           "flex gap-2 flex-auto",
@@ -59,39 +74,72 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
               .put(`http://localhost:5000/todos/${todo.id}`, {
                 completed: !todo.completed,
               })
-              .then(() => {
-                const mapTodos = todos.map((tdo) => {
-                  if (tdo.id == todo.id) {
-                    return {
-                      ...tdo,
-                      completed: !tdo.completed,
-                      pinned: false,
-                    };
-                  }
-                  return tdo;
-                });
+              .then(async () => {
                 if (!todo.completed) {
-                  setTimeout(() => setTodos(mapTodos), 1200);
+                  setTimeout(
+                    () =>
+                      setTodos((todos) =>
+                        todos.map((tdo) => {
+                          if (tdo.id == todo.id) {
+                            return {
+                              ...tdo,
+                              completed: !tdo.completed,
+                              pinned: false,
+                            };
+                          }
+                          return tdo;
+                        })
+                      ),
+                    1200
+                  );
                 } else {
-                  setTodos(mapTodos);
+                  setTodos((todos) =>
+                    todos.map((tdo) => {
+                      if (tdo.id == todo.id) {
+                        return {
+                          ...tdo,
+                          completed: !tdo.completed,
+                          pinned: false,
+                        };
+                      }
+                      return tdo;
+                    })
+                  );
                 }
               });
             setIsChecked(!isChecked);
           }}
           name="todo"
         />
-        <label
-          className={[
-            "p-0 flex cursor-pointer flex-auto leading-6",
-            isChecked && "line-through text-gray-500",
-          ].join(" ")}
-          key={todo.id}
-          onClick={() => {
-            setIsOpen(true);
-          }}
-        >
-          {todoTitle}
-        </label>
+        <div className="flex flex-col gap-1">
+          <p
+            className={[
+              "p-0 flex cursor-pointer flex-auto leading-6",
+              isChecked && "line-through text-gray-500",
+            ].join(" ")}
+            key={todo.id}
+            onClick={() => {
+              setIsOpen(true);
+            }}
+          >
+            {todoTitle}
+          </p>
+          {!todo.completed && (
+            <div className="flex gap-1">
+              {todo.remind_date && (
+                <div className="flex items-center gap-1 text-sm">
+                  <Calendar size={14} />
+                  <p>
+                    {/* {formatDistanceToNow(new Date(todo.remind_date), {
+                      addSuffix: true,
+                    })} */}
+                    {formatRemindDate(new Date(todo.remind_date))}
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </div>
       <EditTodoDialog
         todo={todo}
