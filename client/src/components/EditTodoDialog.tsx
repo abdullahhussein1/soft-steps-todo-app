@@ -80,7 +80,7 @@ const AddTodoDialog = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="rounded-3xl">
+      <DialogContent className="rounded-3xl sm:rounded-3xl">
         <DialogHeader>
           <DialogTitle>Edit Todo</DialogTitle>
         </DialogHeader>

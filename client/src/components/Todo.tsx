@@ -111,24 +111,26 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
           }}
           name="todo"
         />
-        <div className="flex flex-col gap-1">
+        <div
+          className="flex flex-col cursor-pointer flex-auto gap-2"
+          onClick={() => {
+            setIsOpen(true);
+          }}
+        >
           <p
             className={[
-              "p-0 flex cursor-pointer flex-auto leading-6",
+              "p-0 flex text-slate-700 flex-auto leading-6",
               isChecked && "line-through text-gray-500",
             ].join(" ")}
             key={todo.id}
-            onClick={() => {
-              setIsOpen(true);
-            }}
           >
             {todoTitle}
           </p>
           {!todo.completed && (
             <div className="flex gap-1">
               {todo.remind_date && (
-                <div className="flex items-center gap-1 text-sm">
-                  <Calendar size={14} />
+                <div className="flex items-center gap-[3px] text-xs">
+                  <Calendar size={12} />
                   <p>
                     {/* {formatDistanceToNow(new Date(todo.remind_date), {
                       addSuffix: true,
