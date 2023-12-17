@@ -73,11 +73,10 @@ const AddTodoDialog = ({
   };
 
   const convertUtcDateToServerTimezone = (utcDate: Date): Date => {
-    const serverTimezone = "Asia/Baghdad"; // Your server timezone
+    const serverTimezone = "Asia/Baghdad";
     const serverDate = utcToZonedTime(utcDate, serverTimezone);
     return serverDate;
   };
-  console.log(date);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -96,25 +95,21 @@ const AddTodoDialog = ({
             className="rounded-xl  border-[0.5px] "
             id="title"
           />
-          <label htmlFor="title" className="font-bold">
+          <label htmlFor="note" className="font-bold">
             note
           </label>
           <Textarea
             value={todoNoteInput ?? ""}
             onChange={(e) => setTodoNoteInput(e.target.value)}
             className="rounded-xl resize-none  border-[0.5px] "
-            id="title"
+            id="note"
           />
 
           <p className="text-sm text-slate-500 font-light">
             {"updated " +
-              formatDistance(
-                convertUtcDateToServerTimezone(todo.updated_at),
-                new Date(),
-                {
-                  addSuffix: true,
-                }
-              )}
+              formatDistance(new Date(todo.updated_at), new Date(), {
+                addSuffix: true,
+              })}
           </p>
 
           <Popover>
@@ -136,6 +131,7 @@ const AddTodoDialog = ({
                 selected={
                   date ? convertUtcDateToServerTimezone(date) : new Date()
                 }
+                fromDate={new Date()}
                 onSelect={handleDateSelect}
                 initialFocus
               />
@@ -151,8 +147,14 @@ const AddTodoDialog = ({
                 await axios.put(`http://localhost:5000/todos/${todo.id}`, {
                   title: todoInput,
                   note: todoNoteInput,
-                  remind_date: date,
-                  updated_at: new Date(),
+                  remind_date: date
+                    ? date.toLocaleString("en-US", {
+                        timeZone: "Asia/Baghdad",
+                      })
+                    : null,
+                  updated_at: new Date().toLocaleString("en-US", {
+                    timeZone: "Asia/Baghdad",
+                  }),
                 });
                 setTodoTitle(todoInput);
                 setTodoNote(todoNoteInput);

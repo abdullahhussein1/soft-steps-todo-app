@@ -91,7 +91,6 @@ router.put("/:id", async (req, res) => {
       deleted_at,
     } = req.body;
 
-    // Filter out keys with undefined, null, or empty string values
     const filteredUpdates = Object.fromEntries(
       Object.entries({
         title,
