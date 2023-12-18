@@ -3,11 +3,18 @@ import Todo from "./Todo";
 import axios from "axios";
 
 import { useState } from "react";
-import { Filter } from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
+import { Trash } from "lucide-react";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 type TodoType = {
   id: number;
@@ -41,9 +48,41 @@ const TodoList = ({ todos, setTodos, isLoaderVisible }: Props) => {
         </TabsTrigger>
         <TabsContent value="Todos" className="flex flex-col col-span-full">
           <div className="flex flex-col relative h-[440px]">
-            <h1 className="font-bold text-lg h-12 flex items-center border-b-[2px]">
-              Todos
-            </h1>
+            <div className="flex justify-between border-b-[2px] h-12 items-center">
+              <h1 className="font-bold text-lg">Todos</h1>
+              <Popover>
+                <PopoverTrigger asChild className="">
+                  <button className="flex gap-2 w-20 h-7 items-center hover:bg-slate-50 text-slate-500 px-2 rounded-full hover:text-slate-700 transition-all">
+                    <p className="whitespace-nowrap text-xs">Sort By</p>
+                    <ArrowUpDown size={15} />
+                  </button>
+                </PopoverTrigger>
+                <PopoverContent className="flex flex-col w-fit p-2 rounded-xl">
+                  <div className="flex flex-col gap-1 text-sm">
+                    <div>
+                      <button className="flex text-slate-600 w-full hover:text-slate-900 items-center justify-start p-2 gap-2 hover:bg-slate-100/80 rounded-lg">
+                        Date Edited
+                      </button>
+                      <button className="flex text-slate-600 w-full hover:text-slate-900 items-center justify-start p-2 gap-2 hover:bg-slate-100/80 rounded-lg">
+                        Date Created
+                      </button>
+                      <button className="flex text-slate-600 w-full hover:text-slate-900 items-center justify-start p-2 gap-2 hover:bg-slate-100/80 rounded-lg">
+                        Title
+                      </button>
+                    </div>
+                    <div className="border-[1px] rounded-full"></div>
+                    <div className="flex flex-col pt-1 bg-slate-100/80 rounded-xl">
+                      <button className="flex text-slate-600 w-full hover:text-slate-900 items-center justify-start p-2 gap-2  rounded-lg">
+                        Newest First
+                      </button>
+                      <button className="flex text-slate-600 w-full hover:text-slate-900 items-center justify-start p-2 gap-2  rounded-lg">
+                        Oldest First
+                      </button>
+                    </div>
+                  </div>
+                </PopoverContent>
+              </Popover>
+            </div>
             <Oval
               height={30}
               width={30}
@@ -111,8 +150,9 @@ const TodoList = ({ todos, setTodos, isLoaderVisible }: Props) => {
         >
           <div className="flex justify-between border-b-[2px] h-12 items-center">
             <h1 className="font-bold text-lg">Completed</h1>
+
             <button
-              className="hover:bg-red-50 text-slate-500 px-2 rounded-lg hover:text-red-500 transition-colors h-7"
+              className="flex gap-2 w-20 h-7 items-center hover:bg-red-50 text-slate-500 px-2 rounded-full hover:text-red-500 transition-all"
               onClick={() => {
                 {
                   todos
@@ -126,7 +166,8 @@ const TodoList = ({ todos, setTodos, isLoaderVisible }: Props) => {
                 }
               }}
             >
-              clear all
+              <p className="whitespace-nowrap text-xs">Clear All</p>
+              <Trash size={15} />
             </button>
           </div>
           <div className="flex flex-col gap-2 overflow-x-clip overflow-y-auto px-2 ">

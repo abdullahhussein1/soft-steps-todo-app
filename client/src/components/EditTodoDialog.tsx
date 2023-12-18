@@ -171,7 +171,7 @@ const AddTodoDialog = ({
               >
                 Update
               </Button>
-              <Button className="bg-transparent sm:order-1 w-24 hover:bg-slate-100  rounded-full  text-slate-500">
+              <Button className="bg-transparent text-slate-500 sm:order-1 w-24 hover:bg-slate-100 hover:text-slate-700  rounded-full  ">
                 Close
               </Button>
             </div>
