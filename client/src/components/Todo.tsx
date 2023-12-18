@@ -63,6 +63,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
             "delay-1000 translate-x-48 duration-700 transition-all",
         ].join(" ")}
       >
+        {/* FIXME: Update to checkbox icon, maybe some circle checkbox */}
         <input
           className={
             "accent-gray-500 cursor-pointer flex-initial  self-start mt-[5.5px]"

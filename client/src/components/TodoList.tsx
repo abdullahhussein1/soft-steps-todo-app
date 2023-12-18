@@ -46,8 +46,8 @@ const TodoList = ({ todos, setTodos, isLoaderVisible }: Props) => {
         <TabsTrigger value="Completed" className="rounded-full">
           Completed
         </TabsTrigger>
-        <TabsContent value="Todos" className="flex flex-col col-span-full">
-          <div className="flex flex-col relative h-[440px]">
+        <TabsContent value="Todos" className="flex flex-col col-span-full m-0">
+          <div className="flex flex-col relative mt-4 h-[440px]">
             <div className="flex justify-between border-b-[2px] h-12 items-center">
               <h1 className="font-bold text-lg">Todos</h1>
               <Popover>
@@ -148,7 +148,7 @@ const TodoList = ({ todos, setTodos, isLoaderVisible }: Props) => {
           value="Completed"
           className="flex flex-col w-full gap-2 m-0 col-span-full"
         >
-          <div className="flex justify-between border-b-[2px] h-12 items-center">
+          <div className="flex justify-between mt-4 border-b-[2px] h-12 items-center">
             <h1 className="font-bold text-lg">Completed</h1>
 
             <button
@@ -167,6 +167,7 @@ const TodoList = ({ todos, setTodos, isLoaderVisible }: Props) => {
               }}
             >
               <p className="whitespace-nowrap text-xs">Clear All</p>
+              {/* FIXME: the size of the trash icon is small */}
               <Trash size={15} />
             </button>
           </div>

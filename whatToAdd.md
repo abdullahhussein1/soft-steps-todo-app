@@ -1,6 +1,6 @@
 # What to add ?
 
-- [ ] filter todos(date(neweset, oldest)/priority/...etc);
+- [ ] adding sort by(date(neweset, oldest)/priority/...etc);
+- [ ] filtering todos(starred, today and so on);
 - [ ] login/ sign up;
-- [ ] new tabs, bin, starred, ...etc;
 - [ ] ability to add location, priority, ...etc;
