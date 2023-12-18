@@ -36,8 +36,8 @@ const TodoApp = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center">
-      <div className="container w-5/6   rounded-3xl min-h-[600px] p-10 max-w-md flex flex-col gap-5 ">
+    <div className="h-screen flex justify-center items-center">
+      <div className="container w-5/6 rounded-3xl min-h-[600px] max-w-md flex flex-col">
         <TodoList
           todos={todos}
           setTodos={setTodos}

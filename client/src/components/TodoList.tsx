@@ -3,6 +3,7 @@ import Todo from "./Todo";
 import axios from "axios";
 
 import { useState } from "react";
+import { Filter } from "lucide-react";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
@@ -31,19 +32,18 @@ const TodoList = ({ todos, setTodos, isLoaderVisible }: Props) => {
 
   return (
     <Tabs defaultValue="Todos">
-      <TabsList className="grid w-full grid-cols-2  rounded-xl">
-        <TabsTrigger value="Todos" className="rounded-lg ">
+      <TabsList className="grid w-full grid-cols-2  rounded-full">
+        <TabsTrigger value="Todos" className="rounded-full">
           Todos
         </TabsTrigger>
-        <TabsTrigger value="History" className="rounded-lg">
-          History
+        <TabsTrigger value="Completed" className="rounded-full">
+          Completed
         </TabsTrigger>
-        <TabsContent
-          value="Todos"
-          className="flex flex-col justify-start col-span-full "
-        >
+        <TabsContent value="Todos" className="flex flex-col col-span-full">
           <div className="flex flex-col relative h-[440px]">
-            <h1 className="font-bold text-lg border-b-[2px]  mt-4">todos</h1>
+            <h1 className="font-bold text-lg h-12 flex items-center border-b-[2px]">
+              Todos
+            </h1>
             <Oval
               height={30}
               width={30}
@@ -85,10 +85,10 @@ const TodoList = ({ todos, setTodos, isLoaderVisible }: Props) => {
               value={todoInput}
               onChange={(e) => setTodoInput(e.target.value)}
               placeholder={`Add todo`}
-              className="rounded-xl border-[0.5px]"
+              className="rounded-full border-[0.5px]"
             />
             <Button
-              className="rounded-xl bg-blue-700 hover:bg-blue-800"
+              className="rounded-full bg-blue-700 hover:bg-blue-800"
               onMouseUp={async (e) => {
                 e.preventDefault();
                 setTodoInput("");
@@ -104,16 +104,15 @@ const TodoList = ({ todos, setTodos, isLoaderVisible }: Props) => {
               Add
             </Button>
           </div>
-          {/* <AddTodoDialog todos={todos} setTodos={setTodos} /> */}
         </TabsContent>
         <TabsContent
-          value="History"
-          className="flex flex-col w-full gap-2 h-[460px]  col-span-full  relative"
+          value="Completed"
+          className="flex flex-col w-full gap-2 m-0 col-span-full"
         >
-          <div className="flex justify-between  border-b-[2px]   items-center ">
-            <h1 className="font-bold text-lg  ">history</h1>
+          <div className="flex justify-between border-b-[2px] h-12 items-center">
+            <h1 className="font-bold text-lg">Completed</h1>
             <button
-              className="hover:bg-red-50  m-1 text-slate-500 px-2 rounded-lg hover:text-red-500 transition-colors h-7"
+              className="hover:bg-red-50 text-slate-500 px-2 rounded-lg hover:text-red-500 transition-colors h-7"
               onClick={() => {
                 {
                   todos
@@ -141,7 +140,6 @@ const TodoList = ({ todos, setTodos, isLoaderVisible }: Props) => {
                   setTodos={setTodos}
                 />
               ))}
-            <div className=" w-full h-16 bg-gradient-to-t from-white via-white to-transparent absolute bottom-0"></div>
           </div>
         </TabsContent>
       </TabsList>
