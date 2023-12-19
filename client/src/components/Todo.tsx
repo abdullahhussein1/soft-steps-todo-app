@@ -65,9 +65,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
       >
         {/* FIXME: Update to checkbox icon, maybe some circle checkbox */}
         <input
-          className={
-            "accent-gray-500 bg-black cursor-pointer flex-initial mt-[1px]"
-          }
+          className={"accent-gray-500 cursor-pointer flex-initial mt-[1px]"}
           type="checkbox"
           checked={isChecked}
           onChange={async () => {
@@ -113,8 +111,12 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
           name="todo"
         />
         <div
-          className="flex flex-col cursor-pointer flex-auto gap-2"
+          className={[
+            "flex flex-col flex-auto gap-2",
+            !todo.completed && "cursor-pointer",
+          ].join(" ")}
           onClick={() => {
+            if (todo.completed) return;
             setIsOpen(true);
           }}
         >
