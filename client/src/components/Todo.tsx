@@ -48,8 +48,8 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
     <div
       key={todo.id}
       className={[
-        "shrink-0 border-[0.2px] p-3 rounded-xl opacity-100 flex  skew-y-0 justify-between  overflow-clip",
-        isPinned && "bg-slate-50",
+        "shrink-0 border-[0.2px] p-3 rounded-xl flex justify-between  overflow-clip",
+        isPinned && "bg-slate-100/80",
         isChecked &&
           !todo.completed &&
           "delay-1000 translate-x-48 duration-700 transition-all",
@@ -57,7 +57,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
     >
       <div
         className={[
-          "flex gap-2 flex-auto",
+          "flex items-start gap-2 flex-auto",
           isChecked &&
             !todo.completed &&
             "delay-1000 translate-x-48 duration-700 transition-all",
@@ -66,7 +66,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
         {/* FIXME: Update to checkbox icon, maybe some circle checkbox */}
         <input
           className={
-            "accent-gray-500 cursor-pointer flex-initial  self-start mt-[5.5px]"
+            "accent-gray-500 bg-black cursor-pointer flex-initial mt-[1px]"
           }
           type="checkbox"
           checked={isChecked}
@@ -120,7 +120,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
         >
           <p
             className={[
-              "p-0 flex text-slate-700 flex-auto leading-6",
+              "text-slate-700 flex-auto leading-none",
               isChecked && "line-through text-gray-500",
             ].join(" ")}
             key={todo.id}
@@ -132,10 +132,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
               {todo.remind_date && (
                 <div className="flex items-center gap-[3px] text-xs">
                   <Calendar size={12} />
-                  <p>
-                    {/* {formatDistanceToNow(new Date(todo.remind_date), {
-                      addSuffix: true,
-                    })} */}
+                  <p className="leading-none">
                     {formatRemindDate(new Date(todo.remind_date))}
                   </p>
                 </div>
@@ -153,38 +150,44 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
         isOpen={isOpen}
         setIsOpen={setIsOpen}
       />
-      <div className="flex gap-1 flex-initial mt-[5px] self-start">
-        <Star
-          size={15}
-          className={[
-            " transition-colors cursor-pointer duration-300",
-            isChecked
-              ? "hidden"
-              : isPinned
-              ? "text-yellow-500 fill-yellow-500  hover:text-yellow-600 hover:fill-yellow-600"
-              : "text-slate-500  hover:text-slate-900",
-          ].join(" ")}
-          onClick={async () => {
-            await axios
-              .put(`http://localhost:5000/todos/${todo.id}`, {
-                pinned: !todo.pinned,
-              })
-              .then(() => {
-                const mapTodos = todos.map((tdo) => {
-                  if (tdo.id == todo.id) {
-                    return {
-                      ...tdo,
-                      pinned: !tdo.pinned,
-                    };
-                  }
-                  return tdo;
-                });
-                setTodos(mapTodos);
+      <Star
+        size={15}
+        className={[
+          "flex-initial transition-colors cursor-pointer duration-300  mt-[1px]",
+          isChecked
+            ? "hidden"
+            : isPinned
+            ? "text-yellow-500 fill-yellow-500  hover:text-yellow-600 hover:fill-yellow-600"
+            : "text-slate-500  hover:text-slate-900",
+        ].join(" ")}
+        onClick={async () => {
+          await axios
+            .put(`http://localhost:5000/todos/${todo.id}`, {
+              pinned: !todo.pinned,
+            })
+            .then(() => {
+              const mapTodos = todos.map((tdo) => {
+                if (tdo.id == todo.id) {
+                  return {
+                    ...tdo,
+                    pinned: !tdo.pinned,
+                  };
+                }
+                return tdo;
               });
-            setIsPinned(!isPinned);
-          }}
-        />
-        {/* <Popover>
+              setTodos(mapTodos);
+            });
+          setIsPinned(!isPinned);
+        }}
+      />
+    </div>
+  );
+};
+
+export default Todo;
+
+{
+  /* <Popover>
           <PopoverTrigger>
             <MoreHorizontalIcon
               size={16}
@@ -203,10 +206,5 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
               <p>Delete</p>
             </div>
           </PopoverContent>
-        </Popover> */}
-      </div>
-    </div>
-  );
-};
-
-export default Todo;
+        </Popover> */
+}
