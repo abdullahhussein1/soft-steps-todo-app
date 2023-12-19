@@ -1,4 +1,3 @@
-import { Oval } from "react-loader-spinner";
 import Todo from "./Todo";
 import axios from "axios";
 
@@ -9,6 +8,7 @@ import { Trash } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import TodoSkeleton from "./TodoSkeleton";
 
 import {
   Select,
@@ -78,20 +78,10 @@ const TodoList = ({ todos, setTodos, isLoaderVisible }: Props) => {
                 </SelectContent>
               </Select>
             </div>
-            <Oval
-              height={30}
-              width={30}
-              visible={isLoaderVisible}
-              color="blue"
-              wrapperClass="flex items-center justify-center mt-20"
-              ariaLabel="oval-loading"
-              secondaryColor="gray"
-              strokeWidth={5}
-              strokeWidthSecondary={5}
-            />
             <div className="flex p-2  flex-col gap-2 h-[350px] overflow-y-auto overflow-x-clip">
+              <TodoSkeleton isLoaderVisible={isLoaderVisible} />
+              <TodoSkeleton isLoaderVisible={isLoaderVisible} />
               {todos
-
                 .filter((todo) => todo.pinned && !todo.completed)
                 .sort(
                   (a, b) =>
