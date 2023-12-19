@@ -69,6 +69,7 @@ const AddTodoDialog = ({
   const handleDateSelect: SelectSingleEventHandler = (selectedDate) => {
     if (selectedDate instanceof Date || selectedDate === undefined) {
       setDate(selectedDate ?? null);
+      // TODO: update todos array when changing things like updated_at
     }
   };
 
@@ -105,9 +106,9 @@ const AddTodoDialog = ({
             id="note"
           />
 
-          {todo.updated_at && (
+          {todo.updated_at !== todo.created_at && (
             <p className="text-sm text-slate-500 font-light">
-              {"updated " +
+              {"edited " +
                 formatDistanceToNow(new Date(todo.updated_at), {
                   addSuffix: true,
                 })}
@@ -169,7 +170,7 @@ const AddTodoDialog = ({
                   setTodoNote(todoNoteInput);
                 }}
               >
-                Update
+                Edit
               </Button>
               <Button className="bg-transparent text-slate-500 sm:order-1 w-24 hover:bg-slate-100 hover:text-slate-700  rounded-full  ">
                 Close
