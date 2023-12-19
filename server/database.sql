@@ -10,7 +10,7 @@ CREATE TABLE todos (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP DEFAULT NULL,
-);
+)
 
 CREATE USER abdullah WITH PASSWORD 'ise';
 ALTER ROLE abdullah SET client_encoding TO 'utf8';
@@ -20,3 +20,20 @@ GRANT ALL PRIVILEGES ON DATABASE todoapp TO abdullah;
 
 ALTER DATABASE todoapp OWNER TO abdullah;
 ALTER TABLE todos OWNER TO abdullah;
+
+CREATE TABLE user_account (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
+
+CREATE TABLE user_setting (
+    id SERIAL PRIMARY KEY,
+    theme VARCHAR(255) DEFAULT "light",
+    sort_by VARCHAR(255) DEFAULT "dateEdited",
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    user_id INT REFERENCES user_account (id) ON DELETE CASCADE
+)
