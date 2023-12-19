@@ -15,7 +15,6 @@ import { Textarea } from "@/components/ui/textarea";
 
 import * as React from "react";
 import { format, formatDistanceToNow } from "date-fns";
-import { utcToZonedTime } from "date-fns-tz";
 import { Calendar as CalendarIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -72,12 +71,6 @@ const AddTodoDialog = ({
       // TODO: update todos array when changing things like updated_at
     }
   };
-  // FIXME: make the TIMESTAMP field to TIMESTAMPTZ to fix the timezone and remove all that stuff from here
-  const convertUtcDateToServerTimezone = (utcDate: Date): Date => {
-    const serverTimezone = "Asia/Baghdad";
-    const serverDate = utcToZonedTime(utcDate, serverTimezone);
-    return serverDate;
-  };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -131,9 +124,7 @@ const AddTodoDialog = ({
             <PopoverContent className="w-auto p-0">
               <Calendar
                 mode="single"
-                selected={
-                  date ? convertUtcDateToServerTimezone(date) : new Date()
-                }
+                selected={date ?? new Date()}
                 fromDate={new Date()}
                 onSelect={handleDateSelect}
                 initialFocus
@@ -151,19 +142,12 @@ const AddTodoDialog = ({
                   await axios.put(`http://localhost:5000/todos/${todo.id}`, {
                     title: todoInput,
                     note: todoNoteInput,
-                    remind_date:
-                      date && date != todo.remind_date
-                        ? date.toLocaleString("en-US", {
-                            timeZone: "Asia/Baghdad",
-                          })
-                        : null,
+                    remind_date: date && date != todo.remind_date ? date : null,
                     updated_at:
                       date != todo.remind_date ||
                       todoInput != todoTitle ||
                       todoNoteInput != todoNote
-                        ? new Date().toLocaleString("en-US", {
-                            timeZone: "Asia/Baghdad",
-                          })
+                        ? new Date()
                         : null,
                   });
                   setTodoTitle(todoInput);
