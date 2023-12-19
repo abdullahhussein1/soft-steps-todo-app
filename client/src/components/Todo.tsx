@@ -3,7 +3,13 @@ import axios from "axios";
 import EditTodoDialog from "./EditTodoDialog";
 import { Star } from "lucide-react";
 import { Calendar } from "lucide-react";
-import { format, isThisWeek, isToday, isTomorrow } from "date-fns";
+import {
+  format,
+  isThisWeek,
+  isToday,
+  isTomorrow,
+  formatDistanceToNow,
+} from "date-fns";
 
 type TodoType = {
   id: number;
@@ -31,7 +37,11 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const formatRemindDate = (remindDate: Date) => {
-    if (isToday(remindDate)) {
+    if (new Date(todo.remind_date) < new Date()) {
+      return formatDistanceToNow(new Date(todo.remind_date), {
+        addSuffix: true,
+      });
+    } else if (isToday(remindDate)) {
       return "today";
     } else if (isTomorrow(remindDate)) {
       return "tomorrow";
@@ -132,7 +142,12 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
           {!todo.completed && (
             <div className="flex gap-1">
               {todo.remind_date && (
-                <div className="flex items-center gap-[3px] text-xs">
+                <div
+                  className={[
+                    "flex items-center gap-[3px] text-xs",
+                    new Date(todo.remind_date) < new Date() && "text-red-500",
+                  ].join(" ")}
+                >
                   <Calendar size={12} />
                   <p className="leading-none">
                     {formatRemindDate(new Date(todo.remind_date))}
