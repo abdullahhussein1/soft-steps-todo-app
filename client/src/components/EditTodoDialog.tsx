@@ -72,7 +72,7 @@ const AddTodoDialog = ({
       // TODO: update todos array when changing things like updated_at
     }
   };
-
+  // FIXME: make the TIMESTAMP field to TIMESTAMPTZ to fix the timezone and remove all that stuff from here
   const convertUtcDateToServerTimezone = (utcDate: Date): Date => {
     const serverTimezone = "Asia/Baghdad";
     const serverDate = utcToZonedTime(utcDate, serverTimezone);
