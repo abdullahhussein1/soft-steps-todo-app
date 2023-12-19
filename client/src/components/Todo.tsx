@@ -36,8 +36,10 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
   const [isChecked, setIsChecked] = useState<boolean>(todo.completed);
   const [isOpen, setIsOpen] = useState(false);
 
+  const isRemindDatePassed = new Date(todo.remind_date) < new Date();
+
   const formatRemindDate = (remindDate: Date) => {
-    if (new Date(todo.remind_date) < new Date()) {
+    if (isRemindDatePassed) {
       return formatDistanceToNow(new Date(todo.remind_date), {
         addSuffix: true,
       });
@@ -46,10 +48,8 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
     } else if (isTomorrow(remindDate)) {
       return "tomorrow";
     } else if (isThisWeek(remindDate)) {
-      // Use the day of the week for other days within this week
       return format(remindDate, "EEEE");
     } else {
-      // Show the full date for dates outside this week
       return format(remindDate, "MM/dd/yyyy");
     }
   };
@@ -73,7 +73,6 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
             "delay-1000 translate-x-48 duration-700 transition-all",
         ].join(" ")}
       >
-        {/* FIXME: Update to checkbox icon, maybe some circle checkbox */}
         <input
           className={"accent-gray-500 cursor-pointer flex-initial mt-[1px]"}
           type="checkbox"
@@ -84,36 +83,20 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
                 completed: !todo.completed,
               })
               .then(async () => {
+                const mappedTodos = todos.map((tdo) => {
+                  if (tdo.id == todo.id) {
+                    return {
+                      ...tdo,
+                      completed: !tdo.completed,
+                      pinned: false,
+                    };
+                  }
+                  return tdo;
+                });
                 if (!todo.completed) {
-                  setTimeout(
-                    () =>
-                      setTodos((todos) =>
-                        todos.map((tdo) => {
-                          if (tdo.id == todo.id) {
-                            return {
-                              ...tdo,
-                              completed: !tdo.completed,
-                              pinned: false,
-                            };
-                          }
-                          return tdo;
-                        })
-                      ),
-                    1200
-                  );
+                  setTimeout(() => setTodos(() => mappedTodos), 1200);
                 } else {
-                  setTodos((todos) =>
-                    todos.map((tdo) => {
-                      if (tdo.id == todo.id) {
-                        return {
-                          ...tdo,
-                          completed: !tdo.completed,
-                          pinned: false,
-                        };
-                      }
-                      return tdo;
-                    })
-                  );
+                  setTodos(() => mappedTodos);
                 }
               });
             setIsChecked(!isChecked);
@@ -145,7 +128,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
                 <div
                   className={[
                     "flex items-center gap-[3px] text-xs",
-                    new Date(todo.remind_date) < new Date() && "text-red-500",
+                    isRemindDatePassed && "text-red-500",
                   ].join(" ")}
                 >
                   <Calendar size={12} />

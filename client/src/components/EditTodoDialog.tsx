@@ -100,7 +100,7 @@ const AddTodoDialog = ({
           />
 
           {todo.updated_at !== todo.created_at && (
-            <p className="text-sm text-slate-500 font-light">
+            <p className=" text-slate-500 font-light text-[13px]">
               {"edited " +
                 formatDistanceToNow(new Date(todo.updated_at), {
                   addSuffix: true,

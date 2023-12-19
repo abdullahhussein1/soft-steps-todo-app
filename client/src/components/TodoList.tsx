@@ -83,11 +83,7 @@ const TodoList = ({ todos, setTodos, isLoaderVisible }: Props) => {
               <TodoSkeleton isLoaderVisible={isLoaderVisible} />
               {todos
                 .filter((todo) => todo.pinned && !todo.completed)
-                .sort(
-                  (a, b) =>
-                    new Date(a.created_at).getMilliseconds() -
-                    new Date(b.created_at).getMilliseconds()
-                )
+
                 .map((todo) => (
                   <Todo
                     key={todo.id}
@@ -135,7 +131,7 @@ const TodoList = ({ todos, setTodos, isLoaderVisible }: Props) => {
               value={todoInput}
               onChange={(e) => setTodoInput(e.target.value)}
               placeholder={`Add todo`}
-              className="rounded-full border-[0.5px]"
+              className="rounded-full border-[0.5px] text-slate-800"
             />
             <Button
               className="rounded-full bg-blue-700 hover:bg-blue-800"
