@@ -8,7 +8,7 @@ router.post("/", async (req, res) => {
   try {
     const { title } = req.body;
     const newTodo = await pool.query(
-      "INSERT INTO todos(title) VALUES($1) RETURNING *",
+      "INSERT INTO todo(title) VALUES($1) RETURNING *",
       [title]
     );
 
@@ -20,7 +20,7 @@ router.post("/", async (req, res) => {
 
 // GET ALL TODOS
 router.get("/", async (req, res) => {
-  const todos = await pool.query("SELECT * FROM todos ORDER BY id");
+  const todos = await pool.query("SELECT * FROM todo ORDER BY id");
   res.json(todos.rows);
 });
 
@@ -28,7 +28,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const todo = await pool.query("SELECT * FROM todos WHERE id = $1", [id]);
+    const todo = await pool.query("SELECT * FROM todo WHERE id = $1", [id]);
 
     res.json(todo.rows[0]);
   } catch (err) {
@@ -111,7 +111,7 @@ router.put("/:id", async (req, res) => {
     });
 
     const updateQuery = {
-      text: `UPDATE todos SET ${setClause.join(",")} WHERE id = $${
+      text: `UPDATE todo SET ${setClause.join(",")} WHERE id = $${
         Object.keys(filteredUpdates).length + 1
       } RETURNING *`,
       values: [...Object.values(filteredUpdates), id],
@@ -138,7 +138,7 @@ router.delete("/:id", async (req, res) => {
     const { id } = req.params;
 
     const deletedTodo = await pool.query(
-      "DELETE FROM todos WHERE id = $1 RETURNING *",
+      "DELETE FROM todo WHERE id = $1 RETURNING *",
       [id]
     );
 
