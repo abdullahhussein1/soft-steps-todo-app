@@ -36,6 +36,7 @@ type Props = {
 const TodosTab = ({ todos, setTodos, isLoaderVisible }: Props) => {
   const [todoInput, setTodoInput] = useState<string>("");
   const [sortByValue, setSortByValue] = useState<string>("dateEdited");
+
   return (
     <div className="flex flex-col">
       <div className="flex flex-col relative mt-4 h-[440px]">

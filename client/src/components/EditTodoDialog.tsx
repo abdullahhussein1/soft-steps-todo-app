@@ -40,37 +40,24 @@ type TodoType = {
 
 type Props = {
   todo: TodoType;
-  todoTitle: string;
-  setTodoTitle: React.Dispatch<React.SetStateAction<string>>;
-  todoNote: string;
-  setTodoNote: React.Dispatch<React.SetStateAction<string>>;
+  todos: TodoType[];
+  setTodos: React.Dispatch<React.SetStateAction<TodoType[]>>;
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-type SelectSingleEventHandler = (value: Date | undefined) => void;
-
-const AddTodoDialog = ({
+const EditTodoDialog = ({
   todo,
-  todoTitle,
-  setTodoTitle,
-  todoNote,
-  setTodoNote,
+  todos,
+  setTodos,
   isOpen,
   setIsOpen,
 }: Props) => {
-  const [todoInput, setTodoInput] = useState(todoTitle);
-  const [todoNoteInput, setTodoNoteInput] = useState(todoNote);
-  const [date, setDate] = React.useState<Date | null>(
-    todo.remind_date ? new Date(todo.remind_date) : null
+  const [todoInput, setTodoInput] = useState(todo.title);
+  const [todoNoteInput, setTodoNoteInput] = useState(todo.note);
+  const [date, setDate] = React.useState<Date | undefined>(
+    todo.remind_date ? new Date(todo.remind_date) : undefined
   );
-
-  const handleDateSelect: SelectSingleEventHandler = (selectedDate) => {
-    if (selectedDate instanceof Date || selectedDate === undefined) {
-      setDate(selectedDate ?? null);
-      // TODO: update todos array when changing things like updated_at
-    }
-  };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -95,7 +82,7 @@ const AddTodoDialog = ({
           <Textarea
             value={todoNoteInput ?? ""}
             onChange={(e) => setTodoNoteInput(e.target.value)}
-            className="rounded-xl resize-none  border-[0.5px] "
+            className="rounded-xl resize-none border-[0.5px] "
             id="note"
           />
 
@@ -126,7 +113,9 @@ const AddTodoDialog = ({
                 mode="single"
                 selected={date ?? new Date()}
                 fromDate={new Date()}
-                onSelect={handleDateSelect}
+                onSelect={(selectedDate) => {
+                  setDate(selectedDate ?? undefined);
+                }}
                 initialFocus
               />
             </PopoverContent>
@@ -142,16 +131,35 @@ const AddTodoDialog = ({
                   await axios.put(`http://localhost:5000/todos/${todo.id}`, {
                     title: todoInput,
                     note: todoNoteInput,
-                    remind_date: date && date != todo.remind_date ? date : null,
+                    remind_date:
+                      date && date != todo.remind_date
+                        ? new Date(date).toLocaleDateString()
+                        : null,
                     updated_at:
                       date != todo.remind_date ||
-                      todoInput != todoTitle ||
-                      todoNoteInput != todoNote
+                      todoInput != todo.title ||
+                      todoNoteInput != todo.note
                         ? new Date()
                         : null,
                   });
-                  setTodoTitle(todoInput);
-                  setTodoNote(todoNoteInput);
+                  const mappedTodos = todos.map((tdo) => {
+                    if (tdo.id == todo.id && date) {
+                      return {
+                        ...tdo,
+                        title: todoInput,
+                        note: todoNoteInput,
+                        remind_date: date,
+                      };
+                    } else if (tdo.id == todo.id) {
+                      return {
+                        ...tdo,
+                        title: todoInput,
+                        note: todoNoteInput,
+                      };
+                    }
+                    return tdo;
+                  });
+                  setTodos(mappedTodos);
                 }}
               >
                 Edit
@@ -167,4 +175,4 @@ const AddTodoDialog = ({
   );
 };
 
-export default AddTodoDialog;
+export default EditTodoDialog;

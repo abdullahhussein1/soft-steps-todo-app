@@ -31,8 +31,6 @@ type Props = {
 
 const Todo = ({ todo, todos, setTodos }: Props) => {
   const [isPinned, setIsPinned] = useState<boolean>(todo.pinned);
-  const [todoTitle, setTodoTitle] = useState<string>(todo.title);
-  const [todoNote, setTodoNote] = useState(todo.note);
   const [isChecked, setIsChecked] = useState<boolean>(todo.completed);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -50,7 +48,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
     } else if (isThisWeek(remindDate)) {
       return format(remindDate, "EEEE");
     } else {
-      return format(remindDate, "MM/dd/yyyy");
+      return format(remindDate, "dd/MM/yyyy");
     }
   };
 
@@ -120,7 +118,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
             ].join(" ")}
             key={todo.id}
           >
-            {todoTitle}
+            {todo.title}
           </p>
           {!todo.completed && (
             <div className="flex gap-1">
@@ -143,68 +141,45 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
       </div>
       <EditTodoDialog
         todo={todo}
-        todoTitle={todoTitle}
-        setTodoTitle={setTodoTitle}
-        todoNote={todoNote}
-        setTodoNote={setTodoNote}
+        todos={todos}
+        setTodos={setTodos}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
       />
-      <Star
-        size={15}
-        className={[
-          "flex-initial transition-colors cursor-pointer duration-300  mt-[1px]",
-          isChecked
-            ? "hidden"
-            : isPinned
-            ? "text-yellow-500 fill-yellow-500  hover:text-yellow-600 hover:fill-yellow-600"
-            : "text-slate-500  hover:text-slate-900",
-        ].join(" ")}
-        onClick={async () => {
-          await axios
-            .put(`http://localhost:5000/todos/${todo.id}`, {
-              pinned: !todo.pinned,
-            })
-            .then(() => {
-              const mapTodos = todos.map((tdo) => {
-                if (tdo.id == todo.id) {
-                  return {
-                    ...tdo,
-                    pinned: !tdo.pinned,
-                  };
-                }
-                return tdo;
+      <div>
+        <Star
+          size={15}
+          className={[
+            "flex-initial transition-colors cursor-pointer duration-300  mt-[1px]",
+            isChecked
+              ? "hidden"
+              : isPinned
+              ? "text-yellow-500 fill-yellow-500  hover:text-yellow-600 hover:fill-yellow-600"
+              : "text-slate-500  hover:text-slate-900",
+          ].join(" ")}
+          onClick={async () => {
+            await axios
+              .put(`http://localhost:5000/todos/${todo.id}`, {
+                pinned: !todo.pinned,
+              })
+              .then(() => {
+                const mapTodos = todos.map((tdo) => {
+                  if (tdo.id == todo.id) {
+                    return {
+                      ...tdo,
+                      pinned: !tdo.pinned,
+                    };
+                  }
+                  return tdo;
+                });
+                setTodos(mapTodos);
               });
-              setTodos(mapTodos);
-            });
-          setIsPinned(!isPinned);
-        }}
-      />
+            setIsPinned(!isPinned);
+          }}
+        />
+      </div>
     </div>
   );
 };
 
 export default Todo;
-
-{
-  /* <Popover>
-          <PopoverTrigger>
-            <MoreHorizontalIcon
-              size={16}
-              className=" text-slate-500 hover:text-slate-900 transition-colors duration-300 "
-            />
-          </PopoverTrigger>
-          <PopoverContent className="flex flex-col  w-fit p-2 rounded-xl">
-            <div
-              onClick={async () => {
-                setTodos(todos.filter((curr) => curr.id != todo.id));
-                await axios.delete(`http://localhost:5000/todos/${todo.id}`);
-              }}
-              className="flex text-slate-600 hover:text-slate-900 cursor-pointer items-center justify-start p-2 gap-2 hover:bg-slate-50 rounded-lg"
-            >
-              <TrashIcon size={16} />
-              <p>Delete</p>
-            </div>
-          </PopoverContent>
-        </Popover> */
-}
