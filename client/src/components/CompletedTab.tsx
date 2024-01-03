@@ -33,7 +33,9 @@ const CompletedTab = ({ todos, setTodos }: Props) => {
                 .filter((todo) => todo.completed)
                 .forEach(async (todo) => {
                   setTodos(todos.filter((todo) => !todo.completed));
-                  await axios.delete(`http://localhost:5000/todos/${todo.id}`);
+                  await axios.delete(
+                    `https://todo-app-avvn.onrender.com/todos/${todo.id}`
+                  );
                 });
             }
           }}

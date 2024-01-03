@@ -24,7 +24,7 @@ const TodoList = () => {
 
   const fetchTodos = async () => {
     const result = await axios
-      .get("http://localhost:5000/todos")
+      .get("https://todo-app-avvn.onrender.com/todos")
       .then((response) => response.data)
       .then((result) => {
         setIsLoaderVisible(false);

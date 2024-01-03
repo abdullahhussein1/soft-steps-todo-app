@@ -127,9 +127,12 @@ const TodosTab = ({ todos, setTodos, isLoaderVisible }: Props) => {
           onMouseUp={async (e) => {
             e.preventDefault();
             setTodoInput("");
-            const newTodo = await axios.post("http://localhost:5000/todos", {
-              title: todoInput,
-            });
+            const newTodo = await axios.post(
+              "https://todo-app-avvn.onrender.com/todos",
+              {
+                title: todoInput,
+              }
+            );
             setTodos([...todos, newTodo.data]);
           }}
         >

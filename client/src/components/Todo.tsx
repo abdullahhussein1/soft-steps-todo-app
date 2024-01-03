@@ -76,9 +76,12 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
           type="checkbox"
           checked={isChecked}
           onChange={async () => {
-            await axios.put(`http://localhost:5000/todos/${todo.id}`, {
-              completed: !todo.completed,
-            });
+            await axios.put(
+              `https://todo-app-avvn.onrender.com/todos/${todo.id}`,
+              {
+                completed: !todo.completed,
+              }
+            );
             const mappedTodos = todos.map((tdo) => {
               if (tdo.id == todo.id) {
                 return {
@@ -151,9 +154,12 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
               : "text-slate-500  hover:text-slate-900",
           ].join(" ")}
           onClick={async () => {
-            await axios.put(`http://localhost:5000/todos/${todo.id}`, {
-              pinned: !todo.pinned,
-            });
+            await axios.put(
+              `https://todo-app-avvn.onrender.com/todos/${todo.id}`,
+              {
+                pinned: !todo.pinned,
+              }
+            );
             const mapTodos = todos.map((tdo) => {
               if (tdo.id == todo.id) {
                 return {

@@ -95,7 +95,7 @@ const AddTodoDialog = ({ todos, setTodos }: Props) => {
                 e.preventDefault();
                 setTodoInput("");
                 const newTodo = await axios.post(
-                  "http://localhost:5000/todos",
+                  "https://todo-app-avvn.onrender.com/todos",
                   {
                     title: todoInput,
                   }

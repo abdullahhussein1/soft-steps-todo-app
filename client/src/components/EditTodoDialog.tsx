@@ -128,20 +128,23 @@ const EditTodoDialog = ({
                 className="rounded-full bg-blue-700 sm:order-2 flex-auto w-full hover:bg-blue-800"
                 onMouseUp={async (e) => {
                   e.preventDefault();
-                  await axios.put(`http://localhost:5000/todos/${todo.id}`, {
-                    title: todoInput,
-                    note: todoNoteInput,
-                    remind_date:
-                      date && date != todo.remind_date
-                        ? new Date(date).toLocaleDateString()
-                        : null,
-                    updated_at:
-                      date != todo.remind_date ||
-                      todoInput != todo.title ||
-                      todoNoteInput != todo.note
-                        ? new Date()
-                        : null,
-                  });
+                  await axios.put(
+                    `https://todo-app-avvn.onrender.com/todos/${todo.id}`,
+                    {
+                      title: todoInput,
+                      note: todoNoteInput,
+                      remind_date:
+                        date && date != todo.remind_date
+                          ? new Date(date).toLocaleDateString()
+                          : null,
+                      updated_at:
+                        date != todo.remind_date ||
+                        todoInput != todo.title ||
+                        todoNoteInput != todo.note
+                          ? new Date()
+                          : null,
+                    }
+                  );
                   const mappedTodos = todos.map((tdo) => {
                     if (tdo.id == todo.id && date) {
                       return {
