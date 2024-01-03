@@ -1,5 +1,5 @@
 const Router = require("express").Router;
-const pool = require("../../db");
+const client = require("../../client");
 
 const router = Router();
 
@@ -7,7 +7,7 @@ const router = Router();
 router.post("/", async (req, res) => {
   try {
     const { title } = req.body;
-    const newTodo = await pool.query(
+    const newTodo = await client.query(
       "INSERT INTO todo(title) VALUES($1) RETURNING *",
       [title]
     );
@@ -20,15 +20,19 @@ router.post("/", async (req, res) => {
 
 // GET ALL TODOS
 router.get("/", async (req, res) => {
-  const todos = await pool.query("SELECT * FROM todo ORDER BY id");
-  res.json(todos.rows);
+  try {
+    const results = await client.query("SELECT * FROM todo ORDER BY id");
+    res.json(results.rows);
+  } catch (err) {
+    console.error("error executing query:", err);
+  }
 });
 
 // GET SINGLE TODO
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const todo = await pool.query("SELECT * FROM todo WHERE id = $1", [id]);
+    const todo = await client.query("SELECT * FROM todo WHERE id = $1", [id]);
 
     res.json(todo.rows[0]);
   } catch (err) {
@@ -75,7 +79,7 @@ router.put("/:id", async (req, res) => {
       values: [...Object.values(filteredUpdates), id],
     };
 
-    const result = await pool.query(updateQuery);
+    const result = await client.query(updateQuery);
 
     // Determine which fields were updated
     const updatedFields = Object.keys(filteredUpdates);
@@ -95,7 +99,7 @@ router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
-    const deletedTodo = await pool.query(
+    const deletedTodo = await client.query(
       "DELETE FROM todo WHERE id = $1 RETURNING *",
       [id]
     );

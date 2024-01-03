@@ -76,27 +76,24 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
           type="checkbox"
           checked={isChecked}
           onChange={async () => {
-            await axios
-              .put(`http://localhost:5000/todos/${todo.id}`, {
-                completed: !todo.completed,
-              })
-              .then(async () => {
-                const mappedTodos = todos.map((tdo) => {
-                  if (tdo.id == todo.id) {
-                    return {
-                      ...tdo,
-                      completed: !tdo.completed,
-                      pinned: false,
-                    };
-                  }
-                  return tdo;
-                });
-                if (!todo.completed) {
-                  setTimeout(() => setTodos(() => mappedTodos), 1200);
-                } else {
-                  setTodos(() => mappedTodos);
-                }
-              });
+            await axios.put(`http://localhost:5000/todos/${todo.id}`, {
+              completed: !todo.completed,
+            });
+            const mappedTodos = todos.map((tdo) => {
+              if (tdo.id == todo.id) {
+                return {
+                  ...tdo,
+                  completed: !tdo.completed,
+                  pinned: false,
+                };
+              }
+              return tdo;
+            });
+            if (!todo.completed) {
+              setTimeout(() => setTodos(() => mappedTodos), 1200);
+            } else {
+              setTodos(() => mappedTodos);
+            }
             setIsChecked(!isChecked);
           }}
           name="todo"
@@ -120,21 +117,17 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
           >
             {todo.title}
           </p>
-          {!todo.completed && (
-            <div className="flex gap-1">
-              {todo.remind_date && (
-                <div
-                  className={[
-                    "flex items-center gap-[3px] text-xs",
-                    isRemindDatePassed && "text-red-500",
-                  ].join(" ")}
-                >
-                  <Calendar size={12} />
-                  <p className="leading-none">
-                    {formatRemindDate(new Date(todo.remind_date))}
-                  </p>
-                </div>
-              )}
+          {!todo.completed && todo.remind_date && (
+            <div
+              className={[
+                "flex items-center gap-[3px] text-xs",
+                isRemindDatePassed && "text-red-500",
+              ].join(" ")}
+            >
+              <Calendar size={12} />
+              <p className="leading-none">
+                {formatRemindDate(new Date(todo.remind_date))}
+              </p>
             </div>
           )}
         </div>
@@ -158,22 +151,19 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
               : "text-slate-500  hover:text-slate-900",
           ].join(" ")}
           onClick={async () => {
-            await axios
-              .put(`http://localhost:5000/todos/${todo.id}`, {
-                pinned: !todo.pinned,
-              })
-              .then(() => {
-                const mapTodos = todos.map((tdo) => {
-                  if (tdo.id == todo.id) {
-                    return {
-                      ...tdo,
-                      pinned: !tdo.pinned,
-                    };
-                  }
-                  return tdo;
-                });
-                setTodos(mapTodos);
-              });
+            await axios.put(`http://localhost:5000/todos/${todo.id}`, {
+              pinned: !todo.pinned,
+            });
+            const mapTodos = todos.map((tdo) => {
+              if (tdo.id == todo.id) {
+                return {
+                  ...tdo,
+                  pinned: !tdo.pinned,
+                };
+              }
+              return tdo;
+            });
+            setTodos(mapTodos);
             setIsPinned(!isPinned);
           }}
         />
