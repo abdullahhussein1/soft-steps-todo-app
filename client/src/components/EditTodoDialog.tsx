@@ -125,7 +125,7 @@ const EditTodoDialog = ({
           <DialogClose asChild>
             <div className="flex flex-col gap-1 items-center sm:flex-row">
               <Button
-                className="rounded-full bg-blue-700 sm:order-2 flex-auto w-full hover:bg-blue-800"
+                className="rounded-full bg-primary sm:order-2 flex-auto w-full "
                 onMouseUp={async (e) => {
                   e.preventDefault();
                   await axios.put(
@@ -167,7 +167,7 @@ const EditTodoDialog = ({
               >
                 Edit
               </Button>
-              <Button className="bg-transparent text-slate-500 sm:order-1 w-24 hover:bg-slate-100 hover:text-slate-700  rounded-full  ">
+              <Button className="bg-transparent text-foreground sm:order-1 w-24 hover:bg-foreground/5  rounded-full  ">
                 Close
               </Button>
             </div>

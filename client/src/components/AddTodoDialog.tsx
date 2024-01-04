@@ -90,7 +90,7 @@ const AddTodoDialog = ({ todos, setTodos }: Props) => {
         <DialogFooter>
           <DialogClose asChild>
             <Button
-              className="rounded-xl bg-blue-700 hover:bg-blue-800"
+              className="rounded-xl bg-primary "
               onMouseUp={async (e) => {
                 e.preventDefault();
                 setTodoInput("");

@@ -1,10 +1,16 @@
 import TodoList from "./TodoList";
+import { ModeToggle } from "./mode-toggle";
 
 const TodoApp = () => {
   return (
-    <div className="h-screen flex bg-slate-100 justify-center items-center">
-      <div className="container bg-white w-5/6 rounded-3xl h-[600px] max-w-md flex flex-col py-3">
-        <TodoList />
+    <div className="h-[100dvh] flex flex-col bg-secondary justify-center items-center">
+      <div className="w-5/6 max-w-md gap-2 flex flex-col p-5">
+        <div className="self-start">
+          <ModeToggle />
+        </div>
+        <div className="container bg-background rounded-[30px] h-[590px] max-w-md flex flex-col p-5">
+          <TodoList />
+        </div>
       </div>
     </div>
   );

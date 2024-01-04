@@ -46,23 +46,17 @@ const TodosTab = ({ todos, setTodos, isLoaderVisible }: Props) => {
             defaultValue="dateEdited"
             onValueChange={(value) => setSortByValue(value)}
           >
-            <SelectTrigger className="flex border-none gap-[6px] w-20 h-7 items-center hover:bg-slate-50 text-slate-500 px-2 rounded-full hover:text-slate-700 transition-all">
+            <SelectTrigger className="flex border-none gap-[6px] w-20 h-7 items-center  px-2 rounded-full transition-all">
               <p className="whitespace-nowrap text-xs">Sort By</p>
               <div>
                 <ArrowUpDownIcon size={13} />
               </div>
             </SelectTrigger>
-            <SelectContent className="flex flex-col text-slate-600 w-fit p-2 rounded-xl">
+            <SelectContent className="flex flex-col w-fit p-2 rounded-xl">
               <SelectGroup>
-                <SelectItem value="dateEdited" className="rounded-lg">
-                  Date Edited
-                </SelectItem>
-                <SelectItem className="rounded-lg" value="dateCreated">
-                  Date Created
-                </SelectItem>
-                <SelectItem className="rounded-lg" value="title">
-                  Title
-                </SelectItem>
+                <SelectItem value="dateEdited">Date Edited</SelectItem>
+                <SelectItem value="dateCreated">Date Created</SelectItem>
+                <SelectItem value="title">Title</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
@@ -111,7 +105,7 @@ const TodosTab = ({ todos, setTodos, isLoaderVisible }: Props) => {
                 setTodos={setTodos}
               />
             ))}
-          <div className=" w-full h-16 bg-gradient-to-t from-white via-white to-transparent absolute bottom-2 z-10"></div>
+          <div className=" w-full h-16 bg-gradient-to-t from-background via-background to-transparent absolute bottom-2 z-10"></div>
         </div>
       </div>
       <div className="flex gap-2">
@@ -120,10 +114,10 @@ const TodosTab = ({ todos, setTodos, isLoaderVisible }: Props) => {
           value={todoInput}
           onChange={(e) => setTodoInput(e.target.value)}
           placeholder={`Add todo`}
-          className="rounded-full border-[0.5px] text-slate-800"
+          className="rounded-full bg-background border-[0.5px]"
         />
         <Button
-          className="rounded-full bg-blue-700 hover:bg-blue-800"
+          className="rounded-full bg-primary"
           onMouseUp={async (e) => {
             e.preventDefault();
             setTodoInput("");

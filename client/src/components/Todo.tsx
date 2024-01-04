@@ -3,6 +3,7 @@ import axios from "axios";
 import EditTodoDialog from "./EditTodoDialog";
 import { Star } from "lucide-react";
 import { Calendar } from "lucide-react";
+
 import {
   format,
   isThisWeek,
@@ -57,7 +58,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
       key={todo.id}
       className={[
         "shrink-0 border-[0.2px] p-3 rounded-xl flex justify-between  overflow-clip",
-        isPinned && "bg-slate-100/80",
+        isPinned && "bg-secondary",
         isChecked &&
           !todo.completed &&
           "delay-1000 translate-x-48 duration-700 transition-all",
@@ -72,7 +73,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
         ].join(" ")}
       >
         <input
-          className={"accent-gray-500 cursor-pointer flex-initial mt-[1px]"}
+          className={"accent-accent cursor-pointer flex-initial mt-[1px]"}
           type="checkbox"
           checked={isChecked}
           onChange={async () => {
@@ -113,8 +114,8 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
         >
           <p
             className={[
-              "text-slate-700 flex-auto leading-none",
-              isChecked && "line-through text-gray-500",
+              "text-foreground flex-auto leading-none",
+              isChecked && "line-through",
             ].join(" ")}
             key={todo.id}
           >
@@ -151,7 +152,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
               ? "hidden"
               : isPinned
               ? "text-yellow-500 fill-yellow-500  hover:text-yellow-600 hover:fill-yellow-600"
-              : "text-slate-500  hover:text-slate-900",
+              : "text-foreground  hover:text-slate-900",
           ].join(" ")}
           onClick={async () => {
             await axios.put(

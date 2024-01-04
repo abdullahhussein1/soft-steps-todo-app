@@ -14,7 +14,7 @@ const TodoSkeleton = ({ isLoaderVisible }: Props) => {
     >
       <Skeleton className="h-[14px] w-[14px] rounded-sm" />
       <div className="flex-auto space-y-3">
-        <Skeleton className="h-4 w-[250px]" />
+        <Skeleton className="h-4 w-full" />
         <Skeleton className="h-2 w-[80px]" />
       </div>
       <Skeleton className="h-[14px] w-[14px] rounded-sm" />

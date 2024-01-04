@@ -26,7 +26,7 @@ const CompletedTab = ({ todos, setTodos }: Props) => {
       <div className="flex justify-between mt-4 border-b-[2px] h-12 items-center">
         <h1 className="font-bold text-lg">Completed</h1>
         <button
-          className="flex gap-[6px] w-20 h-7 items-center hover:bg-red-50 text-slate-500 px-2 rounded-full hover:text-red-500 transition-all"
+          className="flex gap-[6px] w-20 h-7 items-center hover:bg-foreground/5  px-2 rounded-full hover:text-red-500 transition-all"
           onClick={() => {
             {
               todos
