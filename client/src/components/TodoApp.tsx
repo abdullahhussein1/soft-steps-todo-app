@@ -4,7 +4,7 @@ import { ModeToggle } from "./mode-toggle";
 const TodoApp = () => {
   return (
     <div className="h-[100dvh] flex flex-col bg-secondary justify-center items-center">
-      <div className=" max-w-lg gap-2 flex flex-col p-5">
+      <div className="w-full max-w-lg gap-2 flex flex-col p-5">
         <div className="self-start">
           <ModeToggle />
         </div>
