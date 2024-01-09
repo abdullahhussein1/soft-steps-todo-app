@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useTheme } from "@/components/ThemeProvider";
+import useTheme from "@/hooks/useTheme";
 import { Switch } from "@/components/ui/switch";
 
 type Theme =
