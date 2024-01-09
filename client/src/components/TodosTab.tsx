@@ -46,7 +46,7 @@ const TodosTab = ({ todos, setTodos, isLoaderVisible }: Props) => {
             defaultValue="dateEdited"
             onValueChange={(value) => setSortByValue(value)}
           >
-            <SelectTrigger className="flex border-none gap-[6px] w-20 h-7 items-center  px-2 rounded-full transition-all">
+            <SelectTrigger className="flex border-none gap-[6px] hover:bg-muted/80 w-20 h-7 items-center  px-2 rounded-full transition-all">
               <p className="whitespace-nowrap text-xs">Sort By</p>
               <div>
                 <ArrowUpDownIcon size={13} />
@@ -114,10 +114,10 @@ const TodosTab = ({ todos, setTodos, isLoaderVisible }: Props) => {
           value={todoInput}
           onChange={(e) => setTodoInput(e.target.value)}
           placeholder={`Add todo`}
-          className="rounded-full bg-background border-[0.5px]"
+          className="rounded-full text-foreground"
         />
         <Button
-          className="rounded-full bg-primary"
+          className="rounded-full bg-primary text-white"
           onMouseUp={async (e) => {
             e.preventDefault();
             setTodoInput("");

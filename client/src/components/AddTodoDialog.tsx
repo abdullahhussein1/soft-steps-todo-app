@@ -62,7 +62,7 @@ const AddTodoDialog = ({ todos, setTodos }: Props) => {
             value={todoInput}
             onChange={(e) => setTodoInput(e.target.value)}
             placeholder={`Add todo`}
-            className="rounded-xl border-[0.5px] "
+            className="rounded-xl border-[0.7px] "
           />
           <Popover>
             <PopoverTrigger asChild>

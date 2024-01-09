@@ -8,7 +8,7 @@ const TodoSkeleton = ({ isLoaderVisible }: Props) => {
   return (
     <div
       className={[
-        "flex items-start animate-pulse border-[0.2px] p-3 rounded-xl space-x-2",
+        "flex items-start animate-pulse border-[0.7px] p-3 rounded-xl space-x-2",
         !isLoaderVisible && "hidden",
       ].join(" ")}
     >

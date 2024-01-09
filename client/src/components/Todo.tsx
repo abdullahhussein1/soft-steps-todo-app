@@ -56,8 +56,9 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
   return (
     <div
       key={todo.id}
+      // draggable={true}s
       className={[
-        "shrink-0 border-[0.2px] p-3 rounded-xl flex justify-between  overflow-clip",
+        "shrink-0 border-[0.7px] p-3 rounded-xl flex justify-between  overflow-clip",
         isPinned && "bg-secondary",
         isChecked &&
           !todo.completed &&
@@ -147,12 +148,12 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
         <Star
           size={15}
           className={[
-            "flex-initial transition-colors cursor-pointer duration-300  mt-[1px]",
+            "flex-initial cursor-pointer mt-[1px]",
             isChecked
               ? "hidden"
               : isPinned
               ? "text-yellow-500 fill-yellow-500  hover:text-yellow-600 hover:fill-yellow-600"
-              : "text-foreground  hover:text-slate-900",
+              : "text-foreground/50  hover:text-foreground/90",
           ].join(" ")}
           onClick={async () => {
             await axios.put(

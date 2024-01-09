@@ -73,7 +73,7 @@ const EditTodoDialog = ({
             type="text"
             value={todoInput}
             onChange={(e) => setTodoInput(e.target.value)}
-            className="rounded-xl  border-[0.5px] "
+            className="rounded-xl border-[0.7px]"
             id="title"
           />
           <label htmlFor="note" className="font-bold">
@@ -82,12 +82,12 @@ const EditTodoDialog = ({
           <Textarea
             value={todoNoteInput ?? ""}
             onChange={(e) => setTodoNoteInput(e.target.value)}
-            className="rounded-xl resize-none border-[0.5px] "
+            className="rounded-xl resize-none border-[0.7px] "
             id="note"
           />
 
           {todo.updated_at !== todo.created_at && (
-            <p className=" text-slate-500 font-light text-[13px]">
+            <p className=" text-foreground/70 font-light text-[13px]">
               {"edited " +
                 formatDistanceToNow(new Date(todo.updated_at), {
                   addSuffix: true,
@@ -125,7 +125,7 @@ const EditTodoDialog = ({
           <DialogClose asChild>
             <div className="flex flex-col gap-1 items-center sm:flex-row">
               <Button
-                className="rounded-full bg-primary sm:order-2 flex-auto w-full "
+                className="rounded-full bg-primary text-foreground sm:order-2 flex-auto w-full "
                 onMouseUp={async (e) => {
                   e.preventDefault();
                   await axios.put(

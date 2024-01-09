@@ -16,7 +16,7 @@ export default function ThemesToggle() {
         <Button
           variant="outline"
           size="icon"
-          className="border-none w-fit px-2 bg-background hover:bg-background rounded-full"
+          className="border-none w-fit px-2 bg-background hover:bg-background transition-none rounded-full"
         >
           Toggle theme
         </Button>
