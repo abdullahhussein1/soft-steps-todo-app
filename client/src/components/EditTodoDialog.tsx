@@ -125,7 +125,7 @@ const EditTodoDialog = ({
           <DialogClose asChild>
             <div className="flex flex-col gap-1 items-center sm:flex-row">
               <Button
-                className="rounded-full bg-primary text-foreground sm:order-2 flex-auto w-full "
+                className="rounded-full bg-primary text-white sm:order-2 flex-auto w-full "
                 onMouseUp={async (e) => {
                   e.preventDefault();
                   await axios.put(
@@ -135,7 +135,7 @@ const EditTodoDialog = ({
                       note: todoNoteInput,
                       remind_date:
                         date && date != todo.remind_date
-                          ? new Date(date).toLocaleDateString()
+                          ? new Date(date)
                           : null,
                       updated_at:
                         date != todo.remind_date ||

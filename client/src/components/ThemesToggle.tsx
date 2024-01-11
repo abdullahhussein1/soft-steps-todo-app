@@ -33,6 +33,12 @@ export default function ThemesToggle() {
         <DropdownMenuItem onClick={() => setTheme("orange")}>
           Orange
         </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("yellow")}>
+          Yellow
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("purple")}>
+          Purple
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

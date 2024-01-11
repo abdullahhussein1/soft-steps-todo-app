@@ -9,7 +9,11 @@ type Theme =
   | "green"
   | "green-dark"
   | "orange"
-  | "orange-dark";
+  | "orange-dark"
+  | "yellow"
+  | "yellow-dark"
+  | "purple"
+  | "purple-dark";
 
 type ThemeProviderProps = {
   children: React.ReactNode;
@@ -29,17 +33,6 @@ export default function ThemeProvider({
 
   useEffect(() => {
     const root = window.document.documentElement;
-
-    root.classList.remove(
-      "blue",
-      "blue-dark",
-      "red",
-      "red-dark",
-      "green",
-      "green-dark",
-      "orange",
-      "orange-dark"
-    );
 
     // if (theme === "system") {
     //   const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")

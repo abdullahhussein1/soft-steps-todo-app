@@ -8,7 +8,11 @@ type Theme =
   | "green"
   | "green-dark"
   | "orange"
-  | "orange-dark";
+  | "orange-dark"
+  | "yellow"
+  | "yellow-dark"
+  | "purple"
+  | "purple-dark";
 
 type ThemeProviderState = {
   theme: Theme;
