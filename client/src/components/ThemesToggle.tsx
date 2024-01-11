@@ -7,8 +7,30 @@ import {
 } from "@/components/ui/dropdown-menu";
 import useTheme from "@/hooks/useTheme";
 
+type Theme =
+  | "blue"
+  | "blue-dark"
+  | "red"
+  | "red-dark"
+  | "green"
+  | "green-dark"
+  | "orange"
+  | "orange-dark"
+  | "yellow"
+  | "yellow-dark"
+  | "purple"
+  | "purple-dark";
+
 export default function ThemesToggle() {
-  const { setTheme } = useTheme();
+  const { setTheme, theme } = useTheme();
+
+  const handleThemeChange = (selectedTheme: Theme) => {
+    const isDarkMode = theme.includes("-dark");
+
+    const newTheme = isDarkMode ? `${selectedTheme}-dark` : selectedTheme;
+
+    setTheme(newTheme as Theme);
+  };
 
   return (
     <DropdownMenu>
@@ -22,21 +44,22 @@ export default function ThemesToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem onClick={() => setTheme("blue")}>
+        <DropdownMenuItem onClick={() => handleThemeChange("blue")}>
           Blue
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("green")}>
+        <DropdownMenuItem onClick={() => handleThemeChange("green")}>
           Green
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("red")}>Red</DropdownMenuItem>
-
-        <DropdownMenuItem onClick={() => setTheme("orange")}>
+        <DropdownMenuItem onClick={() => handleThemeChange("red")}>
+          Red
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => handleThemeChange("orange")}>
           Orange
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("yellow")}>
+        <DropdownMenuItem onClick={() => handleThemeChange("yellow")}>
           Yellow
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("purple")}>
+        <DropdownMenuItem onClick={() => handleThemeChange("purple")}>
           Purple
         </DropdownMenuItem>
       </DropdownMenuContent>
