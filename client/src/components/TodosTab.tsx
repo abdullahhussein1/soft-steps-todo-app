@@ -117,7 +117,7 @@ const TodosTab = ({ todos, setTodos, isLoaderVisible }: Props) => {
           className="rounded-full text-foreground"
         />
         <Button
-          className="rounded-full bg-primary text-white"
+          className="rounded-full bg-primary text-special"
           onMouseUp={async (e) => {
             e.preventDefault();
             setTodoInput("");

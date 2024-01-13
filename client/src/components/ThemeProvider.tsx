@@ -10,10 +10,12 @@ type Theme =
   | "green-dark"
   | "orange"
   | "orange-dark"
-  | "yellow"
-  | "yellow-dark"
+  | "neutral"
+  | "neutral-dark"
   | "purple"
-  | "purple-dark";
+  | "purple-dark"
+  | "yellow"
+  | "yellow-dark";
 
 type ThemeProviderProps = {
   children: React.ReactNode;

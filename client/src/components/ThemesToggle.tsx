@@ -16,10 +16,12 @@ type Theme =
   | "green-dark"
   | "orange"
   | "orange-dark"
-  | "yellow"
-  | "yellow-dark"
+  | "neutral"
+  | "neutral-dark"
   | "purple"
-  | "purple-dark";
+  | "purple-dark"
+  | "yellow"
+  | "yellow-dark";
 
 export default function ThemesToggle() {
   const { setTheme, theme } = useTheme();
@@ -56,11 +58,14 @@ export default function ThemesToggle() {
         <DropdownMenuItem onClick={() => handleThemeChange("orange")}>
           Orange
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => handleThemeChange("yellow")}>
-          Yellow
+        <DropdownMenuItem onClick={() => handleThemeChange("neutral")}>
+          Neutral
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => handleThemeChange("purple")}>
           Purple
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => handleThemeChange("yellow")}>
+          Yellow
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -137,7 +137,7 @@ const EditTodoDialog = ({
             <DialogClose asChild>
               <div className="flex flex-col gap-1 items-center sm:flex-row">
                 <Button
-                  className="rounded-full bg-primary text-white sm:order-2 flex-auto w-full "
+                  className="rounded-full bg-primary text-special sm:order-2 flex-auto w-full "
                   onMouseUp={(e) => {
                     e.preventDefault();
                     axios.put(
@@ -255,7 +255,7 @@ const EditTodoDialog = ({
             <DrawerClose asChild>
               <div className="flex flex-col gap-1 items-center sm:flex-row">
                 <Button
-                  className="rounded-full bg-primary text-white sm:order-2 flex-auto w-full "
+                  className="rounded-full bg-primary text-special sm:order-2 flex-auto w-full "
                   onMouseUp={(e) => {
                     e.preventDefault();
                     axios.put(
