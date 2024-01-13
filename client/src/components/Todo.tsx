@@ -77,29 +77,42 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
         <Checkbox
           className={"accent-foreground flex-initial"}
           checked={isChecked}
-          onCheckedChange={async () => {
-            const mappedTodos = todos.map((tdo) => {
-              if (tdo.id == todo.id) {
-                return {
-                  ...tdo,
-                  completed: !tdo.completed,
-                  pinned: false,
-                };
-              }
-              return tdo;
+          onCheckedChange={() => {
+            axios.put(`https://todo-app-avvn.onrender.com/todos/${todo.id}`, {
+              completed: !todo.completed,
             });
             if (!todo.completed) {
-              setTimeout(() => setTodos(() => mappedTodos), 1200);
+              setTimeout(
+                () =>
+                  setTodos((prevTodos) =>
+                    prevTodos.map((tdo) => {
+                      if (tdo.id == todo.id) {
+                        return {
+                          ...tdo,
+                          completed: !tdo.completed,
+                          pinned: false,
+                        };
+                      }
+                      return tdo;
+                    })
+                  ),
+                1200
+              );
             } else {
-              setTodos(() => mappedTodos);
+              setTodos((prevTodos) =>
+                prevTodos.map((tdo) => {
+                  if (tdo.id == todo.id) {
+                    return {
+                      ...tdo,
+                      completed: !tdo.completed,
+                      pinned: false,
+                    };
+                  }
+                  return tdo;
+                })
+              );
             }
             setIsChecked(!isChecked);
-            await axios.put(
-              `https://todo-app-avvn.onrender.com/todos/${todo.id}`,
-              {
-                completed: !todo.completed,
-              }
-            );
           }}
           name="todo"
         />
@@ -116,7 +129,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
           <p
             className={[
               "text-foreground flex-auto leading-none",
-              isChecked && "line-through",
+              isChecked && "line-through text-foreground/80",
             ].join(" ")}
             key={todo.id}
           >

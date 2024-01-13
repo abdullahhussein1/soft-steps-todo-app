@@ -37,6 +37,7 @@ export default function DarkModeToggle() {
     <div className="flex items-center space-x-2">
       <Switch
         id="dark-mode"
+        className="background-white"
         checked={theme.includes("-dark")}
         onCheckedChange={toggleDarkMode}
       />
