@@ -126,9 +126,9 @@ const EditTodoDialog = ({
             <div className="flex flex-col gap-1 items-center sm:flex-row">
               <Button
                 className="rounded-full bg-primary text-white sm:order-2 flex-auto w-full "
-                onMouseUp={async (e) => {
+                onMouseUp={(e) => {
                   e.preventDefault();
-                  await axios.put(
+                  axios.put(
                     `https://todo-app-avvn.onrender.com/todos/${todo.id}`,
                     {
                       title: todoInput,

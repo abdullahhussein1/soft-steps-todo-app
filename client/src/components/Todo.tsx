@@ -11,6 +11,7 @@ import {
   isTomorrow,
   formatDistanceToNow,
 } from "date-fns";
+import { Checkbox } from "./ui/checkbox";
 
 type TodoType = {
   id: number;
@@ -73,17 +74,10 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
             "delay-1000 translate-x-48 duration-700 transition-all",
         ].join(" ")}
       >
-        <input
-          className={"accent-accent cursor-pointer flex-initial mt-[1px]"}
-          type="checkbox"
+        <Checkbox
+          className={"accent-foreground flex-initial"}
           checked={isChecked}
-          onChange={async () => {
-            await axios.put(
-              `https://todo-app-avvn.onrender.com/todos/${todo.id}`,
-              {
-                completed: !todo.completed,
-              }
-            );
+          onCheckedChange={async () => {
             const mappedTodos = todos.map((tdo) => {
               if (tdo.id == todo.id) {
                 return {
@@ -100,6 +94,12 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
               setTodos(() => mappedTodos);
             }
             setIsChecked(!isChecked);
+            await axios.put(
+              `https://todo-app-avvn.onrender.com/todos/${todo.id}`,
+              {
+                completed: !todo.completed,
+              }
+            );
           }}
           name="todo"
         />
@@ -155,13 +155,10 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
               ? "text-yellow-500 fill-yellow-500  hover:text-yellow-600 hover:fill-yellow-600"
               : "text-foreground/50  hover:text-foreground/90",
           ].join(" ")}
-          onClick={async () => {
-            await axios.put(
-              `https://todo-app-avvn.onrender.com/todos/${todo.id}`,
-              {
-                pinned: !todo.pinned,
-              }
-            );
+          onClick={() => {
+            axios.put(`https://todo-app-avvn.onrender.com/todos/${todo.id}`, {
+              pinned: !todo.pinned,
+            });
             const mapTodos = todos.map((tdo) => {
               if (tdo.id == todo.id) {
                 return {
