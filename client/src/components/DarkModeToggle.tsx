@@ -34,14 +34,14 @@ export default function DarkModeToggle() {
   };
 
   return (
-    <div className="flex items-center space-x-2">
+    <div className="flex w-full justify-between">
+      <label htmlFor="dark-mode">Dark Mode</label>
       <Switch
         id="dark-mode"
         className="background-white"
         checked={theme.includes("-dark")}
         onCheckedChange={toggleDarkMode}
       />
-      <label htmlFor="dark-mode">Dark Mode</label>
     </div>
   );
 }
