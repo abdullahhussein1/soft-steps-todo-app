@@ -75,7 +75,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
         ].join(" ")}
       >
         <Checkbox
-          className={"accent-foreground flex-initial"}
+          className={"accent-foreground"}
           checked={isChecked}
           onCheckedChange={() => {
             axios.put(`https://todo-app-avvn.onrender.com/todos/${todo.id}`, {

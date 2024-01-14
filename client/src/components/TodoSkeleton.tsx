@@ -12,7 +12,7 @@ const TodoSkeleton = ({ isLoaderVisible }: Props) => {
         !isLoaderVisible && "hidden",
       ].join(" ")}
     >
-      <Skeleton className="h-[14px] w-[14px] rounded-[3.5px]" />
+      <Skeleton className="h-[14px] w-[14px] rounded-full" />
       <div className="flex-auto space-y-3">
         <Skeleton className="h-4 w-11/12" />
         <Skeleton className="h-2 w-2/5" />
