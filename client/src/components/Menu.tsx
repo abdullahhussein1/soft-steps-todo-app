@@ -111,7 +111,7 @@ const EditTodoDialog = () => {
                         </div>
                       </AccordionTrigger>
                       <AccordionContent className="px-5 py-1">
-                        <ScrollArea className="rounded-3xl  border">
+                        <ScrollArea className="rounded-3xl border">
                           <div className="flex space-x-4 p-2">
                             <div className="w-16 h-16 rounded-2xl bg-white"></div>
                             <div className="w-16 h-16 rounded-2xl bg-white"></div>
@@ -165,10 +165,10 @@ const EditTodoDialog = () => {
                       </div>
                     </AccordionTrigger>
                     <AccordionContent className="flex flex-col space-y-6 px-5 py-1">
-                      <ScrollArea className="flex w-96 rounded-3xl border">
-                        <div className="flex w-max space-x-4 p-2">
+                      <ScrollArea className="w-[70vw] self-center rounded-3xl border">
+                        <div className="flex p-2 space-x-3">
                           <Button
-                            className="w-24 h-24 rounded-2xl bg-blue-700 hover:bg-blue-800"
+                            className="w-24 h-24 rounded-2xl bg-[#2563eb] hover:bg-[#2563eb]/90"
                             onClick={() => handleThemeChange("blue")}
                           />
                           <Button
