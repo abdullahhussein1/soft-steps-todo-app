@@ -45,7 +45,7 @@ type Theme =
   | "yellow-dark";
 
 const changeFavicon = (link: string): void => {
-  let $favicon = document.querySelector('link[rel="icon"]');
+  let $favicon = document.querySelector('link[rel="icon"]') as HTMLLinkElement;
   if ($favicon !== null) {
     $favicon.href = link;
   } else {
