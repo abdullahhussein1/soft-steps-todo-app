@@ -15,6 +15,7 @@ import { PaletteIcon } from "lucide-react";
 import { GlobeIcon } from "lucide-react";
 import { Calendar } from "lucide-react";
 import { Star } from "lucide-react";
+import { Check } from "lucide-react";
 
 import { Drawer, DrawerTrigger, DrawerContent } from "@/components/ui/drawer";
 import { Separator } from "@/components/ui/separator";
@@ -119,7 +120,7 @@ const EditTodoDialog = () => {
                         <p className="text-xs font-light text-foreground/60">
                           preview
                         </p>
-                        <div className="flex flex-col justify-between w-80 h-24 px-3 bg-background py-2 border rounded-t-2xl">
+                        <div className="flex flex-col justify-between w-80 h-28 px-3 bg-background py-2 border rounded-t-2xl">
                           <div
                             className={[
                               "flex items-start border-[0.7px] rounded-xl px-3 py-2 space-x-2",
@@ -129,12 +130,12 @@ const EditTodoDialog = () => {
                             <Checkbox
                               checked={isChecked}
                               onCheckedChange={() => setIsChecked(!isChecked)}
-                              className="h-[10px] w-[10px] flex items-center justify-center accent-primary"
+                              className="h-[11px] w-[11px] flex items-center justify-center accent-primary"
                             />
-                            <div className="flex-auto space-y-2">
+                            <div className="flex-auto space-y-3">
                               <div
                                 className={[
-                                  "h-2 w-11/12 text-[10px] leading-none",
+                                  "h-2 w-11/12 text-xs leading-none",
                                   isChecked &&
                                     "line-through text-foreground/80",
                                 ].join(" ")}
@@ -142,14 +143,14 @@ const EditTodoDialog = () => {
                                 Pray all prayers in mosque
                               </div>
                               {!isChecked && (
-                                <div className="h-[6px] w-2/5 flex text-foreground/70 items-center gap-[3px] text-[8px]">
-                                  <Calendar size={8} />
-                                  <p className="mt-[2px]">tomorrow</p>
+                                <div className="h-[8px] w-2/5 flex text-foreground/70 items-center gap-[4px] text-[9px]">
+                                  <Calendar size={9} />
+                                  <p className="mt-[1px]">tomorrow</p>
                                 </div>
                               )}
                             </div>
                             <Star
-                              size={10}
+                              size={11}
                               className={[
                                 "flex-initial cursor-pointer mt-[1px]",
                                 isChecked
@@ -161,11 +162,11 @@ const EditTodoDialog = () => {
                               onClick={() => setIsPinned(!isPinned)}
                             />
                           </div>
-                          <div className="flex h-6 space-x-1">
+                          <div className="flex h-7 space-x-1">
                             <div className="flex items-center w-full rounded-full border p-2 text-[9px] text-foreground/40">
                               Add todo
                             </div>
-                            <div className="flex items-center justify-center text-[9px] text-special bg-primary w-10 h-6 rounded-full border">
+                            <div className="flex items-center justify-center text-[9px] text-special bg-primary w-12 h-full rounded-full border">
                               add
                             </div>
                           </div>
@@ -177,7 +178,9 @@ const EditTodoDialog = () => {
                               onClick={() => handleThemeChange("blue")}
                             >
                               {theme.includes("blue") && (
-                                <div className="w-5 h-5 rounded-full bg-white"></div>
+                                <div className="w-5 h-5 rounded-full bg-white">
+                                  <Check className="w-full h-full p-1 text-black" />
+                                </div>
                               )}
                             </Button>
                             <Button
@@ -185,7 +188,9 @@ const EditTodoDialog = () => {
                               onClick={() => handleThemeChange("green")}
                             >
                               {theme.includes("green") && (
-                                <div className="w-5 h-5 rounded-full bg-white"></div>
+                                <div className="w-5 h-5 rounded-full bg-white">
+                                  <Check className="w-full h-full p-1 text-black" />
+                                </div>
                               )}
                             </Button>
                             <Button
@@ -193,7 +198,9 @@ const EditTodoDialog = () => {
                               onClick={() => handleThemeChange("purple")}
                             >
                               {theme.includes("purple") && (
-                                <div className="w-5 h-5 rounded-full bg-white"></div>
+                                <div className="w-5 h-5 rounded-full bg-white">
+                                  <Check className="w-full h-full p-1 text-black" />
+                                </div>
                               )}
                             </Button>
                             <Button
@@ -201,7 +208,9 @@ const EditTodoDialog = () => {
                               onClick={() => handleThemeChange("neutral")}
                             >
                               {theme.includes("neutral") && (
-                                <div className="w-5 h-5 rounded-full bg-white"></div>
+                                <div className="w-5 h-5 rounded-full bg-white">
+                                  <Check className="w-full h-full p-1 text-black" />
+                                </div>
                               )}
                             </Button>
                             <Button
@@ -209,7 +218,9 @@ const EditTodoDialog = () => {
                               onClick={() => handleThemeChange("red")}
                             >
                               {theme.includes("red") && (
-                                <div className="w-5 h-5 rounded-full bg-white"></div>
+                                <div className="w-5 h-5 rounded-full bg-white">
+                                  <Check className="w-full h-full p-1 text-black" />
+                                </div>
                               )}
                             </Button>
                             <Button
@@ -217,7 +228,9 @@ const EditTodoDialog = () => {
                               onClick={() => handleThemeChange("orange")}
                             >
                               {theme.includes("orange") && (
-                                <div className="w-5 h-5 rounded-full bg-white"></div>
+                                <div className="w-5 h-5 rounded-full bg-white">
+                                  <Check className="w-full h-full p-1 text-black" />
+                                </div>
                               )}
                             </Button>
                             <Button
@@ -225,7 +238,9 @@ const EditTodoDialog = () => {
                               onClick={() => handleThemeChange("yellow")}
                             >
                               {theme.includes("yellow") && (
-                                <div className="w-5 h-5 rounded-full bg-white"></div>
+                                <div className="w-5 h-5 rounded-full bg-white">
+                                  <Check className="w-full h-full p-1 text-black" />
+                                </div>
                               )}
                             </Button>
                           </div>
@@ -430,7 +445,9 @@ const EditTodoDialog = () => {
                               onClick={() => handleThemeChange("blue")}
                             >
                               {theme.includes("blue") && (
-                                <div className="w-5 h-5 rounded-full bg-white"></div>
+                                <div className="w-5 h-5 rounded-full bg-white">
+                                  <Check className="w-full h-full p-1 text-black" />
+                                </div>
                               )}
                             </Button>
                             <Button
@@ -438,7 +455,9 @@ const EditTodoDialog = () => {
                               onClick={() => handleThemeChange("green")}
                             >
                               {theme.includes("green") && (
-                                <div className="w-5 h-5 rounded-full bg-white"></div>
+                                <div className="w-5 h-5 rounded-full bg-white">
+                                  <Check className="w-full h-full p-1 text-black" />
+                                </div>
                               )}
                             </Button>
                             <Button
@@ -446,7 +465,9 @@ const EditTodoDialog = () => {
                               onClick={() => handleThemeChange("purple")}
                             >
                               {theme.includes("purple") && (
-                                <div className="w-5 h-5 rounded-full bg-white"></div>
+                                <div className="w-5 h-5 rounded-full bg-white">
+                                  <Check className="w-full h-full p-1 text-black" />
+                                </div>
                               )}
                             </Button>
                             <Button
@@ -454,7 +475,9 @@ const EditTodoDialog = () => {
                               onClick={() => handleThemeChange("neutral")}
                             >
                               {theme.includes("neutral") && (
-                                <div className="w-5 h-5 rounded-full bg-white"></div>
+                                <div className="w-5 h-5 rounded-full bg-white">
+                                  <Check className="w-full h-full p-1 text-black" />
+                                </div>
                               )}
                             </Button>
                             <Button
@@ -462,7 +485,9 @@ const EditTodoDialog = () => {
                               onClick={() => handleThemeChange("red")}
                             >
                               {theme.includes("red") && (
-                                <div className="w-5 h-5 rounded-full bg-white"></div>
+                                <div className="w-5 h-5 rounded-full bg-white">
+                                  <Check className="w-full h-full p-1 text-black" />
+                                </div>
                               )}
                             </Button>
                             <Button
@@ -470,7 +495,9 @@ const EditTodoDialog = () => {
                               onClick={() => handleThemeChange("orange")}
                             >
                               {theme.includes("orange") && (
-                                <div className="w-5 h-5 rounded-full bg-white"></div>
+                                <div className="w-5 h-5 rounded-full bg-white">
+                                  <Check className="w-full h-full p-1 text-black" />
+                                </div>
                               )}
                             </Button>
                             <Button
@@ -478,7 +505,9 @@ const EditTodoDialog = () => {
                               onClick={() => handleThemeChange("yellow")}
                             >
                               {theme.includes("yellow") && (
-                                <div className="w-5 h-5 rounded-full bg-white"></div>
+                                <div className="w-5 h-5 rounded-full bg-white">
+                                  <Check className="w-full h-full p-1 text-black" />
+                                </div>
                               )}
                             </Button>
                           </div>
