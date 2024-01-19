@@ -296,7 +296,7 @@ const EditTodoDialog = () => {
                               onClick={() => handleThemeChange("blue")}
                             >
                               {theme.includes("blue") && (
-                                <div className="w-5 h-5 rounded-full bg-special"></div>
+                                <div className="w-5 h-5 rounded-full bg-white"></div>
                               )}
                             </Button>
                             <Button
@@ -304,7 +304,7 @@ const EditTodoDialog = () => {
                               onClick={() => handleThemeChange("green")}
                             >
                               {theme.includes("green") && (
-                                <div className="w-5 h-5 rounded-full bg-special"></div>
+                                <div className="w-5 h-5 rounded-full bg-white"></div>
                               )}
                             </Button>
                             <Button
@@ -312,7 +312,7 @@ const EditTodoDialog = () => {
                               onClick={() => handleThemeChange("purple")}
                             >
                               {theme.includes("purple") && (
-                                <div className="w-5 h-5 rounded-full bg-special"></div>
+                                <div className="w-5 h-5 rounded-full bg-white"></div>
                               )}
                             </Button>
                             <Button
@@ -320,7 +320,7 @@ const EditTodoDialog = () => {
                               onClick={() => handleThemeChange("neutral")}
                             >
                               {theme.includes("neutral") && (
-                                <div className="w-5 h-5 rounded-full bg-special"></div>
+                                <div className="w-5 h-5 rounded-full bg-white"></div>
                               )}
                             </Button>
                             <Button
@@ -328,7 +328,7 @@ const EditTodoDialog = () => {
                               onClick={() => handleThemeChange("red")}
                             >
                               {theme.includes("red") && (
-                                <div className="w-5 h-5 rounded-full bg-special"></div>
+                                <div className="w-5 h-5 rounded-full bg-white"></div>
                               )}
                             </Button>
                             <Button
@@ -336,7 +336,7 @@ const EditTodoDialog = () => {
                               onClick={() => handleThemeChange("orange")}
                             >
                               {theme.includes("orange") && (
-                                <div className="w-5 h-5 rounded-full bg-special"></div>
+                                <div className="w-5 h-5 rounded-full bg-white"></div>
                               )}
                             </Button>
                             <Button
@@ -344,7 +344,7 @@ const EditTodoDialog = () => {
                               onClick={() => handleThemeChange("yellow")}
                             >
                               {theme.includes("yellow") && (
-                                <div className="w-5 h-5 rounded-full bg-special"></div>
+                                <div className="w-5 h-5 rounded-full bg-white"></div>
                               )}
                             </Button>
                           </div>
