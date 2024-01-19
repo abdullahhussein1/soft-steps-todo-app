@@ -138,7 +138,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
           {!todo.completed && todo.remind_date && (
             <div
               className={[
-                "flex items-center gap-[3px] text-xs",
+                "flex items-center gap-[3px] text-xs text-foreground/70",
                 isRemindDatePassed && "text-red-500",
               ].join(" ")}
             >

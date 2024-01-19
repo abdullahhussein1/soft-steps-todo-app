@@ -46,13 +46,13 @@ const TodosTab = ({ todos, setTodos, isLoaderVisible }: Props) => {
             defaultValue="dateEdited"
             onValueChange={(value) => setSortByValue(value)}
           >
-            <SelectTrigger className="flex border-none gap-[6px] hover:bg-muted/80 w-20 h-7 items-center  px-2 rounded-full transition-all">
+            <SelectTrigger className="flex border-none gap-[6px] hover:bg-border/50 w-20 h-7 items-center  px-2 rounded-full transition-all">
               <p className="whitespace-nowrap text-xs">Sort By</p>
               <div>
                 <ArrowUpDownIcon size={13} />
               </div>
             </SelectTrigger>
-            <SelectContent className="flex flex-col w-fit p-2 rounded-xl">
+            <SelectContent className="flex flex-col w-fit p-2 rounded-xl text-foreground/80">
               <SelectGroup>
                 <SelectItem value="dateEdited">Date Edited</SelectItem>
                 <SelectItem value="dateCreated">Date Created</SelectItem>
@@ -76,7 +76,6 @@ const TodosTab = ({ todos, setTodos, isLoaderVisible }: Props) => {
               />
             ))}
           {todos
-
             .filter((todo) => !todo.pinned && !todo.completed)
             .sort((a, b) => {
               if (sortByValue == "dateEdited") {
