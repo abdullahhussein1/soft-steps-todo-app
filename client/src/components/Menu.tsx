@@ -23,6 +23,7 @@ import { GlobeIcon } from "lucide-react";
 import { Calendar } from "lucide-react";
 import { Star } from "lucide-react";
 import { Check } from "lucide-react";
+import { LogOutIcon } from "lucide-react";
 
 import { Drawer, DrawerTrigger, DrawerContent } from "@/components/ui/drawer";
 import { Separator } from "@/components/ui/separator";
@@ -626,6 +627,17 @@ const EditTodoDialog = () => {
                   </AccordionItem>
                 </Accordion>
               </div>
+              <button
+                className={[
+                  "flex font-medium items-center justify-center space-x-3  transition-colors w-full  rounded-2xl px-6 py-4",
+                  theme.endsWith("-dark")
+                    ? "bg-secondary/25 text-red-700 hover:bg-red-400/5"
+                    : "bg-background text-red-500 hover:bg-red-100",
+                ].join(" ")}
+              >
+                <LogOutIcon size={18} />
+                <p>Log Out</p>
+              </button>
             </div>
           </ScrollArea>
         </DrawerContent>
