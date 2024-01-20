@@ -2,6 +2,13 @@ import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 
 import profileImage from "@/assets/images/profile-test.jpg";
 import favIcon from "@/assets/images/favicon.png";
+import favIconFilledBlackWhite from "@/assets/images/favicon-filled-black-white.png";
+import favIconBlack from "@/assets/images/favicon-bg-black.png";
+import favIconWhite from "@/assets/images/favicon-bg-white.png";
+import favIconRed from "@/assets/images/favicon-filled-red.png";
+import favIconGreen from "@/assets/images/favicon-filled-green.png";
+import favIconPurple from "@/assets/images/favicon-filled-purple.png";
+import favIconYellow from "@/assets/images/favicon-filled-yellow.png";
 
 import {
   Accordion,
@@ -530,67 +537,86 @@ const EditTodoDialog = () => {
                     <AccordionContent className="flex justify-center px-5 py-1">
                       <ScrollArea className="w-72 self-center rounded-2xl border">
                         <div className="flex p-2 space-x-3">
-                          <button className="relative flex items-center justify-center">
-                            <div
-                              className="w-12 h-12 rounded-2xl border bg-white"
-                              onClick={() =>
-                                changeFavicon(
-                                  "..//assets/images/icons/profile-test.jpg"
-                                )
-                              }
-                            />
+                          <button
+                            className="w-12 h-12 rounded-2xl border flex items-center justify-center overflow-clip"
+                            onClick={() => changeFavicon(favIcon)}
+                          >
                             <img
                               src={favIcon}
                               alt="favicon"
-                              className="absolute w-10 h-10"
+                              className="object-cover"
                             />
                           </button>
-                          <button className="relative flex items-center justify-center">
-                            <div
-                              className="w-12 h-12 rounded-2xl border bg-gray-900"
-                              onClick={() => changeFavicon("blue")}
-                            />
+                          <button
+                            className="w-12 h-12 rounded-2xl border flex items-center justify-center overflow-clip"
+                            onClick={() => changeFavicon(favIconGreen)}
+                          >
                             <img
-                              src={favIcon}
+                              src={favIconGreen}
                               alt="favicon"
-                              className="absolute w-10 h-10"
+                              className="object-cover"
                             />
                           </button>
-                          <button className="relative flex items-center justify-center">
-                            <div
-                              className="w-12 h-12 rounded-2xl border bg-black"
-                              onClick={() =>
-                                changeFavicon(
-                                  "@/assets/images/macos-monterey-wwdc-21-stock-5k-6016x6016-5584.jpg"
-                                )
-                              }
-                            />
+                          <button
+                            className="w-12 h-12 rounded-2xl border flex items-center justify-center overflow-clip"
+                            onClick={() => changeFavicon(favIconPurple)}
+                          >
                             <img
-                              src={favIcon}
+                              src={favIconPurple}
                               alt="favicon"
-                              className="absolute w-10 h-10"
+                              className="object-cover"
                             />
                           </button>
-                          <button className="relative flex items-center justify-center">
-                            <div
-                              className="w-12 h-12 rounded-2xl border bg-gradient-to-br from-white to-slate-400"
-                              onClick={() => changeFavicon("blue")}
-                            />
+                          <button
+                            className="w-12 h-12 rounded-2xl border flex items-center justify-center overflow-clip"
+                            onClick={() => changeFavicon(favIconRed)}
+                          >
                             <img
-                              src={favIcon}
+                              src={favIconRed}
                               alt="favicon"
-                              className="absolute w-10 h-10"
+                              className="object-cover"
                             />
                           </button>
-                          <button className="relative flex items-center justify-center">
-                            <div
-                              className="w-12 h-12 rounded-2xl border bg-gradient-to-br from-black to-slate-900"
-                              onClick={() => changeFavicon("blue")}
-                            />
+                          <button
+                            className="w-12 h-12 rounded-2xl border flex items-center justify-center overflow-clip"
+                            onClick={() => changeFavicon(favIconYellow)}
+                          >
                             <img
-                              src={favIcon}
+                              src={favIconYellow}
                               alt="favicon"
-                              className="absolute w-10 h-10"
+                              className="object-cover"
+                            />
+                          </button>
+                          <button
+                            className="w-12 h-12 rounded-2xl border flex items-center justify-center overflow-clip"
+                            onClick={() =>
+                              changeFavicon(favIconFilledBlackWhite)
+                            }
+                          >
+                            <img
+                              src={favIconFilledBlackWhite}
+                              alt="favicon"
+                              className="object-cover"
+                            />
+                          </button>
+                          <button
+                            className="w-12 h-12 rounded-2xl border flex items-center justify-center overflow-clip"
+                            onClick={() => changeFavicon(favIconBlack)}
+                          >
+                            <img
+                              src={favIconBlack}
+                              alt="favicon"
+                              className="object-cover"
+                            />
+                          </button>
+                          <button
+                            className="w-12 h-12 rounded-2xl border flex items-center justify-center overflow-clip"
+                            onClick={() => changeFavicon(favIconWhite)}
+                          >
+                            <img
+                              src={favIconWhite}
+                              alt="favicon"
+                              className="object-cover"
                             />
                           </button>
                         </div>
