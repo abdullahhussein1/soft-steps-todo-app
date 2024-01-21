@@ -118,6 +118,8 @@ const TodosTab = ({ todos, setTodos, isLoaderVisible }: Props) => {
         <Button
           className="rounded-full bg-primary text-special"
           onMouseUp={async (e) => {
+            if (todoInput == "") return;
+
             e.preventDefault();
             setTodoInput("");
             const newTodo = await axios.post(
