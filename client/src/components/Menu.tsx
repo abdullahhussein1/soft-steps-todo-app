@@ -1,14 +1,6 @@
 import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 
 import profileImage from "@/assets/images/profile-test.jpg";
-import favIcon from "@/assets/images/favicon.png";
-import favIconFilledBlackWhite from "@/assets/images/favicon-filled-black-white.png";
-import favIconBlack from "@/assets/images/favicon-bg-black.png";
-import favIconWhite from "@/assets/images/favicon-bg-white.png";
-import favIconRed from "@/assets/images/favicon-filled-red.png";
-import favIconGreen from "@/assets/images/favicon-filled-green.png";
-import favIconPurple from "@/assets/images/favicon-filled-purple.png";
-import favIconYellow from "@/assets/images/favicon-filled-yellow.png";
 
 import {
   Accordion,
@@ -22,7 +14,6 @@ import { PaletteIcon } from "lucide-react";
 import { GlobeIcon } from "lucide-react";
 import { Calendar } from "lucide-react";
 import { Star } from "lucide-react";
-import { Check } from "lucide-react";
 import { LogOutIcon } from "lucide-react";
 
 import { Drawer, DrawerTrigger, DrawerContent } from "@/components/ui/drawer";
@@ -33,51 +24,16 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import useTheme from "@/hooks/useTheme";
 
 import DarkModeToggle from "./DarkModeToggle";
-import { Button } from "./ui/button";
 import { Checkbox } from "./ui/checkbox";
 import { useState } from "react";
-
-type Theme =
-  | "blue"
-  | "blue-dark"
-  | "red"
-  | "red-dark"
-  | "green"
-  | "green-dark"
-  | "orange"
-  | "orange-dark"
-  | "neutral"
-  | "neutral-dark"
-  | "purple"
-  | "purple-dark"
-  | "yellow"
-  | "yellow-dark";
-
-const changeFavicon = (link: string): void => {
-  let $favicon = document.querySelector('link[rel="icon"]') as HTMLLinkElement;
-  if ($favicon !== null) {
-    $favicon.href = link;
-  } else {
-    $favicon = document.createElement("link");
-    $favicon.rel = "icon";
-    $favicon.href = link;
-    document.head.appendChild($favicon);
-  }
-};
+import AppIconContent from "./AppIconContent";
+import ColorThemeButton from "./ColorThemeButton";
 
 const EditTodoDialog = () => {
   const [isPinned, setIsPinned] = useState(true);
   const [isChecked, setIsChecked] = useState(false);
-  const { setTheme, theme } = useTheme();
+  const { theme } = useTheme();
   const isDesktop = useMediaQuery("(min-width: 640px)");
-
-  const handleThemeChange = (selectedTheme: Theme) => {
-    const isDarkMode = theme.includes("-dark");
-
-    const newTheme = isDarkMode ? `${selectedTheme}-dark` : selectedTheme;
-
-    setTheme(newTheme as Theme);
-  };
 
   if (isDesktop) {
     return (
@@ -94,7 +50,7 @@ const EditTodoDialog = () => {
           ].join(" ")}
         >
           <ScrollArea className="rounded-t-3xl py-3">
-            <div className="flex flex-col items-center space-y-6 py-2">
+            {/* <div className="flex flex-col items-center space-y-6 py-2">
               <div
                 className={[
                   "flex flex-col font-medium items-center space-y-2 w-full bg-background rounded-3xl p-3",
@@ -341,7 +297,7 @@ const EditTodoDialog = () => {
                   </AccordionItem>
                 </Accordion>
               </div>
-            </div>
+            </div> */}
           </ScrollArea>
         </DialogContent>
       </Dialog>
@@ -448,76 +404,13 @@ const EditTodoDialog = () => {
                         </div>
                         <ScrollArea className="w-72 rounded-b-2xl border">
                           <div className="flex p-2 space-x-3">
-                            <Button
-                              className="w-10 h-10 p-2 rounded-full bg-[#2563eb] hover:bg-[#2563eb]/90"
-                              onClick={() => handleThemeChange("blue")}
-                            >
-                              {theme.includes("blue") && (
-                                <div className="w-5 h-5 rounded-full bg-white">
-                                  <Check className="w-full h-full p-1 text-black" />
-                                </div>
-                              )}
-                            </Button>
-                            <Button
-                              className="w-10 h-10 p-2 rounded-full bg-green-700 hover:bg-green-800"
-                              onClick={() => handleThemeChange("green")}
-                            >
-                              {theme.includes("green") && (
-                                <div className="w-5 h-5 rounded-full bg-white">
-                                  <Check className="w-full h-full p-1 text-black" />
-                                </div>
-                              )}
-                            </Button>
-                            <Button
-                              className="w-10 h-10 p-2 rounded-full bg-purple-700 hover:bg-purple-800"
-                              onClick={() => handleThemeChange("purple")}
-                            >
-                              {theme.includes("purple") && (
-                                <div className="w-5 h-5 rounded-full bg-white">
-                                  <Check className="w-full h-full p-1 text-black" />
-                                </div>
-                              )}
-                            </Button>
-                            <Button
-                              className="w-10 h-10 p-2 rounded-full bg-neutral-700 hover:bg-neutral-800"
-                              onClick={() => handleThemeChange("neutral")}
-                            >
-                              {theme.includes("neutral") && (
-                                <div className="w-5 h-5 rounded-full bg-white">
-                                  <Check className="w-full h-full p-1 text-black" />
-                                </div>
-                              )}
-                            </Button>
-                            <Button
-                              className="w-10 h-10 p-2 rounded-full bg-red-700 hover:bg-red-800"
-                              onClick={() => handleThemeChange("red")}
-                            >
-                              {theme.includes("red") && (
-                                <div className="w-5 h-5 rounded-full bg-white">
-                                  <Check className="w-full h-full p-1 text-black" />
-                                </div>
-                              )}
-                            </Button>
-                            <Button
-                              className="w-10 h-10 p-2 rounded-full bg-orange-700 hover:bg-orange-800"
-                              onClick={() => handleThemeChange("orange")}
-                            >
-                              {theme.includes("orange") && (
-                                <div className="w-5 h-5 rounded-full bg-white">
-                                  <Check className="w-full h-full p-1 text-black" />
-                                </div>
-                              )}
-                            </Button>
-                            <Button
-                              className="w-10 h-10 p-2 rounded-full bg-yellow-700 hover:bg-yellow-800"
-                              onClick={() => handleThemeChange("yellow")}
-                            >
-                              {theme.includes("yellow") && (
-                                <div className="w-5 h-5 rounded-full bg-white">
-                                  <Check className="w-full h-full p-1 text-black" />
-                                </div>
-                              )}
-                            </Button>
+                            <ColorThemeButton color="green" />
+                            <ColorThemeButton color="blue" />
+                            <ColorThemeButton color="purple" />
+                            <ColorThemeButton color="neutral" />
+                            <ColorThemeButton color="red" />
+                            <ColorThemeButton color="orange" />
+                            <ColorThemeButton color="yellow" />
                           </div>
                           <ScrollBar orientation="horizontal" />
                         </ScrollArea>
@@ -536,93 +429,7 @@ const EditTodoDialog = () => {
                       </div>
                     </AccordionTrigger>
                     <AccordionContent className="flex justify-center px-5 py-1">
-                      <ScrollArea className="w-72 self-center rounded-2xl border">
-                        <div className="flex p-2 space-x-3">
-                          <button
-                            className="w-12 h-12 rounded-2xl border flex items-center justify-center overflow-clip"
-                            onClick={() => changeFavicon(favIcon)}
-                          >
-                            <img
-                              src={favIcon}
-                              alt="favicon"
-                              className="object-cover"
-                            />
-                          </button>
-                          <button
-                            className="w-12 h-12 rounded-2xl border flex items-center justify-center overflow-clip"
-                            onClick={() => changeFavicon(favIconGreen)}
-                          >
-                            <img
-                              src={favIconGreen}
-                              alt="favicon"
-                              className="object-cover"
-                            />
-                          </button>
-                          <button
-                            className="w-12 h-12 rounded-2xl border flex items-center justify-center overflow-clip"
-                            onClick={() => changeFavicon(favIconPurple)}
-                          >
-                            <img
-                              src={favIconPurple}
-                              alt="favicon"
-                              className="object-cover"
-                            />
-                          </button>
-                          <button
-                            className="w-12 h-12 rounded-2xl border flex items-center justify-center overflow-clip"
-                            onClick={() => changeFavicon(favIconRed)}
-                          >
-                            <img
-                              src={favIconRed}
-                              alt="favicon"
-                              className="object-cover"
-                            />
-                          </button>
-                          <button
-                            className="w-12 h-12 rounded-2xl border flex items-center justify-center overflow-clip"
-                            onClick={() => changeFavicon(favIconYellow)}
-                          >
-                            <img
-                              src={favIconYellow}
-                              alt="favicon"
-                              className="object-cover"
-                            />
-                          </button>
-                          <button
-                            className="w-12 h-12 rounded-2xl border flex items-center justify-center overflow-clip"
-                            onClick={() =>
-                              changeFavicon(favIconFilledBlackWhite)
-                            }
-                          >
-                            <img
-                              src={favIconFilledBlackWhite}
-                              alt="favicon"
-                              className="object-cover"
-                            />
-                          </button>
-                          <button
-                            className="w-12 h-12 rounded-2xl border flex items-center justify-center overflow-clip"
-                            onClick={() => changeFavicon(favIconBlack)}
-                          >
-                            <img
-                              src={favIconBlack}
-                              alt="favicon"
-                              className="object-cover"
-                            />
-                          </button>
-                          <button
-                            className="w-12 h-12 rounded-2xl border flex items-center justify-center overflow-clip"
-                            onClick={() => changeFavicon(favIconWhite)}
-                          >
-                            <img
-                              src={favIconWhite}
-                              alt="favicon"
-                              className="object-cover"
-                            />
-                          </button>
-                        </div>
-                        <ScrollBar orientation="horizontal" />
-                      </ScrollArea>
+                      <AppIconContent />
                     </AccordionContent>
                   </AccordionItem>
                 </Accordion>
