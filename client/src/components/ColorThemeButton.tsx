@@ -35,19 +35,19 @@ const ColorThemeButton = ({ color }: Props) => {
   const getButtonColor = (color: string) => {
     switch (color) {
       case "blue":
-        return "bg-blue-600";
+        return "bg-blue-500";
       case "green":
-        return "bg-green-600";
+        return "bg-green-500";
       case "red":
-        return "bg-red-600";
+        return "bg-red-500";
       case "orange":
-        return "bg-orange-600";
+        return "bg-orange-500";
       case "purple":
-        return "bg-purple-600";
+        return "bg-purple-700";
       case "neutral":
         return "bg-neutral-600";
       case "yellow":
-        return "bg-yellow-600";
+        return "bg-yellow-400";
     }
   };
 
