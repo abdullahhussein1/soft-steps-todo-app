@@ -1,10 +1,9 @@
-import { Checkbox } from "@radix-ui/react-checkbox";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Calendar, Star } from "lucide-react";
-import { ScrollBar } from "./ui/scroll-area";
 import DarkModeToggle from "./DarkModeToggle";
 import ColorThemeButton from "./ColorThemeButton";
 import { useState } from "react";
+import { Checkbox } from "./ui/checkbox";
+import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 
 const ColorThemeContent = () => {
   const [isPinned, setIsPinned] = useState(true);
