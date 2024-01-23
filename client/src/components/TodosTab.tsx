@@ -104,7 +104,7 @@ const TodosTab = ({ todos, setTodos, isLoaderVisible }: Props) => {
                 setTodos={setTodos}
               />
             ))}
-          <div className=" w-full h-16 bg-gradient-to-t from-background via-background to-transparent absolute bottom-2 z-10"></div>
+          <div className=" w-full h-10 bg-gradient-to-t from-background via-background to-transparent absolute bottom-10 z-10"></div>
         </div>
       </div>
       <div className="flex gap-2">
@@ -112,7 +112,7 @@ const TodosTab = ({ todos, setTodos, isLoaderVisible }: Props) => {
           type="text"
           value={todoInput}
           onChange={(e) => setTodoInput(e.target.value)}
-          placeholder={`Add todo`}
+          placeholder="I want to..."
           className="rounded-full text-foreground"
         />
         <Button

@@ -56,7 +56,7 @@ const ColorThemeContent = () => {
           </div>
           <div className="flex h-6 space-x-1">
             <div className="flex items-center w-full rounded-full border p-2 text-[9px] text-foreground/40">
-              Add todo
+              I want to...
             </div>
             <div className="flex items-center justify-center text-[9px] text-special bg-primary w-10 h-6 rounded-full border">
               add
@@ -64,7 +64,7 @@ const ColorThemeContent = () => {
           </div>
         </div>
         <ScrollArea className="w-[65vw] rounded-b-2xl border">
-          <div className="flex p-2 gap-3">
+          <div className="flex p-2 space-x-3">
             <ColorThemeButton color="green" />
             <ColorThemeButton color="blue" />
             <ColorThemeButton color="purple" />

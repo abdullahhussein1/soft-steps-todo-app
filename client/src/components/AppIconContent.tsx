@@ -16,7 +16,7 @@ import FavIconButton from "./FavIconButton";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 
 const AppIconContent = () => (
-  <ScrollArea className="w-72 self-center rounded-2xl border">
+  <ScrollArea className="w-[65vw] self-center rounded-2xl border">
     <div className="flex p-2 space-x-3">
       <FavIconButton favicon={favicon} />
       <FavIconButton favicon={faviconRed} />
