@@ -61,7 +61,7 @@ const TodosTab = ({ todos, setTodos, isLoaderVisible }: Props) => {
             </SelectContent>
           </Select>
         </div>
-        <div className="flex p-2  flex-col gap-2 h-[350px] overflow-y-auto overflow-x-clip">
+        <div className="flex p-2 flex-col gap-2 h-[360px] overflow-y-auto overflow-x-clip">
           <TodoSkeleton isLoaderVisible={isLoaderVisible} />
           <TodoSkeleton isLoaderVisible={isLoaderVisible} />
           {todos
@@ -104,7 +104,7 @@ const TodosTab = ({ todos, setTodos, isLoaderVisible }: Props) => {
                 setTodos={setTodos}
               />
             ))}
-          <div className=" w-full h-10 bg-gradient-to-t from-background via-background to-transparent absolute bottom-10 z-10"></div>
+          <div className=" w-full h-10 bg-gradient-to-t from-background via-background to-transparent absolute bottom-8 z-10"></div>
         </div>
       </div>
       <div className="flex gap-2">
