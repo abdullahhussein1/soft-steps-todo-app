@@ -13,7 +13,7 @@ const ColorThemeContent = () => {
     <div className="flex items-center flex-col space-y-6 px-5 py-1">
       <div className="flex flex-col space-y-1">
         <p className="text-xs font-light text-foreground/60">preview</p>
-        <div className="flex flex-col justify-between w-[65vw] h-24 px-3 bg-background py-2 border rounded-t-2xl">
+        <div className="flex flex-col justify-between w-[65vw] sm:w-96 h-24 px-3 bg-background py-2 border rounded-t-2xl">
           <div
             className={[
               "flex items-start border-[0.7px] rounded-xl px-3 py-2 space-x-2",
@@ -63,7 +63,7 @@ const ColorThemeContent = () => {
             </div>
           </div>
         </div>
-        <ScrollArea className="w-[65vw] rounded-b-2xl border">
+        <ScrollArea className="w-[65vw] sm:w-96 rounded-b-2xl border">
           <div className="flex p-2 space-x-3">
             <ColorThemeButton color="green" />
             <ColorThemeButton color="blue" />
@@ -76,7 +76,7 @@ const ColorThemeContent = () => {
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
       </div>
-      <div className="w-[65vw]">
+      <div className="w-[65vw] sm:w-96">
         <DarkModeToggle />
       </div>
     </div>
