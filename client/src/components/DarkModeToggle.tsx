@@ -1,6 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useTheme from "@/hooks/useTheme";
-import { Switch } from "@/components/ui/switch";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+} from "@/components/ui/select";
 
 type Theme =
   | "blue"
@@ -14,34 +20,66 @@ type Theme =
 
 export default function DarkModeToggle() {
   const { theme, setTheme } = useTheme();
+  const [selectedTheme, setSelectedTheme] = useState<string>(
+    localStorage.getItem("selectedTheme") ?? "System"
+  );
 
   useEffect(() => {
-    const isDarkMode = localStorage.getItem("darkMode") === "true";
-    if (isDarkMode) {
-      setTheme(theme.includes("-dark") ? theme : ((theme + "-dark") as Theme));
-    }
-  }, [setTheme, theme]);
+    const isSystemThemeDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
 
-  const toggleDarkMode = () => {
-    const newTheme = theme.includes("-dark")
-      ? (theme.replace("-dark", "") as Theme)
-      : ((theme + "-dark") as Theme);
-    setTheme(newTheme);
-    localStorage.setItem(
-      "darkMode",
-      newTheme.includes("-dark") ? "true" : "false"
-    );
-  };
+    if (selectedTheme === "System") {
+      if (isSystemThemeDark) {
+        const newTheme = theme.includes("-dark")
+          ? theme
+          : ((theme + "-dark") as Theme);
+
+        setTheme(newTheme);
+      } else {
+        const newTheme = theme.includes("-dark")
+          ? (theme.replace("-dark", "") as Theme)
+          : theme;
+
+        setTheme(newTheme);
+      }
+    } else if (selectedTheme === "Dark") {
+      const newTheme = theme.includes("-dark")
+        ? theme
+        : ((theme + "-dark") as Theme);
+
+      setTheme(newTheme);
+    } else {
+      const newTheme = theme.includes("-dark")
+        ? (theme.replace("-dark", "") as Theme)
+        : theme;
+
+      setTheme(newTheme);
+    }
+    localStorage.setItem("selectedTheme", selectedTheme);
+  }, [selectedTheme]);
 
   return (
-    <div className="flex w-full justify-between">
-      <label htmlFor="dark-mode">Dark Mode</label>
-      <Switch
-        id="dark-mode"
-        className="background-white"
-        checked={theme.includes("-dark")}
-        onCheckedChange={toggleDarkMode}
-      />
+    <div className="flex w-full justify-between items-center">
+      <label htmlFor="darkMode">Dark Mode</label>
+      <Select
+        defaultValue="system"
+        onValueChange={(value) => setSelectedTheme(value)}
+      >
+        <SelectTrigger
+          id="darkMode"
+          className="flex border-none gap-[6px] hover:bg-border/50 w-20 h-7 items-center  px-2 rounded-full transition-all"
+        >
+          <p className="whitespace-nowrap text-xs">{selectedTheme}</p>
+        </SelectTrigger>
+        <SelectContent className="flex flex-col w-fit p-2 rounded-xl text-foreground/80">
+          <SelectGroup>
+            <SelectItem value="Light">Light</SelectItem>
+            <SelectItem value="Dark">Dark</SelectItem>
+            <SelectItem value="System">System</SelectItem>
+          </SelectGroup>
+        </SelectContent>
+      </Select>
     </div>
   );
 }
