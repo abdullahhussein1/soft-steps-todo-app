@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import useTheme from "@/hooks/useTheme";
 import {
   Select,
@@ -6,6 +5,7 @@ import {
   SelectGroup,
   SelectItem,
   SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 
 type Theme =
@@ -18,18 +18,15 @@ type Theme =
   | "orange"
   | "orange-dark";
 
-export default function DarkModeToggle() {
+export default function DarkModeButton() {
   const { theme, setTheme } = useTheme();
-  const [selectedTheme, setSelectedTheme] = useState<string>(
-    localStorage.getItem("selectedTheme") ?? "System"
-  );
 
-  useEffect(() => {
-    const isSystemThemeDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
+  const isSystemThemeDark = window.matchMedia(
+    "(prefers-color-scheme: dark)"
+  ).matches;
 
-    if (selectedTheme === "System") {
+  function handleDarkModeValueChange(value: string) {
+    if (value === "System") {
       if (isSystemThemeDark) {
         const newTheme = theme.includes("-dark")
           ? theme
@@ -43,7 +40,7 @@ export default function DarkModeToggle() {
 
         setTheme(newTheme);
       }
-    } else if (selectedTheme === "Dark") {
+    } else if (value === "Dark") {
       const newTheme = theme.includes("-dark")
         ? theme
         : ((theme + "-dark") as Theme);
@@ -56,21 +53,18 @@ export default function DarkModeToggle() {
 
       setTheme(newTheme);
     }
-    localStorage.setItem("selectedTheme", selectedTheme);
-  }, [selectedTheme]);
+    localStorage.setItem("selectedTheme", value);
+  }
 
   return (
     <div className="flex w-full justify-between items-center">
       <label htmlFor="darkMode">Dark Mode</label>
       <Select
-        defaultValue="system"
-        onValueChange={(value) => setSelectedTheme(value)}
+        defaultValue="System"
+        onValueChange={(value) => handleDarkModeValueChange(value)}
       >
-        <SelectTrigger
-          id="darkMode"
-          className="flex border-none gap-[6px] hover:bg-border/50 w-20 h-7 items-center  px-2 rounded-full transition-all"
-        >
-          <p className="whitespace-nowrap text-xs">{selectedTheme}</p>
+        <SelectTrigger className="flex border-none text-xs font-normal bg-secondary/25 justify-between hover:bg-border/50 w-20 h-7 items-center  px-2 rounded-full transition-all">
+          <SelectValue />
         </SelectTrigger>
         <SelectContent className="flex flex-col w-fit p-2 rounded-xl text-foreground/80">
           <SelectGroup>

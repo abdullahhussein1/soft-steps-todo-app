@@ -1,5 +1,5 @@
 import { Calendar, Star } from "lucide-react";
-import DarkModeToggle from "./DarkModeToggle";
+import DarkModeButton from "./DarkModeButton";
 import ColorThemeButton from "./ColorThemeButton";
 import { useState } from "react";
 import { Checkbox } from "./ui/checkbox";
@@ -77,7 +77,7 @@ const ColorThemeContent = () => {
         </ScrollArea>
       </div>
       <div className="w-[65vw] sm:w-96">
-        <DarkModeToggle />
+        <DarkModeButton />
       </div>
     </div>
   );
