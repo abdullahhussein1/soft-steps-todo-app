@@ -36,15 +36,17 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
   const [isChecked, setIsChecked] = useState<boolean>(todo.completed);
   const [isOpen, setIsOpen] = useState(false);
 
-  const isRemindDatePassed = new Date(todo.remind_date) < new Date();
+  const isRemindDatePassed =
+    new Date(todo.remind_date) < new Date() &&
+    !isToday(new Date(todo.remind_date));
 
   const formatRemindDate = (remindDate: Date) => {
-    if (isRemindDatePassed) {
+    if (isToday(remindDate)) {
+      return "today";
+    } else if (isRemindDatePassed) {
       return formatDistanceToNow(new Date(todo.remind_date), {
         addSuffix: true,
       });
-    } else if (isToday(remindDate)) {
-      return "today";
     } else if (isTomorrow(remindDate)) {
       return "tomorrow";
     } else if (isThisWeek(remindDate)) {
@@ -105,7 +107,6 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
                     return {
                       ...tdo,
                       completed: !tdo.completed,
-                      pinned: false,
                     };
                   }
                   return tdo;
