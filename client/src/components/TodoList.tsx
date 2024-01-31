@@ -39,7 +39,7 @@ const TodoList = () => {
 
   return (
     <Tabs defaultValue="Todos">
-      <TabsList className="grid w-full grid-cols-2  rounded-full">
+      <TabsList className="grid w-full grid-cols-2 rounded-full">
         <TabsTrigger value="Todos" className="rounded-full">
           Todos
         </TabsTrigger>
