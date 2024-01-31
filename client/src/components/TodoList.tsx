@@ -8,14 +8,17 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 type TodoType = {
   id: number;
-  title: string;
+  user_id: string;
+  task: string;
   note: string;
-  pinned: boolean;
-  completed: boolean;
-  remind_date: Date;
+  priority: "none" | "low" | "medium" | "high";
+  location?: string;
+  attachment?: string;
+  is_complete: boolean;
+  is_pin: boolean;
   created_at: Date;
   updated_at: Date;
-  deleted_at: Date;
+  remind_at: Date;
 };
 
 const TodoList = () => {
@@ -23,14 +26,16 @@ const TodoList = () => {
   const [isLoaderVisible, setIsLoaderVisible] = useState<boolean>(true);
 
   const fetchTodos = async () => {
-    const result = await axios
-      .get("https://todo-app-avvn.onrender.com/todos")
-      .then((response) => response.data)
-      .then((result) => {
-        setIsLoaderVisible(false);
-        return result;
-      });
-    setTodos(result);
+    try {
+      const response = await axios.get(
+        "https://todo-app-avvn.onrender.com/todos"
+      );
+      const result = response.data;
+      setIsLoaderVisible(false);
+      setTodos(result);
+    } catch (error) {
+      console.error("Error fetching todos:", error);
+    }
   };
 
   useEffect(() => {

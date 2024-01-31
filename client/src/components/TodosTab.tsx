@@ -1,8 +1,6 @@
 import { useState } from "react";
-
 import Todo from "./Todo";
 import axios from "axios";
-
 import { ArrowUpDownIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -17,14 +15,17 @@ import {
 
 type TodoType = {
   id: number;
-  title: string;
+  user_id: string;
+  task: string;
   note: string;
-  pinned: boolean;
-  completed: boolean;
-  remind_date: Date;
+  priority: "none" | "low" | "medium" | "high";
+  location?: string;
+  attachment?: string;
+  is_complete: boolean;
+  is_pin: boolean;
   created_at: Date;
   updated_at: Date;
-  deleted_at: Date;
+  remind_at: Date;
 };
 
 type Props = {
@@ -65,7 +66,7 @@ const TodosTab = ({ todos, setTodos, isLoaderVisible }: Props) => {
           <TodoSkeleton isLoaderVisible={isLoaderVisible} />
           <TodoSkeleton isLoaderVisible={isLoaderVisible} />
           {todos
-            .filter((todo) => todo.pinned && !todo.completed)
+            .filter((todo) => todo.is_pin && !todo.is_complete)
             .map((todo) => (
               <Todo
                 key={todo.id}
@@ -75,24 +76,20 @@ const TodosTab = ({ todos, setTodos, isLoaderVisible }: Props) => {
               />
             ))}
           {todos
-            .filter((todo) => !todo.pinned && !todo.completed)
+            .filter((todo) => !todo.is_pin && !todo.is_complete)
             .sort((a, b) => {
-              if (sortByValue == "dateEdited") {
+              if (sortByValue === "dateEdited") {
                 return (
-                  new Date(
-                    b.updated_at != b.created_at ? b.updated_at : 0
-                  ).getTime() -
-                  new Date(
-                    a.updated_at != a.created_at ? a.updated_at : 0
-                  ).getTime()
+                  new Date(b.updated_at ?? b.created_at).getTime() -
+                  new Date(a.updated_at ?? a.created_at).getTime()
                 );
-              } else if (sortByValue == "dateCreated") {
+              } else if (sortByValue === "dateCreated") {
                 return (
                   new Date(b.created_at).getTime() -
                   new Date(a.created_at).getTime()
                 );
               } else {
-                return a.title.localeCompare(b.title);
+                return a.task.localeCompare(b.task);
               }
             })
             .map((todo) => (
@@ -117,17 +114,22 @@ const TodosTab = ({ todos, setTodos, isLoaderVisible }: Props) => {
         <Button
           className="rounded-full bg-primary text-special"
           onMouseUp={async (e) => {
-            if (todoInput == "") return;
+            if (todoInput === "") return;
 
             e.preventDefault();
             setTodoInput("");
-            const newTodo = await axios.post(
-              "https://todo-app-avvn.onrender.com/todos",
-              {
-                title: todoInput,
-              }
-            );
-            setTodos([...todos, newTodo.data]);
+            try {
+              const response = await axios.post(
+                "https://todo-app-avvn.onrender.com/todos",
+                {
+                  task: todoInput,
+                }
+              );
+              const newTodo = response.data;
+              setTodos([...todos, newTodo]);
+            } catch (error) {
+              console.error("Error adding todo:", error);
+            }
           }}
         >
           Add

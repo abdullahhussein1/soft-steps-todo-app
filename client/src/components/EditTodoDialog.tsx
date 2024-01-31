@@ -38,14 +38,17 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 type TodoType = {
   id: number;
-  title: string;
+  user_id: string;
+  task: string;
   note: string;
-  pinned: boolean;
-  completed: boolean;
-  remind_date: Date;
+  priority: "none" | "low" | "medium" | "high";
+  location?: string;
+  attachment?: string;
+  is_complete: boolean;
+  is_pin: boolean;
   created_at: Date;
   updated_at: Date;
-  deleted_at: Date;
+  remind_at: Date;
 };
 
 type Props = {
@@ -63,10 +66,10 @@ const EditTodoDialog = ({
   isOpen,
   setIsOpen,
 }: Props) => {
-  const [todoInput, setTodoInput] = useState(todo.title);
+  const [todoInput, setTodoInput] = useState(todo.task);
   const [todoNoteInput, setTodoNoteInput] = useState(todo.note);
   const [date, setDate] = React.useState<Date | undefined>(
-    todo.remind_date ? new Date(todo.remind_date) : undefined
+    todo.remind_at ? new Date(todo.remind_at) : undefined
   );
   const isDesktop = useMediaQuery("(min-width: 640px)");
 
@@ -143,32 +146,32 @@ const EditTodoDialog = ({
                     axios.put(
                       `https://todo-app-avvn.onrender.com/todos/${todo.id}`,
                       {
-                        title: todoInput,
+                        task: todoInput,
                         note: todoNoteInput,
-                        remind_date:
-                          date && date != todo.remind_date
+                        remind_at:
+                          date && date !== todo.remind_at
                             ? new Date(date)
                             : null,
                         updated_at:
-                          date != todo.remind_date ||
-                          todoInput != todo.title ||
-                          todoNoteInput != todo.note
+                          date !== todo.remind_at ||
+                          todoInput !== todo.task ||
+                          todoNoteInput !== todo.note
                             ? new Date()
                             : null,
                       }
                     );
                     const mappedTodos = todos.map((tdo) => {
-                      if (tdo.id == todo.id && date) {
+                      if (tdo.id === todo.id && date) {
                         return {
                           ...tdo,
-                          title: todoInput,
+                          task: todoInput,
                           note: todoNoteInput,
-                          remind_date: date,
+                          remind_at: date,
                         };
-                      } else if (tdo.id == todo.id) {
+                      } else if (tdo.id === todo.id) {
                         return {
                           ...tdo,
-                          title: todoInput,
+                          task: todoInput,
                           note: todoNoteInput,
                         };
                       }
@@ -261,32 +264,32 @@ const EditTodoDialog = ({
                     axios.put(
                       `https://todo-app-avvn.onrender.com/todos/${todo.id}`,
                       {
-                        title: todoInput,
+                        task: todoInput,
                         note: todoNoteInput,
-                        remind_date:
-                          date && date != todo.remind_date
+                        remind_at:
+                          date && date !== todo.remind_at
                             ? new Date(date)
                             : null,
                         updated_at:
-                          date != todo.remind_date ||
-                          todoInput != todo.title ||
-                          todoNoteInput != todo.note
+                          date !== todo.remind_at ||
+                          todoInput !== todo.task ||
+                          todoNoteInput !== todo.note
                             ? new Date()
                             : null,
                       }
                     );
                     const mappedTodos = todos.map((tdo) => {
-                      if (tdo.id == todo.id && date) {
+                      if (tdo.id === todo.id && date) {
                         return {
                           ...tdo,
-                          title: todoInput,
+                          task: todoInput,
                           note: todoNoteInput,
-                          remind_date: date,
+                          remind_at: date,
                         };
-                      } else if (tdo.id == todo.id) {
+                      } else if (tdo.id === todo.id) {
                         return {
                           ...tdo,
-                          title: todoInput,
+                          task: todoInput,
                           note: todoNoteInput,
                         };
                       }

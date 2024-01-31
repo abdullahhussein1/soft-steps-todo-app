@@ -1,30 +1,75 @@
-const Router = require("express").Router;
-const client = require("../../client");
+const { Router } = require("express");
+const { createClient } = require("@supabase/supabase-js");
+
+// Initialize Superbase client
+const supabaseUrl = "https://segqjlhodxcykvbdnqfd.supabase.co";
+const supabaseKey =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNlZ3FqbGhvZHhjeWt2YmRucWZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDYzNzcxMzcsImV4cCI6MjAyMTk1MzEzN30.LdpvQ9vD2JbPOK8h0Pjw5Z3ll3d4_c7Or_FNlNaNYEE";
+
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 const router = Router();
 
 // CREATE TODO
 router.post("/", async (req, res) => {
   try {
-    const { title } = req.body;
-    const newTodo = await client.query(
-      "INSERT INTO todo(title) VALUES($1) RETURNING *",
-      [title]
-    );
+    const {
+      user_id,
+      task,
+      note,
+      priority,
+      location,
+      attachment,
+      is_complete,
+      is_pin,
+      remind_at,
+    } = req.body;
+    const { data: newTodo, error } = await supabase
+      .from("todos")
+      .upsert(
+        [
+          {
+            user_id,
+            task,
+            note,
+            priority,
+            location,
+            attachment,
+            is_complete,
+            is_pin,
+            remind_at,
+          },
+        ],
+        { returning: "representation" }
+      );
 
-    res.status(201).json(newTodo.rows[0]);
+    if (error) {
+      throw error;
+    }
+
+    res.status(201).json(newTodo[0]);
   } catch (err) {
     console.error(err);
+    res.status(500).json({ error: err.message });
   }
 });
 
 // GET ALL TODOS
 router.get("/", async (req, res) => {
   try {
-    const results = await client.query("SELECT * FROM todo ORDER BY id");
-    res.json(results.rows);
+    const { data: todos, error } = await supabase
+      .from("todos")
+      .select("*")
+      .order("id", { ascending: true });
+
+    if (error) {
+      throw error;
+    }
+
+    res.json(todos);
   } catch (err) {
-    console.error("error executing query:", err);
+    console.error(err);
+    res.status(500).json({ error: err.message });
   }
 });
 
@@ -32,62 +77,64 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const todo = await client.query("SELECT * FROM todo WHERE id = $1", [id]);
+    const { data: todo, error } = await supabase
+      .from("todos")
+      .select("*")
+      .eq("id", id)
+      .single();
 
-    res.json(todo.rows[0]);
+    if (error) {
+      throw error;
+    }
+
+    res.json(todo);
   } catch (err) {
     console.error(err);
+    res.status(500).json({ error: err.message });
   }
 });
 
+// UPDATE TODO
 router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const {
-      title,
+      task,
       note,
-      pinned,
-      completed,
-      remind_date,
+      priority,
+      location,
+      attachment,
+      is_complete,
+      is_pin,
+      remind_at,
       updated_at,
       deleted_at,
     } = req.body;
 
-    const filteredUpdates = Object.fromEntries(
-      Object.entries({
-        title,
-        note,
-        pinned,
-        completed,
-        remind_date,
-        updated_at,
-        deleted_at,
-      }).filter(
-        ([key, value]) => value !== undefined && value !== null && value !== ""
-      )
+    const { data: updatedTodo, error } = await supabase.from("todos").upsert(
+      [
+        {
+          id,
+          task,
+          note,
+          priority,
+          location,
+          attachment,
+          is_complete,
+          is_pin,
+          remind_at,
+          updated_at,
+          deleted_at,
+        },
+      ],
+      { returning: "representation" }
     );
 
-    // Generate the SET clause for the SQL query
-    const setClause = Object.keys(filteredUpdates).map((key, index) => {
-      return `${key} = $${index + 1}`;
-    });
+    if (error) {
+      throw error;
+    }
 
-    const updateQuery = {
-      text: `UPDATE todo SET ${setClause.join(",")} WHERE id = $${
-        Object.keys(filteredUpdates).length + 1
-      } RETURNING *`,
-      values: [...Object.values(filteredUpdates), id],
-    };
-
-    const result = await client.query(updateQuery);
-
-    // Determine which fields were updated
-    const updatedFields = Object.keys(filteredUpdates);
-
-    res.json({
-      msg: `${updatedFields.join(", ")} updated`,
-      result: result.rows[0],
-    });
+    res.json(updatedTodo[0]);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });
@@ -98,15 +145,20 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
+    const { data: deletedTodo, error } = await supabase
+      .from("todos")
+      .delete()
+      .eq("id", id)
+      .single();
 
-    const deletedTodo = await client.query(
-      "DELETE FROM todo WHERE id = $1 RETURNING *",
-      [id]
-    );
+    if (error) {
+      throw error;
+    }
 
-    res.json(deletedTodo.rows[0]);
+    res.json(deletedTodo);
   } catch (err) {
     console.error(err);
+    res.status(500).json({ error: err.message });
   }
 });
 

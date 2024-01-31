@@ -15,14 +15,17 @@ import { Checkbox } from "./ui/checkbox";
 
 type TodoType = {
   id: number;
-  title: string;
+  user_id: string;
+  task: string;
   note: string;
-  pinned: boolean;
-  completed: boolean;
-  remind_date: Date;
+  priority: "none" | "low" | "medium" | "high";
+  location?: string;
+  attachment?: string;
+  is_complete: boolean;
+  is_pin: boolean;
   created_at: Date;
   updated_at: Date;
-  deleted_at: Date;
+  remind_at: Date;
 };
 
 type Props = {
@@ -32,19 +35,18 @@ type Props = {
 };
 
 const Todo = ({ todo, todos, setTodos }: Props) => {
-  const [isPinned, setIsPinned] = useState<boolean>(todo.pinned);
-  const [isChecked, setIsChecked] = useState<boolean>(todo.completed);
+  const [isPinned, setIsPinned] = useState<boolean>(todo.is_pin);
+  const [isChecked, setIsChecked] = useState<boolean>(todo.is_complete);
   const [isOpen, setIsOpen] = useState(false);
 
   const isRemindDatePassed =
-    new Date(todo.remind_date) < new Date() &&
-    !isToday(new Date(todo.remind_date));
+    new Date(todo.remind_at) < new Date() && !isToday(new Date(todo.remind_at));
 
   const formatRemindDate = (remindDate: Date) => {
     if (isToday(remindDate)) {
       return "today";
     } else if (isRemindDatePassed) {
-      return formatDistanceToNow(new Date(todo.remind_date), {
+      return formatDistanceToNow(new Date(todo.remind_at), {
         addSuffix: true,
       });
     } else if (isTomorrow(remindDate)) {
@@ -64,7 +66,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
         "shrink-0 border-[0.7px] p-3 rounded-xl flex justify-between  overflow-clip",
         isPinned && "bg-secondary",
         isChecked &&
-          !todo.completed &&
+          !todo.is_complete &&
           "delay-1000 translate-x-48 duration-700 transition-all",
       ].join(" ")}
     >
@@ -72,7 +74,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
         className={[
           "flex items-start gap-2 flex-auto",
           isChecked &&
-            !todo.completed &&
+            !todo.is_complete &&
             "delay-1000 translate-x-48 duration-700 transition-all",
         ].join(" ")}
       >
@@ -81,18 +83,18 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
           checked={isChecked}
           onCheckedChange={() => {
             axios.put(`https://todo-app-avvn.onrender.com/todos/${todo.id}`, {
-              completed: !todo.completed,
+              is_complete: !todo.is_complete,
             });
-            if (!todo.completed) {
+            if (!todo.is_complete) {
               setTimeout(
                 () =>
                   setTodos((prevTodos) =>
                     prevTodos.map((tdo) => {
-                      if (tdo.id == todo.id) {
+                      if (tdo.id === todo.id) {
                         return {
                           ...tdo,
-                          completed: !tdo.completed,
-                          pinned: false,
+                          is_complete: !tdo.is_complete,
+                          is_pin: false,
                         };
                       }
                       return tdo;
@@ -103,10 +105,10 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
             } else {
               setTodos((prevTodos) =>
                 prevTodos.map((tdo) => {
-                  if (tdo.id == todo.id) {
+                  if (tdo.id === todo.id) {
                     return {
                       ...tdo,
-                      completed: !tdo.completed,
+                      is_complete: !tdo.is_complete,
                     };
                   }
                   return tdo;
@@ -120,10 +122,10 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
         <div
           className={[
             "flex flex-col flex-auto gap-2",
-            !todo.completed && "cursor-pointer",
+            !todo.is_complete && "cursor-pointer",
           ].join(" ")}
           onClick={() => {
-            if (todo.completed) return;
+            if (todo.is_complete) return;
             setIsOpen(true);
           }}
         >
@@ -134,9 +136,9 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
             ].join(" ")}
             key={todo.id}
           >
-            {todo.title}
+            {todo.task}
           </p>
-          {!todo.completed && todo.remind_date && (
+          {!todo.is_complete && todo.remind_at && (
             <div
               className={[
                 "flex items-center gap-[3px] text-xs text-foreground/70",
@@ -145,7 +147,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
             >
               <Calendar size={12} />
               <p className="leading-none">
-                {formatRemindDate(new Date(todo.remind_date))}
+                {formatRemindDate(new Date(todo.remind_at))}
               </p>
             </div>
           )}
@@ -171,13 +173,13 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
           ].join(" ")}
           onClick={() => {
             axios.put(`https://todo-app-avvn.onrender.com/todos/${todo.id}`, {
-              pinned: !todo.pinned,
+              is_pin: !todo.is_pin,
             });
             const mapTodos = todos.map((tdo) => {
-              if (tdo.id == todo.id) {
+              if (tdo.id === todo.id) {
                 return {
                   ...tdo,
-                  pinned: !tdo.pinned,
+                  is_pin: !tdo.is_pin,
                 };
               }
               return tdo;
