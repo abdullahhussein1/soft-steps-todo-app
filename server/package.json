@@ -2,10 +2,12 @@
   "name": "server",
   "version": "1.0.0",
   "title": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "start": "node index",
-    "dev": "nodemon index"
+    "start": "node dist/index.js",
+    "dev": "nodemon src/index.ts",
+    "build": "tsc",
+    "start:dev": "npm run build && nodemon dist/index.js"
   },
   "keywords": [],
   "author": "",
@@ -18,5 +20,12 @@
     "nodemon": "^3.0.2",
     "pg": "^8.11.3",
     "tz": "^0.1.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.15",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
   }
 }
