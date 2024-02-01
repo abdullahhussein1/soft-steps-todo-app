@@ -26,7 +26,7 @@ router.post("/", async (req, res) => {
     } = req.body;
     const { data: newTodo, error } = await supabase
       .from("todos")
-      .upsert({
+      .insert({
         user_id,
         task,
         note,
