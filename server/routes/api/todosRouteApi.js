@@ -26,22 +26,18 @@ router.post("/", async (req, res) => {
     } = req.body;
     const { data: newTodo, error } = await supabase
       .from("todos")
-      .upsert(
-        [
-          {
-            user_id,
-            task,
-            note,
-            priority,
-            location,
-            attachment,
-            is_complete,
-            is_pin,
-            remind_at,
-          },
-        ],
-        { returning: "representation" }
-      );
+      .upsert({
+        user_id,
+        task,
+        note,
+        priority,
+        location,
+        attachment,
+        is_complete,
+        is_pin,
+        remind_at,
+      })
+      .select();
 
     if (error) {
       throw error;
@@ -66,7 +62,11 @@ router.get("/", async (req, res) => {
       throw error;
     }
 
-    res.json(todos);
+    if (todos !== null) {
+      res.json(todos);
+    } else {
+      res.json([]);
+    }
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });
@@ -111,8 +111,9 @@ router.put("/:id", async (req, res) => {
       deleted_at,
     } = req.body;
 
-    const { data: updatedTodo, error } = await supabase.from("todos").upsert(
-      [
+    const { data: updatedTodo, error } = await supabase
+      .from("todos")
+      .upsert([
         {
           id,
           task,
@@ -126,9 +127,8 @@ router.put("/:id", async (req, res) => {
           updated_at,
           deleted_at,
         },
-      ],
-      { returning: "representation" }
-    );
+      ])
+      .select();
 
     if (error) {
       throw error;
