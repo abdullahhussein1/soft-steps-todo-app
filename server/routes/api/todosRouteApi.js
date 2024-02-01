@@ -113,7 +113,7 @@ router.put("/:id", async (req, res) => {
 
     const { data: updatedTodo, error } = await supabase
       .from("todos")
-      .upsert([
+      .update([
         {
           id,
           task,
@@ -128,6 +128,7 @@ router.put("/:id", async (req, res) => {
           deleted_at,
         },
       ])
+      .eq("id", id)
       .select();
 
     if (error) {
