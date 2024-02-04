@@ -20,8 +20,8 @@ type Todo = {
 };
 
 // Initialize Supabase client
-const supabaseUrl = process.env.SUPERBASE_URL!;
-const supabaseKey = process.env.SUPERBASE_KEY!;
+const supabaseUrl = process.env.DATABASE_API_URL!;
+const supabaseKey = process.env.DATABASE_API_KEY!;
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
