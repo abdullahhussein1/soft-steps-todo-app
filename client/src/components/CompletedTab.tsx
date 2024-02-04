@@ -18,8 +18,6 @@ type TodoType = {
   remind_at: Date;
 };
 
-console.log(import.meta.env.VITE_API_BASE_URL);
-
 type Props = {
   todos: TodoType[];
   setTodos: React.Dispatch<React.SetStateAction<TodoType[]>>;
