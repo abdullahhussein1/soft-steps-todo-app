@@ -1,8 +1,6 @@
 import { Router, Request, Response } from "express";
 import { createClient, PostgrestResponse } from "@supabase/supabase-js";
-import dotenv from "dotenv";
-
-dotenv.config();
+import "dotenv/config";
 
 type Todo = {
   id: number;

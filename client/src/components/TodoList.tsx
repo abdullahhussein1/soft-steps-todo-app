@@ -6,8 +6,6 @@ import CompletedTab from "./CompletedTab";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import "dotenv/config";
-
 type TodoType = {
   id: number;
   user_id: string;
@@ -29,7 +27,9 @@ const TodoList = () => {
 
   const fetchTodos = async () => {
     try {
-      const response = await axios.get(`${process.env.API_BASE_URL}/todos`);
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/todos`
+      );
       const result = response.data;
       setIsLoaderVisible(false);
       setTodos(result);

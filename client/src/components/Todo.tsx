@@ -13,8 +13,6 @@ import {
 } from "date-fns";
 import { Checkbox } from "./ui/checkbox";
 
-import "dotenv/config";
-
 type TodoType = {
   id: number;
   user_id: string;
@@ -84,7 +82,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
           className={"accent-foreground"}
           checked={isChecked}
           onCheckedChange={() => {
-            axios.put(`${process.env.API_BASE_URL}/todos/${todo.id}`, {
+            axios.put(`${import.meta.env.VITE_API_BASE_URL}/todos/${todo.id}`, {
               is_complete: !todo.is_complete,
             });
             if (!todo.is_complete) {
@@ -174,7 +172,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
               : "text-foreground/50  hover:text-foreground/90",
           ].join(" ")}
           onClick={() => {
-            axios.put(`${process.env.API_BASE_URL}/todos/${todo.id}`, {
+            axios.put(`${import.meta.env.VITE_API_BASE_URL}/todos/${todo.id}`, {
               is_pin: !todo.is_pin,
             });
             const mapTodos = todos.map((tdo) => {

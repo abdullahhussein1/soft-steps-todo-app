@@ -13,8 +13,6 @@ import {
   SelectTrigger,
 } from "@/components/ui/select";
 
-import "dotenv/config";
-
 type TodoType = {
   id: number;
   user_id: string;
@@ -122,7 +120,7 @@ const TodosTab = ({ todos, setTodos, isLoaderVisible }: Props) => {
             setTodoInput("");
             try {
               const response = await axios.post(
-                `${process.env.API_BASE_URL}/todos`,
+                `${import.meta.env.VITE_API_BASE_URL}/todos`,
                 {
                   task: todoInput,
                 }
