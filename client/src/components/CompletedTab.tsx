@@ -1,6 +1,8 @@
 import Todo from "./Todo";
 import axios from "axios";
 
+import "dotenv/config";
+
 import { Trash } from "lucide-react";
 
 type TodoType = {
@@ -40,7 +42,7 @@ const CompletedTab = ({ todos, setTodos }: Props) => {
 
               for (const todo of completedTodos) {
                 await axios.delete(
-                  `https://todo-app-avvn.onrender.com/todos/${todo.id}`
+                  `${process.env.API_BASE_URL}/todos/${todo.id}`
                 );
               }
             }

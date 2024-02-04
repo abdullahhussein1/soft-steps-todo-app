@@ -36,6 +36,8 @@ import {
 } from "@/components/ui/popover";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
+import "dotenv/config";
+
 type TodoType = {
   id: number;
   user_id: string;
@@ -143,23 +145,18 @@ const EditTodoDialog = ({
                   className="rounded-full bg-primary text-special sm:order-2 flex-auto w-full "
                   onMouseUp={(e) => {
                     e.preventDefault();
-                    axios.put(
-                      `https://todo-app-avvn.onrender.com/todos/${todo.id}`,
-                      {
-                        task: todoInput,
-                        note: todoNoteInput,
-                        remind_at:
-                          date && date !== todo.remind_at
-                            ? new Date(date)
-                            : null,
-                        updated_at:
-                          date !== todo.remind_at ||
-                          todoInput !== todo.task ||
-                          todoNoteInput !== todo.note
-                            ? new Date()
-                            : null,
-                      }
-                    );
+                    axios.put(`${process.env.API_BASE_URL}/todos/${todo.id}`, {
+                      task: todoInput,
+                      note: todoNoteInput,
+                      remind_at:
+                        date && date !== todo.remind_at ? new Date(date) : null,
+                      updated_at:
+                        date !== todo.remind_at ||
+                        todoInput !== todo.task ||
+                        todoNoteInput !== todo.note
+                          ? new Date()
+                          : null,
+                    });
                     const mappedTodos = todos.map((tdo) => {
                       if (tdo.id === todo.id && date) {
                         return {
@@ -261,23 +258,18 @@ const EditTodoDialog = ({
                   className="rounded-full bg-primary text-special sm:order-2 flex-auto w-full "
                   onMouseUp={(e) => {
                     e.preventDefault();
-                    axios.put(
-                      `https://todo-app-avvn.onrender.com/todos/${todo.id}`,
-                      {
-                        task: todoInput,
-                        note: todoNoteInput,
-                        remind_at:
-                          date && date !== todo.remind_at
-                            ? new Date(date)
-                            : null,
-                        updated_at:
-                          date !== todo.remind_at ||
-                          todoInput !== todo.task ||
-                          todoNoteInput !== todo.note
-                            ? new Date()
-                            : null,
-                      }
-                    );
+                    axios.put(`${process.env.API_BASE_URL}/todos/${todo.id}`, {
+                      task: todoInput,
+                      note: todoNoteInput,
+                      remind_at:
+                        date && date !== todo.remind_at ? new Date(date) : null,
+                      updated_at:
+                        date !== todo.remind_at ||
+                        todoInput !== todo.task ||
+                        todoNoteInput !== todo.note
+                          ? new Date()
+                          : null,
+                    });
                     const mappedTodos = todos.map((tdo) => {
                       if (tdo.id === todo.id && date) {
                         return {
