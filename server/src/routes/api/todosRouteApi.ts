@@ -21,8 +21,7 @@ type Todo = {
 
 // Initialize Supabase client
 const supabaseUrl = "https://segqjlhodxcykvbdnqfd.supabase.co";
-const supabaseKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNlZ3FqbGhvZHhjeWt2YmRucWZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDYzNzcxMzcsImV4cCI6MjAyMTk1MzEzN30.LdpvQ9vD2JbPOK8h0Pjw5Z3ll3d4_c7Or_FNlNaNYEE";
+const supabaseKey = process.env.DATABASE_KEY!;
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
