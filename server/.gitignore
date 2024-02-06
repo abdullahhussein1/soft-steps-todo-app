@@ -1,1 +1,32 @@
+# Node.js
+node_modules/
+
+# Dependency directories
+/coverage
+/dist
+/build
+
+# Express
 .env
+
+# Editor-specific files
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+
+# Miscellaneous
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
