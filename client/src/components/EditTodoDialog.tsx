@@ -109,7 +109,6 @@ const EditTodoDialog = ({
                   })}
               </p>
             )}
-
             <Popover>
               <PopoverTrigger asChild>
                 <Button
