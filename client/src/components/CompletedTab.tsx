@@ -29,7 +29,7 @@ const CompletedTab = ({ todos, setTodos }: Props) => {
       <div className="flex justify-between mt-4 border-b-[2px] h-12 items-center">
         <h1 className="font-bold text-lg">Completed</h1>
         <button
-          className="flex gap-[6px] w-20 h-7 items-center hover:bg-red-400/10 px-2 rounded-full hover:text-red-500 transition-all"
+          className="flex gap-[6px] w-20 h-7 items-center rounded-full hover:bg-red-400/10 px-2 hover:text-red-500 transition-all"
           onClick={async () => {
             const completedTodos = todos.filter((todo) => todo.is_complete);
 

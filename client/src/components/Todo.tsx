@@ -2,7 +2,17 @@ import { useState } from "react";
 import axios from "axios";
 import EditTodoDialog from "./EditTodoDialog";
 import { Star } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
+import { Trash } from "lucide-react";
+import { Edit } from "lucide-react";
 import { Calendar } from "lucide-react";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 import {
   format,
@@ -61,7 +71,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
   return (
     <div
       key={todo.id}
-      // draggable={true}s
+      // draggable={true}
       className={[
         "shrink-0 border-[0.7px] p-3 rounded-xl flex justify-between  overflow-clip",
         isPinned && "bg-secondary",
@@ -160,35 +170,60 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
         isOpen={isOpen}
         setIsOpen={setIsOpen}
       />
-      <div>
-        <Star
-          size={15}
-          className={[
-            "flex-initial cursor-pointer mt-[1px]",
-            isChecked
-              ? "hidden"
-              : isPinned
-              ? "text-yellow-500 fill-yellow-500  hover:text-yellow-600 hover:fill-yellow-600"
-              : "text-foreground/50  hover:text-foreground/90",
-          ].join(" ")}
-          onClick={() => {
-            axios.put(`${import.meta.env.VITE_API_BASE_URL}/todos/${todo.id}`, {
-              is_pin: !todo.is_pin,
-            });
-            const mapTodos = todos.map((tdo) => {
-              if (tdo.id === todo.id) {
-                return {
-                  ...tdo,
-                  is_pin: !tdo.is_pin,
-                };
-              }
-              return tdo;
-            });
-            setTodos(mapTodos);
-            setIsPinned(!isPinned);
-          }}
-        />
-      </div>
+      <DropdownMenu>
+        <DropdownMenuTrigger className="flex-initial self-start">
+          <MoreHorizontal size={13} />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="flex flex-col w-fit p-2 rounded-xl">
+          <DropdownMenuItem
+            className={["flex gap-2", isChecked && "hidden"].join(" ")}
+            onClick={() => {
+              axios.put(
+                `${import.meta.env.VITE_API_BASE_URL}/todos/${todo.id}`,
+                {
+                  is_pin: !todo.is_pin,
+                }
+              );
+              const mapTodos = todos.map((tdo) => {
+                if (tdo.id === todo.id) {
+                  return {
+                    ...tdo,
+                    is_pin: !tdo.is_pin,
+                  };
+                }
+                return tdo;
+              });
+              setTodos(mapTodos);
+              setIsPinned(!isPinned);
+            }}
+          >
+            <Star size={15} className={[isPinned && "fill-current"].join()} />
+            <p>{isPinned ? "Unstar" : "Star"}</p>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className={["flex gap-2", isChecked && "hidden"].join(" ")}
+            onClick={() => {
+              setIsOpen(true);
+            }}
+          >
+            <Edit size={15} />
+            <p>Edit</p>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="flex gap-2"
+            onClick={() => {
+              axios.delete(
+                `${import.meta.env.VITE_API_BASE_URL}/todos/${todo.id}`
+              );
+              const filterTodos = todos.filter((tdo) => tdo.id !== todo.id);
+              setTodos(filterTodos);
+            }}
+          >
+            <Trash size={15} />
+            <p>Delete</p>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   );
 };
