@@ -23,10 +23,28 @@ import useTheme from "@/hooks/useTheme";
 
 import AppIconContent from "./AppIconContent";
 import ColorThemeContent from "./ColorThemeContent";
+import { User } from "@supabase/supabase-js";
+import supabase from "@/supabase/supabase";
+import { useNavigate } from "react-router-dom";
 
-const EditTodoDialog = () => {
+type props = {
+  user: User | null;
+};
+
+const Menu = ({ user }: props) => {
   const { theme } = useTheme();
   const isDesktop = useMediaQuery("(min-width: 640px)");
+  const navigate = useNavigate();
+
+  async function signOutUser() {
+    try {
+      await supabase.auth.signOut();
+      localStorage.removeItem("supabase.auth.token");
+      navigate("/auth");
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  }
 
   if (isDesktop) {
     return (
@@ -51,9 +69,9 @@ const EditTodoDialog = () => {
                 ].join(" ")}
               >
                 <div className="w-20 h-20 rounded-full overflow-clip border-2">
-                  <img src={profileImage} />
+                  <img src={user?.user_metadata.avatar_url} />
                 </div>
-                <p>Abdullah Hussein</p>
+                <p>{user?.user_metadata.full_name}</p>
               </div>
               <div className="flex flex-col w-full space-y-2">
                 <p className="text-lg font-bold self-start">Appearance</p>
@@ -131,7 +149,7 @@ const EditTodoDialog = () => {
                 <div className="w-20 h-20 rounded-full overflow-clip border-2">
                   <img src={profileImage} />
                 </div>
-                <p>Abdullah Hussein</p>
+                <p>{user?.user_metadata.full_name}</p>
               </div>
               <div className="flex flex-col w-full space-y-2">
                 <p className="text-lg font-bold self-start">Appearance</p>
@@ -175,6 +193,7 @@ const EditTodoDialog = () => {
                     ? "bg-secondary/25 text-red-700 hover:bg-red-400/5"
                     : "bg-background text-red-500 hover:bg-red-100",
                 ].join(" ")}
+                onClick={() => signOutUser()}
               >
                 <LogOutIcon size={18} />
                 <p>Log Out</p>
@@ -187,4 +206,4 @@ const EditTodoDialog = () => {
   }
 };
 
-export default EditTodoDialog;
+export default Menu;

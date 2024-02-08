@@ -5,23 +5,15 @@ import TodosTab from "./TodosTab";
 import CompletedTab from "./CompletedTab";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { User } from "@supabase/supabase-js";
 
-type TodoType = {
-  id: number;
-  user_id: string;
-  task: string;
-  note: string;
-  priority: "none" | "low" | "medium" | "high";
-  location?: string;
-  attachment?: string;
-  is_complete: boolean;
-  is_pin: boolean;
-  created_at: Date;
-  updated_at: Date;
-  remind_at: Date;
+import TodoType from "@/types/TodoType";
+
+type props = {
+  user: User | null;
 };
 
-const TodoList = () => {
+const TodoList = ({ user }: props) => {
   const [todos, setTodos] = useState<TodoType[]>([]);
   const [isLoaderVisible, setIsLoaderVisible] = useState<boolean>(true);
 
