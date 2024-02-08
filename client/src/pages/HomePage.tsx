@@ -1,38 +1,13 @@
 import Menu from "../components/Menu";
 import TodoList from "../components/TodoList";
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { createClient, User } from "@supabase/supabase-js";
-
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL as string,
-  import.meta.env.VITE_SUPABASE_KEY as string
-);
+import { User } from "@supabase/supabase-js";
+import supabase from "@/supabase/supabase";
 
 const TodoApp = () => {
   const [user, setUser] = React.useState<User | null>(null);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const { data: userData, error } = await supabase.auth.getUser();
-        if (userData) {
-          setUser(userData.user);
-        } else {
-          console.error("Error fetching user:", error);
-          // Redirect to the authentication page if the user is not signed in
-          navigate("/auth");
-        }
-      } catch (error) {
-        console.error("Error fetching user:", error);
-        // Redirect to the authentication page in case of an error
-        navigate("/auth");
-      }
-    };
-
-    fetchUser();
-  }, [navigate]);
 
   React.useEffect(() => {
     const fetchUser = async () => {
@@ -42,13 +17,19 @@ const TodoApp = () => {
       } = await supabase.auth.getUser();
       if (user) {
         setUser(user);
+        console.log(user);
       } else {
         console.error("Error fetching user:", error);
+        navigate("/auth");
       }
     };
 
     fetchUser();
-  }, []);
+  }, [navigate]);
+
+  if (!user) {
+    return <div className="bg-neutral-900/50"></div>;
+  }
 
   return (
     <div className="h-[100dvh] flex flex-col bg-secondary justify-center items-center">
@@ -57,7 +38,7 @@ const TodoApp = () => {
           <Menu user={user} />
         </div>
         <div className="container bg-background shadow-2xl shadow-gray-950/20 rounded-[30px] h-[590px] max-w-xl flex flex-col p-5">
-          <TodoList user={user} />
+          <TodoList />
         </div>
       </div>
     </div>

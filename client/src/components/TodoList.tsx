@@ -5,15 +5,9 @@ import TodosTab from "./TodosTab";
 import CompletedTab from "./CompletedTab";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { User } from "@supabase/supabase-js";
-
 import TodoType from "@/types/TodoType";
 
-type props = {
-  user: User | null;
-};
-
-const TodoList = ({ user }: props) => {
+const TodoList = () => {
   const [todos, setTodos] = useState<TodoType[]>([]);
   const [isLoaderVisible, setIsLoaderVisible] = useState<boolean>(true);
 

@@ -1,7 +1,5 @@
 import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 
-import profileImage from "@/assets/images/profile-test.jpg";
-
 import {
   Accordion,
   AccordionContent,
@@ -147,7 +145,7 @@ const Menu = ({ user }: props) => {
                 ].join(" ")}
               >
                 <div className="w-20 h-20 rounded-full overflow-clip border-2">
-                  <img src={profileImage} />
+                  <img src={user?.user_metadata.avatar_url} />
                 </div>
                 <p>{user?.user_metadata.full_name}</p>
               </div>
