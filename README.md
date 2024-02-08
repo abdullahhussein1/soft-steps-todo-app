@@ -55,8 +55,9 @@ Let Soft Steps be your mindful assistant, making your todo list a breeze to navi
    ```env
    VITE_SUPABASE_URL=<your_supabase_url>
    VITE_SUPABASE_KEY=<your_supabase_key>
+   VITE_API_BASE_URL=<your_api_base_url>
    ```
-   Replace `<your_supabase_url>` and `<your_supabase_key>` with your Supabase project URL and key.
+   Replace `<your_supabase_url>` and `<your_supabase_key>` with your Supabase project URL and key, and `<your_api_base_url>` with your server's base URL.
 
 4. **Start the client:**
    ```bash
