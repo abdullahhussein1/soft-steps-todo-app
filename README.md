@@ -72,3 +72,4 @@ Let Soft Steps be your mindful assistant, making your todo list a breeze to navi
 ### Additional Notes:
 
 - The server is running on port `<your_preferred_server_port>` as specified in your `.env` file.
+- Avoid appending additional slashes `/` to the end of the `.env` variables.
