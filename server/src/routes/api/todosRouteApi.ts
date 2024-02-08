@@ -71,11 +71,13 @@ router.post("/", async (req: Request, res: Response) => {
 });
 
 // GET ALL TODOS
-router.get("/", async (_req: Request, res: Response) => {
+router.get("/", async (req: Request, res: Response) => {
   try {
+    const { user_id } = req.query; // Use req.query to get the query parameters
     const { data: todos, error }: PostgrestResponse<Todo[]> = await supabase
       .from("todos")
       .select("*")
+      .eq("user_id", user_id)
       .order("id", { ascending: true });
 
     if (error) {

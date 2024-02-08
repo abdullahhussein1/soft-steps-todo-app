@@ -17,7 +17,7 @@ const TodoApp = () => {
       } = await supabase.auth.getUser();
       if (user) {
         setUser(user);
-        console.log(user);
+        console.log(user.id);
       } else {
         console.error("Error fetching user:", error);
         navigate("/auth");
@@ -38,7 +38,7 @@ const TodoApp = () => {
           <Menu user={user} />
         </div>
         <div className="container bg-background shadow-2xl shadow-gray-950/20 rounded-[30px] h-[590px] max-w-xl flex flex-col p-5">
-          <TodoList />
+          <TodoList user={user} />
         </div>
       </div>
     </div>

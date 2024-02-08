@@ -6,16 +6,27 @@ import CompletedTab from "./CompletedTab";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import TodoType from "@/types/TodoType";
+import { User } from "@supabase/supabase-js";
 
-const TodoList = () => {
+type params = {
+  user: User | null;
+};
+
+const TodoList = ({ user }: params) => {
   const [todos, setTodos] = useState<TodoType[]>([]);
   const [isLoaderVisible, setIsLoaderVisible] = useState<boolean>(true);
 
   const fetchTodos = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/todos`
+        `${import.meta.env.VITE_API_BASE_URL}/todos`,
+        {
+          params: {
+            user_id: user?.id,
+          },
+        }
       );
+
       const result = response.data;
       setIsLoaderVisible(false);
       setTodos(result);
@@ -26,7 +37,7 @@ const TodoList = () => {
 
   useEffect(() => {
     fetchTodos();
-  }, []);
+  });
 
   return (
     <Tabs defaultValue="Todos">
