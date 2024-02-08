@@ -13,5 +13,5 @@ app.use("/todos", todosRoute);
 
 // Start the server
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`➜  Local:   \x1b[36mhttp://localhost:${PORT}/\x1b[0m`);
 });
