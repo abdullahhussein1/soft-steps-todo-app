@@ -5,7 +5,7 @@ import { ThemeSupa } from "@supabase/auth-ui-shared";
 
 const AuthenticationPage: React.FC = () => {
   return (
-    <div className="p-5 bg-neutral-900/50 flex items-center  justify-center h-screen">
+    <div className="p-5 bg-neutral-900 flex items-center  justify-center h-screen">
       <div className="bg-black max-w-xl w-full p-5 rounded-3xl">
         <Auth
           supabaseClient={supabase}

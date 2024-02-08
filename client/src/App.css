@@ -379,10 +379,6 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-body {
-  background-color: black;
-}
-
 /* width */
 ::-webkit-scrollbar {
   width: 3px;
