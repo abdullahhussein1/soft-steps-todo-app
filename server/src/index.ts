@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use("/todos", todosRoute);
+app.use("/api/todos", todosRoute);
 
 // Start the server
 app.listen(PORT, () => {

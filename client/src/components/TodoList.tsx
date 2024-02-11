@@ -19,7 +19,7 @@ const TodoList = ({ user }: params) => {
   const fetchTodos = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/todos`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/todos`,
         {
           params: {
             user_id: user?.id,

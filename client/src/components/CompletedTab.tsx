@@ -27,7 +27,7 @@ const CompletedTab = ({ todos, setTodos }: Props) => {
 
               for (const todo of completedTodos) {
                 await axios.delete(
-                  `${import.meta.env.VITE_API_BASE_URL}/todos/${todo.id}`
+                  `${import.meta.env.VITE_API_BASE_URL}/api/todos/${todo.id}`
                 );
               }
             }

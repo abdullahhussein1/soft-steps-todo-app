@@ -107,7 +107,7 @@ const TodosTab = ({ todos, setTodos, isLoaderVisible }: Props) => {
             setTodoInput("");
             try {
               const response = await axios.post(
-                `${import.meta.env.VITE_API_BASE_URL}/todos`,
+                `${import.meta.env.VITE_API_BASE_URL}/api/todos`,
                 {
                   task: todoInput,
                 }

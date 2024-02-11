@@ -79,9 +79,12 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
           className={"accent-foreground"}
           checked={isChecked}
           onCheckedChange={() => {
-            axios.put(`${import.meta.env.VITE_API_BASE_URL}/todos/${todo.id}`, {
-              is_complete: !todo.is_complete,
-            });
+            axios.put(
+              `${import.meta.env.VITE_API_BASE_URL}/api/todos/${todo.id}`,
+              {
+                is_complete: !todo.is_complete,
+              }
+            );
             if (!todo.is_complete) {
               setTimeout(
                 () =>
@@ -168,7 +171,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
             className={["flex gap-2", isChecked && "hidden"].join(" ")}
             onClick={() => {
               axios.put(
-                `${import.meta.env.VITE_API_BASE_URL}/todos/${todo.id}`,
+                `${import.meta.env.VITE_API_BASE_URL}/api/todos/${todo.id}`,
                 {
                   is_pin: !todo.is_pin,
                 }
@@ -202,7 +205,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
             className="flex gap-2"
             onClick={() => {
               axios.delete(
-                `${import.meta.env.VITE_API_BASE_URL}/todos/${todo.id}`
+                `${import.meta.env.VITE_API_BASE_URL}/api/todos/${todo.id}`
               );
               const filterTodos = todos.filter((tdo) => tdo.id !== todo.id);
               setTodos(filterTodos);

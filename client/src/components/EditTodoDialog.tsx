@@ -130,7 +130,7 @@ const EditTodoDialog = ({
                   onMouseUp={(e) => {
                     e.preventDefault();
                     axios.put(
-                      `${import.meta.env.VITE_API_BASE_URL}/todos/${todo.id}`,
+                      `${import.meta.env.VITE_API_BASE_URL}/api/todos/${todo.id}`,
                       {
                         task: todoInput,
                         note: todoNoteInput,
@@ -248,7 +248,7 @@ const EditTodoDialog = ({
                   onMouseUp={(e) => {
                     e.preventDefault();
                     axios.put(
-                      `${import.meta.env.VITE_API_BASE_URL}/todos/${todo.id}`,
+                      `${import.meta.env.VITE_API_BASE_URL}/api/todos/${todo.id}`,
                       {
                         task: todoInput,
                         note: todoNoteInput,
