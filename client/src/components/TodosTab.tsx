@@ -14,14 +14,16 @@ import {
 } from "@/components/ui/select";
 
 import TodoType from "@/types/TodoType";
+import UserType from "@/types/UserType";
 
 type Props = {
   todos: TodoType[];
   setTodos: React.Dispatch<React.SetStateAction<TodoType[]>>;
+  user: UserType;
   isLoaderVisible: boolean;
 };
 
-const TodosTab = ({ todos, setTodos, isLoaderVisible }: Props) => {
+const TodosTab = ({ todos, setTodos, user, isLoaderVisible }: Props) => {
   const [todoInput, setTodoInput] = useState<string>("");
   const [sortByValue, setSortByValue] = useState<string>("dateEdited");
 
@@ -40,7 +42,7 @@ const TodosTab = ({ todos, setTodos, isLoaderVisible }: Props) => {
                 <ArrowUpDownIcon size={13} />
               </div>
             </SelectTrigger>
-            <SelectContent className="flex flex-col w-fit p-2 rounded-xl text-foreground/80">
+            <SelectContent className="flex flex-col w-fit rounded-xl text-foreground/80">
               <SelectGroup>
                 <SelectItem value="dateEdited">Date Edited</SelectItem>
                 <SelectItem value="dateCreated">Date Created</SelectItem>
@@ -110,6 +112,7 @@ const TodosTab = ({ todos, setTodos, isLoaderVisible }: Props) => {
                 `${import.meta.env.VITE_API_BASE_URL}/api/todos`,
                 {
                   task: todoInput,
+                  user_id: user?.id,
                 }
               );
               const newTodo = response.data;

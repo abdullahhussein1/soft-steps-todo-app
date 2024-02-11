@@ -88,7 +88,7 @@ const EditTodoDialog = ({
               id="note"
             />
 
-            {todo.updated_at !== todo.created_at && (
+            {todo.updated_at && (
               <p className=" text-foreground/70 font-light text-[13px]">
                 {"edited " +
                   formatDistanceToNow(new Date(todo.updated_at), {
@@ -130,7 +130,9 @@ const EditTodoDialog = ({
                   onMouseUp={(e) => {
                     e.preventDefault();
                     axios.put(
-                      `${import.meta.env.VITE_API_BASE_URL}/api/todos/${todo.id}`,
+                      `${import.meta.env.VITE_API_BASE_URL}/api/todos/${
+                        todo.id
+                      }`,
                       {
                         task: todoInput,
                         note: todoNoteInput,
@@ -205,7 +207,7 @@ const EditTodoDialog = ({
               id="note"
             />
 
-            {todo.updated_at !== todo.created_at && (
+            {todo.updated_at && (
               <p className=" text-foreground/70 font-light text-[13px]">
                 {"edited " +
                   formatDistanceToNow(new Date(todo.updated_at), {
@@ -248,7 +250,9 @@ const EditTodoDialog = ({
                   onMouseUp={(e) => {
                     e.preventDefault();
                     axios.put(
-                      `${import.meta.env.VITE_API_BASE_URL}/api/todos/${todo.id}`,
+                      `${import.meta.env.VITE_API_BASE_URL}/api/todos/${
+                        todo.id
+                      }`,
                       {
                         task: todoInput,
                         note: todoNoteInput,

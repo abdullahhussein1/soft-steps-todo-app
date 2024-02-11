@@ -1,15 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-
 import TodosTab from "./TodosTab";
 import CompletedTab from "./CompletedTab";
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import TodoType from "@/types/TodoType";
-import { User } from "@supabase/supabase-js";
+import UserType from "@/types/UserType";
 
 type params = {
-  user: User | null;
+  user: UserType;
 };
 
 const TodoList = ({ user }: params) => {
@@ -52,6 +50,7 @@ const TodoList = ({ user }: params) => {
           <TodosTab
             todos={todos}
             setTodos={setTodos}
+            user={user}
             isLoaderVisible={isLoaderVisible}
           />
         </TabsContent>

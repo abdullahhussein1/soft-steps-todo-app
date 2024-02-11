@@ -166,7 +166,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
             <MoreHorizontal size={16} />
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="flex flex-col w-fit p-2 rounded-xl">
+        <DropdownMenuContent className="flex flex-col w-fit rounded-xl">
           <DropdownMenuItem
             className={["flex gap-2", isChecked && "hidden"].join(" ")}
             onClick={() => {
