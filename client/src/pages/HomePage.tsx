@@ -9,6 +9,10 @@ const TodoApp = () => {
   const [user, setUser] = React.useState<User | null>(null);
   const navigate = useNavigate();
 
+  supabase.auth.onAuthStateChange((event, session) => {
+    console.log(event, session);
+  });
+
   React.useEffect(() => {
     const fetchUser = async () => {
       const {
@@ -20,6 +24,7 @@ const TodoApp = () => {
         console.log(user.id);
       } else {
         console.error("Error fetching user:", error);
+        setUser(null);
         navigate("/auth");
       }
     };

@@ -36,8 +36,7 @@ const Menu = ({ user }: props) => {
 
   async function signOutUser() {
     try {
-      await supabase.auth.signOut();
-      localStorage.removeItem("supabase.auth.token");
+      supabase.auth.signOut();
       navigate("/auth");
     } catch (error) {
       console.error("Error signing out:", error);

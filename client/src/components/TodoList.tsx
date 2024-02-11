@@ -30,12 +30,13 @@ const TodoList = ({ user }: params) => {
       setTodos(result);
     } catch (error) {
       console.error("Error fetching todos:", error);
+      setIsLoaderVisible(false);
     }
   };
 
   useEffect(() => {
     fetchTodos();
-  });
+  }, []);
 
   return (
     <Tabs defaultValue="Todos">
