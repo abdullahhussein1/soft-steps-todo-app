@@ -162,7 +162,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
       />
       <DropdownMenu>
         <DropdownMenuTrigger className="flex-initial self-start">
-          <div className="px-2 pb-2">
+          <div className="px-2 ">
             <MoreHorizontal size={16} />
           </div>
         </DropdownMenuTrigger>

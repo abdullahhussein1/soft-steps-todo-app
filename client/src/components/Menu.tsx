@@ -36,7 +36,7 @@ const Menu = ({ user }: props) => {
 
   async function signOutUser() {
     try {
-      supabase.auth.signOut();
+      supabase.auth.signOut({ scope: "local" });
       navigate("/auth");
     } catch (error) {
       console.error("Error signing out:", error);
@@ -112,6 +112,7 @@ const Menu = ({ user }: props) => {
                     ? "bg-secondary/25 text-red-700 hover:bg-red-400/5"
                     : "bg-background text-red-500 hover:bg-red-100",
                 ].join(" ")}
+                onClick={signOutUser}
               >
                 <LogOutIcon size={18} />
                 <p>Log Out</p>
@@ -190,7 +191,7 @@ const Menu = ({ user }: props) => {
                     ? "bg-secondary/25 text-red-700 hover:bg-red-400/5"
                     : "bg-background text-red-500 hover:bg-red-100",
                 ].join(" ")}
-                onClick={() => signOutUser()}
+                onClick={signOutUser}
               >
                 <LogOutIcon size={18} />
                 <p>Log Out</p>
