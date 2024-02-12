@@ -58,10 +58,13 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
   return (
     <div
       key={todo.id}
-      // draggable={true}
       className={[
-        "shrink-0 border-[0.7px] p-3 rounded-xl flex justify-between  overflow-clip",
+        "shrink-0  p-3 rounded-xl flex justify-between  overflow-clip",
         isPinned && "bg-secondary",
+        todo.priority === "none" && " border-[0.7px] border-l-[3px]",
+        todo.priority === "high" && " border-l-[3px] border-red-500",
+        todo.priority === "medium" && " border-l-[3px] border-orange-500",
+        todo.priority === "low" && " border-l-[3px] border-yellow-500",
         isChecked &&
           !todo.is_complete &&
           "delay-1000 translate-x-48 duration-700 transition-all",
@@ -124,10 +127,6 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
             "flex flex-col flex-auto gap-2",
             !todo.is_complete && "cursor-pointer",
           ].join(" ")}
-          onClick={() => {
-            if (todo.is_complete) return;
-            setIsOpen(true);
-          }}
         >
           <p
             className={[

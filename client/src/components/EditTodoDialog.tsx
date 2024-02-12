@@ -15,6 +15,13 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+} from "@/components/ui/select";
 
 import axios from "axios";
 import { useState } from "react";
@@ -24,7 +31,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 import * as React from "react";
 import { format, formatDistanceToNow } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
+import { ArrowUpIcon, Calendar as CalendarIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
@@ -58,6 +65,14 @@ const EditTodoDialog = ({
   const [date, setDate] = React.useState<Date | undefined>(
     todo.remind_at ? new Date(todo.remind_at) : undefined
   );
+  const [priority, setPriority] = useState<TodoType["priority"]>(todo.priority);
+  const [location, setLocation] = useState<TodoType["location"] | undefined>(
+    todo.location
+  );
+  const [attachment, setAttachment] = useState<
+    TodoType["attachment"] | undefined
+  >(todo.attachment);
+
   const isDesktop = useMediaQuery("(min-width: 640px)");
 
   if (isDesktop) {
@@ -121,6 +136,44 @@ const EditTodoDialog = ({
                 />
               </PopoverContent>
             </Popover>
+            <label htmlFor="priority" className="font-bold">
+              Priority
+            </label>
+            <select
+              value={priority}
+              onChange={(e) =>
+                setPriority(e.target.value as TodoType["priority"])
+              }
+              className="rounded-xl border-[0.7px]"
+              id="priority"
+            >
+              <option value="none">None</option>
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+
+            <label htmlFor="location" className="font-bold">
+              Location
+            </label>
+            <Input
+              type="text"
+              value={location || ""}
+              onChange={(e) => setLocation(e.target.value)}
+              className="rounded-xl border-[0.7px]"
+              id="location"
+            />
+
+            <label htmlFor="attachment" className="font-bold">
+              Attachment
+            </label>
+            <Input
+              type="text"
+              value={attachment || ""}
+              onChange={(e) => setAttachment(e.target.value)}
+              className="rounded-xl border-[0.7px]"
+              id="attachment"
+            />
           </div>
           <DialogFooter>
             <DialogClose asChild>
@@ -140,10 +193,16 @@ const EditTodoDialog = ({
                           date && date !== todo.remind_at
                             ? new Date(date)
                             : null,
+                        priority,
+                        location,
+                        attachment,
                         updated_at:
                           date !== todo.remind_at ||
                           todoInput !== todo.task ||
-                          todoNoteInput !== todo.note
+                          todoNoteInput !== todo.note ||
+                          priority !== todo.priority ||
+                          location !== todo.location ||
+                          attachment !== todo.attachment
                             ? new Date()
                             : null,
                       }
@@ -161,6 +220,9 @@ const EditTodoDialog = ({
                           ...tdo,
                           task: todoInput,
                           note: todoNoteInput,
+                          priority: priority, // Use the existing priority if not updated
+                          location: location, // Use the existing location if not updated
+                          attachment: attachment,
                         };
                       }
                       return tdo;
@@ -215,32 +277,79 @@ const EditTodoDialog = ({
                   })}
               </p>
             )}
-
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant={"outline"}
+            <div className="flex gap-5">
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-fit px-3 border-none rounded-xl justify-start text-left font-normal",
+                      !date && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {date ? format(date, "PPP") : <span>Pick a date</span>}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={date ?? new Date()}
+                    fromDate={new Date()}
+                    onSelect={(selectedDate) => {
+                      setDate(selectedDate ?? undefined);
+                    }}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+              <Select
+                defaultValue="dateEdited"
+                onValueChange={(value) =>
+                  setPriority(value as TodoType["priority"])
+                }
+              >
+                <SelectTrigger
                   className={cn(
-                    "w-fit px-3 border-none rounded-xl justify-start text-left font-normal",
-                    !date && "text-muted-foreground"
+                    "flex items-center text-sm w-fit px-3 border-none rounded-xl justify-start text-left font-normal",
+                    !todo.priority && "text-muted-foreground"
                   )}
                 >
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {date ? format(date, "PPP") : <span>Pick a date</span>}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
-                <Calendar
-                  mode="single"
-                  selected={date ?? new Date()}
-                  fromDate={new Date()}
-                  onSelect={(selectedDate) => {
-                    setDate(selectedDate ?? undefined);
-                  }}
-                  initialFocus
-                />
-              </PopoverContent>
-            </Popover>
+                  <ArrowUpIcon className="mr-2 h-4 w-4" />
+                  {!todo.priority && <p>Set Priority</p>}
+                  {todo.priority && <p>{priority}</p>}
+                </SelectTrigger>
+                <SelectContent className="flex flex-col w-fit rounded-xl text-foreground/80">
+                  <SelectGroup>
+                    <SelectItem value="high">High</SelectItem>
+                    <SelectItem value="medium">Medium</SelectItem>
+                    <SelectItem value="low">Low</SelectItem>
+                    <SelectItem value="none">None</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+            <label htmlFor="location" className="font-bold">
+              Location
+            </label>
+            <Input
+              type="text"
+              value={location || ""}
+              onChange={(e) => setLocation(e.target.value)}
+              className="rounded-xl border-[0.7px]"
+              id="location"
+            />
+
+            <label htmlFor="attachment" className="font-bold">
+              Attachment
+            </label>
+            <Input
+              type="text"
+              value={attachment || ""}
+              onChange={(e) => setAttachment(e.target.value)}
+              className="rounded-xl border-[0.7px]"
+              id="attachment"
+            />
           </div>
           <DrawerFooter>
             <DrawerClose asChild>
@@ -260,10 +369,16 @@ const EditTodoDialog = ({
                           date && date !== todo.remind_at
                             ? new Date(date)
                             : null,
+                        priority,
+                        location,
+                        attachment,
                         updated_at:
                           date !== todo.remind_at ||
                           todoInput !== todo.task ||
-                          todoNoteInput !== todo.note
+                          todoNoteInput !== todo.note ||
+                          priority !== todo.priority ||
+                          location !== todo.location ||
+                          attachment !== todo.attachment
                             ? new Date()
                             : null,
                       }
@@ -281,6 +396,9 @@ const EditTodoDialog = ({
                           ...tdo,
                           task: todoInput,
                           note: todoNoteInput,
+                          priority: priority, // Use the existing priority if not updated
+                          location: location, // Use the existing location if not updated
+                          attachment: attachment,
                         };
                       }
                       return tdo;

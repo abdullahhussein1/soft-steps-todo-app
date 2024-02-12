@@ -136,7 +136,7 @@ const Menu = ({ user }: props) => {
             theme.endsWith("-dark") && "bg-background",
           ].join(" ")}
         >
-          <ScrollArea className="rounded-t-3xl py-3">
+          <ScrollArea className="rounded-3xl py-3">
             <div className="flex flex-col items-center space-y-6 py-2">
               <div
                 className={[
