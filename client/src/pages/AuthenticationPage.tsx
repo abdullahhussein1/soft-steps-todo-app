@@ -47,7 +47,7 @@ const AuthenticationPage: React.FC = () => {
   }
 
   return (
-    <div className="p-5 bg-[#111] flex items-center  justify-center flex-col gap-4 h-screen">
+    <div className="p-5 bg-[#111] text-white flex items-center  justify-center flex-col gap-4 h-screen">
       <h1 className="text-3xl font-light">
         Welcome to <span className="font-semibold">Soft Steps</span>
       </h1>
