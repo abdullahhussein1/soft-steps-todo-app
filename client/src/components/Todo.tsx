@@ -5,7 +5,6 @@ import { Star } from "lucide-react";
 import { MoreHorizontal } from "lucide-react";
 import { Trash } from "lucide-react";
 import { Edit } from "lucide-react";
-import { Calendar } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -59,12 +58,8 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
     <div
       key={todo.id}
       className={[
-        "shrink-0  p-3 rounded-xl flex justify-between  overflow-clip",
+        "shrink-0  p-3 rounded-xl flex border-[0.7px] justify-between  overflow-clip",
         isPinned && "bg-secondary",
-        todo.priority === "none" && " border-[0.7px] border-l-[3px]",
-        todo.priority === "high" && " border-l-[3px] border-red-500",
-        todo.priority === "medium" && " border-l-[3px] border-orange-500",
-        todo.priority === "low" && " border-l-[3px] border-yellow-500",
         isChecked &&
           !todo.is_complete &&
           "delay-1000 translate-x-48 duration-700 transition-all",
@@ -137,17 +132,25 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
           >
             {todo.task}
           </p>
+          {!todo.is_complete && todo.note && (
+            <div
+              className={[
+                " text-[10px] leading-none text-foreground/70",
+              ].join()}
+            >
+              {todo.note.length < 20
+                ? todo.note
+                : todo.note.slice(0, 20) + " ..."}
+            </div>
+          )}
           {!todo.is_complete && todo.remind_at && (
             <div
               className={[
-                "flex items-center gap-[3px] text-xs text-foreground/70",
+                " leading-none text-xs text-foreground/70",
                 isRemindDatePassed && "text-red-500",
               ].join(" ")}
             >
-              <Calendar size={12} />
-              <p className="leading-none">
-                {formatRemindDate(new Date(todo.remind_at))}
-              </p>
+              {formatRemindDate(new Date(todo.remind_at))}
             </div>
           )}
         </div>

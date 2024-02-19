@@ -248,9 +248,9 @@ const EditTodoDialog = ({
           <DrawerHeader>
             <DrawerTitle>Edit Todo</DrawerTitle>
           </DrawerHeader>
-          <div className="flex flex-col gap-3 mt-8">
+          <div className="flex flex-col gap-3 mt-3">
             <label htmlFor="title" className="font-bold">
-              title
+              Title
             </label>
             <Input
               type="text"
@@ -259,75 +259,74 @@ const EditTodoDialog = ({
               className="rounded-xl border-[0.7px]"
               id="title"
             />
-            <label htmlFor="note" className="font-bold">
-              note
-            </label>
             <Textarea
               value={todoNoteInput ?? ""}
+              placeholder="Add note"
               onChange={(e) => setTodoNoteInput(e.target.value)}
-              className="rounded-xl resize-none border-[0.7px] "
+              className="rounded-xl text-xs text-foreground/60 resize-none border-[0.7px] "
               id="note"
             />
 
-            {todo.updated_at && (
-              <p className=" text-foreground/70 font-light text-[13px]">
-                {"edited " +
-                  formatDistanceToNow(new Date(todo.updated_at), {
-                    addSuffix: true,
-                  })}
-              </p>
-            )}
-            <div className="flex gap-5">
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant={"outline"}
+            <div className="grid grid-cols-2">
+              <div className="flex flex-col">
+                <p className="font-bold">Due to</p>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        "w-fit px-3 border-none rounded-xl justify-start text-left font-normal",
+                        !date && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {date ? format(date, "PPP") : <span>Pick a date</span>}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0">
+                    <Calendar
+                      mode="single"
+                      selected={date ?? new Date()}
+                      fromDate={new Date()}
+                      onSelect={(selectedDate) => {
+                        setDate(selectedDate ?? undefined);
+                      }}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
+              <div className="flex flex-col">
+                <p className="font-bold">Priority</p>
+                <Select
+                  defaultValue="dateEdited"
+                  onValueChange={(value) =>
+                    setPriority(value as TodoType["priority"])
+                  }
+                >
+                  <SelectTrigger
                     className={cn(
-                      "w-fit px-3 border-none rounded-xl justify-start text-left font-normal",
-                      !date && "text-muted-foreground"
+                      "flex items-center text-sm w-fit p-2 border-none rounded-xl justify-start text-left font-normal",
+                      todo.priority === "none" && "text-muted-foreground"
                     )}
                   >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {date ? format(date, "PPP") : <span>Pick a date</span>}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
-                  <Calendar
-                    mode="single"
-                    selected={date ?? new Date()}
-                    fromDate={new Date()}
-                    onSelect={(selectedDate) => {
-                      setDate(selectedDate ?? undefined);
-                    }}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
-              <Select
-                defaultValue="dateEdited"
-                onValueChange={(value) =>
-                  setPriority(value as TodoType["priority"])
-                }
-              >
-                <SelectTrigger
-                  className={cn(
-                    "flex items-center text-sm w-fit px-3 border-none rounded-xl justify-start text-left font-normal",
-                    !todo.priority && "text-muted-foreground"
-                  )}
-                >
-                  <ArrowUpIcon className="mr-2 h-4 w-4" />
-                  {!todo.priority && <p>Set Priority</p>}
-                  {todo.priority && <p>{priority}</p>}
-                </SelectTrigger>
-                <SelectContent className="flex flex-col w-fit rounded-xl text-foreground/80">
-                  <SelectGroup>
-                    <SelectItem value="high">High</SelectItem>
-                    <SelectItem value="medium">Medium</SelectItem>
-                    <SelectItem value="low">Low</SelectItem>
-                    <SelectItem value="none">None</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+                    <ArrowUpIcon className="mr-2 h-4 w-4" />
+                    {todo.priority === "none" ? (
+                      <p>Set Priority</p>
+                    ) : (
+                      <p>{priority}</p>
+                    )}
+                  </SelectTrigger>
+                  <SelectContent className="flex flex-col w-fit rounded-xl text-foreground/80">
+                    <SelectGroup>
+                      <SelectItem value="high">high</SelectItem>
+                      <SelectItem value="medium">medium</SelectItem>
+                      <SelectItem value="low">low</SelectItem>
+                      <SelectItem value="none">none</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
             <label htmlFor="location" className="font-bold">
               Location
@@ -350,6 +349,14 @@ const EditTodoDialog = ({
               className="rounded-xl border-[0.7px]"
               id="attachment"
             />
+            {todo.updated_at && (
+              <p className=" text-foreground/70 font-light text-xs">
+                {"edited " +
+                  formatDistanceToNow(new Date(todo.updated_at), {
+                    addSuffix: true,
+                  })}
+              </p>
+            )}
           </div>
           <DrawerFooter>
             <DrawerClose asChild>
