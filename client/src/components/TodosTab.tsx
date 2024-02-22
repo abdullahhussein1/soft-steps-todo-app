@@ -2,6 +2,7 @@ import { useState } from "react";
 import Todo from "./Todo";
 import axios from "axios";
 import { ArrowUpDownIcon } from "lucide-react";
+import { Maximize2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import TodoSkeleton from "./TodoSkeleton";
@@ -15,6 +16,7 @@ import {
 
 import TodoType from "@/types/TodoType";
 import UserType from "@/types/UserType";
+import AddTodoDialog from "./AddTodoDialog";
 
 type Props = {
   todos: TodoType[];
@@ -25,6 +27,7 @@ type Props = {
 
 const TodosTab = ({ todos, setTodos, user, isLoaderVisible }: Props) => {
   const [todoInput, setTodoInput] = useState<string>("");
+  const [isAddDialogShown, setIsAddDialogShown] = useState<boolean>(false);
   const [sortByValue, setSortByValue] = useState<string>("dateEdited");
 
   return (
@@ -92,14 +95,26 @@ const TodosTab = ({ todos, setTodos, user, isLoaderVisible }: Props) => {
           <div className="w-full h-10 bg-gradient-to-t from-background via-background to-transparent absolute bottom-8 z-10"></div>
         </div>
       </div>
+      <AddTodoDialog
+        todos={todos}
+        setTodos={setTodos}
+        isOpen={isAddDialogShown}
+        setIsOpen={setIsAddDialogShown}
+        user={user}
+      />
       <div className="flex gap-2">
-        <Input
-          type="text"
-          value={todoInput}
-          onChange={(e) => setTodoInput(e.target.value)}
-          placeholder="I want to..."
-          className="rounded-full text-foreground"
-        />
+        <div className="relative flex items-center w-full">
+          <Input
+            type="text"
+            value={todoInput}
+            onChange={(e) => setTodoInput(e.target.value)}
+            placeholder="I want to..."
+            className="rounded-full text-foreground"
+          />
+          <div className="absolute right-1 flex rounded-full hover:bg-neutral-900/50 transition-colors p-2 items-center justify-center">
+            <Maximize2 size={14} onClick={() => setIsAddDialogShown(true)} />
+          </div>
+        </div>
         <Button
           className="rounded-full bg-primary text-special"
           onMouseUp={async (e) => {
