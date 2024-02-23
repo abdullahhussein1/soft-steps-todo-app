@@ -1,7 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
 import EditTodoDialog from "./EditTodoDialog";
-import { Star } from "lucide-react";
+import {
+  ArrowUpWideNarrow,
+  Calendar,
+  MapPin,
+  PencilLine,
+  Star,
+} from "lucide-react";
 import { MoreHorizontal } from "lucide-react";
 import { Trash } from "lucide-react";
 import { Edit } from "lucide-react";
@@ -140,19 +146,77 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
             >
               {todo.note.length < 20
                 ? todo.note
-                : todo.note.slice(0, 20) + " ..."}
+                : todo.note.slice(0, 20) + "..."}
             </div>
           )}
-          {!todo.is_complete && todo.remind_at && (
-            <div
-              className={[
-                " leading-none text-xs text-foreground/70",
-                isRemindDatePassed && "text-red-500",
-              ].join(" ")}
-            >
-              {formatRemindDate(new Date(todo.remind_at))}
-            </div>
-          )}
+          {(todo.note || todo.location || todo.remind_at) &&
+            !todo.is_complete && (
+              <div className="flex justify-between">
+                <div className="flex items-center gap-2">
+                  {todo.remind_at && (
+                    <div
+                      className={[
+                        "flex gap-1 items-center leading-none text-xs text-foreground/70",
+                        isRemindDatePassed && "text-red-500",
+                      ].join(" ")}
+                    >
+                      <Calendar size={13} />
+                      <p className="text-[10px]">
+                        {formatRemindDate(new Date(todo.remind_at))}
+                      </p>
+                    </div>
+                  )}
+                  {todo.note && (
+                    <div
+                      className={[
+                        "flex gap-1 items-center leading-none text-xs text-foreground/70",
+                      ].join(" ")}
+                    >
+                      <PencilLine size={13} />
+                    </div>
+                  )}
+                  {todo.location && (
+                    <div
+                      className={[
+                        "flex gap-1 items-center leading-none text-xs text-foreground/70",
+                      ].join(" ")}
+                    >
+                      <MapPin size={13} />
+                    </div>
+                  )}
+                  {todo.priority !== "none" && (
+                    <div
+                      className={[
+                        "flex gap-1 items-center leading-none text-xs text-foreground/70",
+                      ].join(" ")}
+                    >
+                      <ArrowUpWideNarrow size={13} />
+                    </div>
+                  )}
+                </div>
+                {todo.priority !== "none" && (
+                  <div
+                    className={[
+                      "flex gap-1 items-center leading-none text-xs text-foreground/70",
+                    ].join(" ")}
+                  >
+                    <div
+                      className={[
+                        "px-2 py-1 rounded-full font-semibold text-[10px]",
+                        todo.priority === "low" &&
+                          "text-yellow-500 bg-yellow-600/20",
+                        todo.priority === "medium" &&
+                          "text-orange-500 bg-orange-600/20",
+                        todo.priority === "high" &&
+                          "text-red-500 bg-red-600/20",
+                      ].join(" ")}
+                    >
+                      {todo.priority}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
         </div>
       </div>
       <EditTodoDialog
