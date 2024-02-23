@@ -47,9 +47,15 @@ const TodosTab = ({ todos, setTodos, user, isLoaderVisible }: Props) => {
             </SelectTrigger>
             <SelectContent className="flex flex-col w-fit rounded-xl text-foreground/80">
               <SelectGroup>
-                <SelectItem value="dateEdited">Date Edited</SelectItem>
-                <SelectItem value="dateCreated">Date Created</SelectItem>
-                <SelectItem value="title">Title</SelectItem>
+                <SelectItem value="dateEdited" className="text-xs md:text-sm">
+                  Date Edited
+                </SelectItem>
+                <SelectItem value="dateCreated" className="text-xs md:text-sm">
+                  Date Created
+                </SelectItem>
+                <SelectItem value="title" className="text-xs md:text-sm">
+                  Title
+                </SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
@@ -111,7 +117,7 @@ const TodosTab = ({ todos, setTodos, user, isLoaderVisible }: Props) => {
             placeholder="I want to..."
             className="rounded-full text-foreground"
           />
-          <div className="absolute right-1 flex rounded-full hover:bg-neutral-900/50 transition-colors p-2 items-center justify-center">
+          <div className="absolute right-1 flex rounded-full bg-background cursor-pointer p-2 hover:text-foreground transition-colors items-center justify-center">
             <Maximize2 size={14} onClick={() => setIsAddDialogShown(true)} />
           </div>
         </div>

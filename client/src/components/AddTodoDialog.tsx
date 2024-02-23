@@ -21,6 +21,8 @@ import {
   SelectGroup,
   SelectItem,
   SelectTrigger,
+  SelectSeparator,
+  SelectValue,
 } from "@/components/ui/select";
 
 import axios from "axios";
@@ -31,7 +33,13 @@ import { Textarea } from "@/components/ui/textarea";
 
 import * as React from "react";
 import { format } from "date-fns";
-import { ArrowUpIcon, Calendar as CalendarIcon } from "lucide-react";
+import {
+  ArrowUpWideNarrow,
+  Calendar as CalendarIcon,
+  MapPin,
+  PencilLine,
+  CheckSquare,
+} from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
@@ -60,10 +68,6 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
   const [date, setDate] = React.useState<Date | undefined>();
   const [priority, setPriority] = useState<TodoType["priority"] | undefined>();
   const [location, setLocation] = useState<TodoType["location"] | undefined>();
-  const [attachment, setAttachment] = useState<
-    TodoType["attachment"] | undefined
-  >();
-
   const isDesktop = useMediaQuery("(min-width: 640px)");
 
   if (isDesktop) {
@@ -73,89 +77,123 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
           <DialogHeader>
             <DialogTitle>Add Todo</DialogTitle>
           </DialogHeader>
-          <div className="flex flex-col gap-3 mt-8">
-            <label htmlFor="title" className="font-bold">
-              title
-            </label>
-            <Input
-              type="text"
-              value={todoInput ?? ""}
-              onChange={(e) => setTodoInput(e.target.value)}
-              className="rounded-xl border-[0.7px]"
-              id="title"
-            />
-            <label htmlFor="note" className="font-bold">
-              note
-            </label>
-            <Textarea
-              value={todoNoteInput ?? ""}
-              onChange={(e) => setTodoNoteInput(e.target.value)}
-              className="rounded-xl resize-none border-[0.7px] "
-              id="note"
-            />
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant={"outline"}
-                  className={cn(
-                    "w-fit px-3 border-none rounded-xl justify-start text-left font-normal",
-                    !date && "text-muted-foreground"
-                  )}
+          <div className="flex flex-col gap-5 mt-3">
+            <div className="flex flex-col gap-[6px]">
+              <label
+                htmlFor="title"
+                className="flex items-center gap-2 font-medium"
+              >
+                <CheckSquare size={17} />
+                <p>Title</p>
+              </label>
+              <Input
+                type="text"
+                value={todoInput ?? ""}
+                placeholder="I want to..."
+                onChange={(e) => setTodoInput(e.target.value)}
+                className="rounded-xl border-[0.7px]"
+                id="title"
+              />
+            </div>
+            <div className="flex flex-col gap-[6px]">
+              <label
+                htmlFor="note"
+                className="flex items-center gap-2 font-medium"
+              >
+                <PencilLine size={17} />
+                <p>Note</p>
+              </label>
+              <Textarea
+                value={todoNoteInput ?? ""}
+                placeholder="Add note"
+                onChange={(e) => setTodoNoteInput(e.target.value)}
+                className="rounded-xl text-xs text-foreground/60 resize-none border-[0.7px] "
+                id="note"
+              />
+            </div>
+            <div className="flex flex-col gap-[6px]">
+              <label
+                htmlFor="location"
+                className="flex items-center gap-2 font-medium"
+              >
+                <MapPin size={17} />
+                <p>Location</p>
+              </label>
+              <Input
+                type="text"
+                value={location || ""}
+                onChange={(e) => setLocation(e.target.value)}
+                className="rounded-xl border-[0.7px]"
+                id="location"
+              />
+            </div>
+            <div className="grid grid-cols-2">
+              <div className="flex flex-col">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        "w-fit px-3 border-none rounded-xl justify-start text-left font-normal",
+                        !date && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {date ? format(date, "PPP") : <span>Pick a date</span>}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0">
+                    <Calendar
+                      mode="single"
+                      selected={date ?? new Date()}
+                      fromDate={new Date()}
+                      onSelect={(selectedDate) => {
+                        setDate(selectedDate ?? undefined);
+                      }}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
+              <div className="flex flex-col">
+                <Select
+                  defaultValue="none"
+                  onValueChange={(value) =>
+                    setPriority(value as TodoType["priority"])
+                  }
                 >
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {date ? format(date, "PPP") : <span>Pick a date</span>}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
-                <Calendar
-                  mode="single"
-                  selected={date ?? new Date()}
-                  fromDate={new Date()}
-                  onSelect={(selectedDate) => {
-                    setDate(selectedDate ?? undefined);
-                  }}
-                  initialFocus
-                />
-              </PopoverContent>
-            </Popover>
-            <label htmlFor="priority" className="font-bold">
-              Priority
-            </label>
-            <select
-              value={priority}
-              onChange={(e) =>
-                setPriority(e.target.value as TodoType["priority"])
-              }
-              className="rounded-xl border-[0.7px]"
-              id="priority"
-            >
-              <option value="none">None</option>
-              <option value="low">Low</option>
-              <option value="medium">Medium</option>
-              <option value="high">High</option>
-            </select>
-
-            <label htmlFor="location" className="font-bold">
-              Location
-            </label>
-            <Input
-              type="text"
-              value={location || ""}
-              onChange={(e) => setLocation(e.target.value)}
-              className="rounded-xl border-[0.7px]"
-              id="location"
-            />
-
-            <label htmlFor="attachment" className="font-bold">
-              Attachment
-            </label>
-            <Input
-              type="text"
-              value={attachment || ""}
-              onChange={(e) => setAttachment(e.target.value)}
-              className="rounded-xl border-[0.7px]"
-              id="attachment"
-            />
+                  <SelectTrigger
+                    className={cn(
+                      "flex items-center text-sm w-fit border-none rounded-xl justify-start text-left font-normal"
+                    )}
+                  >
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        " px-3 border-none rounded-xl w-32 justify-start text-left font-normal",
+                        !date && "text-muted-foreground"
+                      )}
+                    >
+                      <ArrowUpWideNarrow className="mr-2 h-4 w-4" />
+                      {priority !== "none" ? (
+                        <SelectValue />
+                      ) : (
+                        <span>Set priority</span>
+                      )}
+                    </Button>
+                  </SelectTrigger>
+                  <SelectContent className="flex flex-col w-fit rounded-xl text-foreground/80">
+                    <SelectGroup>
+                      <SelectItem value="high">high</SelectItem>
+                      <SelectItem value="medium">medium</SelectItem>
+                      <SelectItem value="low">low</SelectItem>
+                      <SelectSeparator />
+                      <SelectItem value="none">none</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
           </div>
           <DialogFooter>
             <DialogClose asChild>
@@ -173,7 +211,6 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
                         remind_at: date ? new Date(date) : null,
                         priority,
                         location,
-                        attachment,
                       }
                     );
 
@@ -203,29 +240,58 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
           <DrawerHeader>
             <DrawerTitle>Add Todo</DrawerTitle>
           </DrawerHeader>
-          <div className="flex flex-col gap-3 mt-3">
-            <label htmlFor="title" className="font-bold">
-              Title
-            </label>
-            <Input
-              type="text"
-              value={todoInput ?? ""}
-              placeholder="I want to..."
-              onChange={(e) => setTodoInput(e.target.value)}
-              className="rounded-xl border-[0.7px]"
-              id="title"
-            />
-            <Textarea
-              value={todoNoteInput ?? ""}
-              placeholder="Add note"
-              onChange={(e) => setTodoNoteInput(e.target.value)}
-              className="rounded-xl text-xs text-foreground/60 resize-none border-[0.7px] "
-              id="note"
-            />
-
+          <div className="flex flex-col gap-5 mt-3">
+            <div className="flex flex-col gap-[6px]">
+              <label
+                htmlFor="title"
+                className="flex items-center gap-2 font-medium"
+              >
+                <CheckSquare size={17} />
+                <p>Title</p>
+              </label>
+              <Input
+                type="text"
+                value={todoInput ?? ""}
+                placeholder="I want to..."
+                onChange={(e) => setTodoInput(e.target.value)}
+                className="rounded-xl border-[0.7px]"
+                id="title"
+              />
+            </div>
+            <div className="flex flex-col gap-[6px]">
+              <label
+                htmlFor="note"
+                className="flex items-center gap-2 font-medium"
+              >
+                <PencilLine size={17} />
+                <p>Note</p>
+              </label>
+              <Textarea
+                value={todoNoteInput ?? ""}
+                placeholder="Add note"
+                onChange={(e) => setTodoNoteInput(e.target.value)}
+                className="rounded-xl text-xs text-foreground/60 resize-none border-[0.7px] "
+                id="note"
+              />
+            </div>
+            <div className="flex flex-col gap-[6px]">
+              <label
+                htmlFor="location"
+                className="flex items-center gap-2 font-medium"
+              >
+                <MapPin size={17} />
+                <p>Location</p>
+              </label>
+              <Input
+                type="text"
+                value={location || ""}
+                onChange={(e) => setLocation(e.target.value)}
+                className="rounded-xl border-[0.7px]"
+                id="location"
+              />
+            </div>
             <div className="grid grid-cols-2">
               <div className="flex flex-col">
-                <p className="font-bold">Due to</p>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
@@ -253,54 +319,44 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
                 </Popover>
               </div>
               <div className="flex flex-col">
-                <p className="font-bold">Priority</p>
                 <Select
-                  defaultValue="dateAdded"
+                  defaultValue="none"
                   onValueChange={(value) =>
                     setPriority(value as TodoType["priority"])
                   }
                 >
                   <SelectTrigger
                     className={cn(
-                      "flex items-center text-sm w-fit p-2 border-none rounded-xl justify-start text-left font-normal"
+                      "flex items-center text-sm w-fit border-none rounded-xl justify-start text-left font-normal"
                     )}
                   >
-                    <ArrowUpIcon className="mr-2 h-4 w-4" />
-
-                    <p>{priority}</p>
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        " px-3 border-none rounded-xl w-32 justify-start text-left font-normal",
+                        !date && "text-muted-foreground"
+                      )}
+                    >
+                      <ArrowUpWideNarrow className="mr-2 h-4 w-4" />
+                      {priority !== "none" ? (
+                        <SelectValue />
+                      ) : (
+                        <span>Set priority</span>
+                      )}
+                    </Button>
                   </SelectTrigger>
                   <SelectContent className="flex flex-col w-fit rounded-xl text-foreground/80">
                     <SelectGroup>
                       <SelectItem value="high">high</SelectItem>
                       <SelectItem value="medium">medium</SelectItem>
                       <SelectItem value="low">low</SelectItem>
+                      <SelectSeparator />
                       <SelectItem value="none">none</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
               </div>
             </div>
-            <label htmlFor="location" className="font-bold">
-              Location
-            </label>
-            <Input
-              type="text"
-              value={location || ""}
-              onChange={(e) => setLocation(e.target.value)}
-              className="rounded-xl border-[0.7px]"
-              id="location"
-            />
-
-            <label htmlFor="attachment" className="font-bold">
-              Attachment
-            </label>
-            <Input
-              type="text"
-              value={attachment || ""}
-              onChange={(e) => setAttachment(e.target.value)}
-              className="rounded-xl border-[0.7px]"
-              id="attachment"
-            />
           </div>
           <DrawerFooter>
             <DrawerClose asChild>
@@ -318,7 +374,6 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
                         remind_at: date ? new Date(date) : null,
                         priority,
                         location,
-                        attachment,
                       }
                     );
 
