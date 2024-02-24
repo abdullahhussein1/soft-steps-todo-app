@@ -1,10 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import TodosTab from "./TodosTab";
-import CompletedTab from "./CompletedTab";
+import TodosTab from "./tabs/TodosTab";
+import CompletedTab from "./tabs/CompletedTab";
+import TrashTab from "./tabs/TrashTab";
+import SettingsTab from "./tabs/SettingsTab";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import TodoType from "@/types/TodoType";
 import UserType from "@/types/UserType";
+import { LayoutList, ListChecks, Settings, TrashIcon } from "lucide-react";
 
 type params = {
   user: UserType;
@@ -39,15 +42,21 @@ const TodoList = ({ user }: params) => {
   }, []);
 
   return (
-    <Tabs defaultValue="Todos">
-      <TabsList className="grid w-full grid-cols-2 rounded-full">
-        <TabsTrigger value="Todos" className="rounded-full">
-          Todos
+    <Tabs defaultValue="todos">
+      <TabsList className="grid w-full grid-cols-4 rounded-full">
+        <TabsTrigger value="todos" className="flex gap-2 rounded-full">
+          <LayoutList size={16} />
         </TabsTrigger>
-        <TabsTrigger value="Completed" className="rounded-full">
-          Completed
+        <TabsTrigger value="completed" className="flex gap-2 rounded-full">
+          <ListChecks size={16} />
         </TabsTrigger>
-        <TabsContent value="Todos" className="col-span-full m-0">
+        <TabsTrigger value="deleted" className="flex gap-2 rounded-full">
+          <TrashIcon size={16} />
+        </TabsTrigger>
+        <TabsTrigger value="settings" className="flex gap-2 rounded-full">
+          <Settings size={16} />
+        </TabsTrigger>
+        <TabsContent value="todos" className="col-span-full">
           <TodosTab
             todos={todos}
             setTodos={setTodos}
@@ -55,8 +64,17 @@ const TodoList = ({ user }: params) => {
             isLoaderVisible={isLoaderVisible}
           />
         </TabsContent>
-        <TabsContent value="Completed" className=" col-span-full m-0">
+        <TabsContent value="completed" className=" col-span-full">
           <CompletedTab todos={todos} setTodos={setTodos} />
+        </TabsContent>
+        <TabsContent value="Completed" className=" col-span-full">
+          <CompletedTab todos={todos} setTodos={setTodos} />
+        </TabsContent>
+        <TabsContent value="deleted" className=" col-span-full">
+          <TrashTab todos={todos} setTodos={setTodos} />
+        </TabsContent>
+        <TabsContent value="settings" className=" col-span-full">
+          <SettingsTab todos={todos} setTodos={setTodos} />
         </TabsContent>
       </TabsList>
     </Tabs>

@@ -68,6 +68,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
         isPinned && "bg-secondary",
         isChecked &&
           !todo.is_complete &&
+          !todo.deleted_at &&
           "delay-1000 translate-x-48 duration-700 transition-all",
       ].join(" ")}
     >
@@ -76,11 +77,14 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
           "flex items-start gap-2 flex-auto",
           isChecked &&
             !todo.is_complete &&
+            !todo.deleted_at &&
             "delay-1000 translate-x-48 duration-700 transition-all",
         ].join(" ")}
       >
         <Checkbox
-          className={"accent-foreground"}
+          className={["accent-foreground", todo.deleted_at && "hidden"].join(
+            " "
+          )}
           checked={isChecked}
           onCheckedChange={() => {
             axios.put(
@@ -127,13 +131,15 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
           <p
             className={[
               "text-foreground flex-auto leading-none",
-              isChecked && "line-through text-foreground/80",
+              isChecked &&
+                !todo.deleted_at &&
+                "line-through text-foreground/80",
             ].join(" ")}
             key={todo.id}
           >
             {todo.task}
           </p>
-          {!todo.is_complete && todo.note && (
+          {!todo.is_complete && !todo.deleted_at && todo.note && (
             <div
               className={[
                 " text-[10px] leading-none text-foreground/70",
@@ -148,7 +154,8 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
             todo.location ||
             todo.remind_at ||
             todo.priority !== "none") &&
-            !todo.is_complete && (
+            !todo.is_complete &&
+            !todo.deleted_at && (
               <div className="flex justify-between">
                 <div className="flex items-center gap-2">
                   {todo.remind_at && (
@@ -232,7 +239,10 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="flex flex-col w-fit rounded-xl">
           <DropdownMenuItem
-            className={["flex gap-2", isChecked && "hidden"].join(" ")}
+            className={[
+              "flex gap-2",
+              (isChecked || todo.deleted_at) && "hidden",
+            ].join(" ")}
             onClick={() => {
               axios.put(
                 `${import.meta.env.VITE_API_BASE_URL}/api/todos/${todo.id}`,
@@ -257,7 +267,10 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
             <p>{isPinned ? "Unstar" : "Star"}</p>
           </DropdownMenuItem>
           <DropdownMenuItem
-            className={["flex gap-2", isChecked && "hidden"].join(" ")}
+            className={[
+              "flex gap-2",
+              (isChecked || todo.deleted_at) && "hidden",
+            ].join(" ")}
             onClick={() => {
               setIsOpen(true);
             }}
@@ -268,11 +281,22 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
           <DropdownMenuItem
             className="flex gap-2"
             onClick={() => {
-              axios.delete(
-                `${import.meta.env.VITE_API_BASE_URL}/api/todos/${todo.id}`
+              axios.put(
+                `${import.meta.env.VITE_API_BASE_URL}/api/todos/${todo.id}`,
+                {
+                  deleted_at: new Date(),
+                }
               );
-              const filterTodos = todos.filter((tdo) => tdo.id !== todo.id);
-              setTodos(filterTodos);
+              const mapTodos = todos.map((tdo) => {
+                if (tdo.id === todo.id) {
+                  return {
+                    ...tdo,
+                    deleted_at: new Date(),
+                  };
+                }
+                return tdo;
+              });
+              setTodos(mapTodos);
             }}
           >
             <Trash size={15} />

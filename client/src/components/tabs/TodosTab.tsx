@@ -1,11 +1,11 @@
 import { useState } from "react";
-import Todo from "./Todo";
+import Todo from "../Todo";
 import axios from "axios";
 import { ArrowUpDownIcon } from "lucide-react";
 import { Maximize2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import TodoSkeleton from "./TodoSkeleton";
+import TodoSkeleton from "../TodoSkeleton";
 import {
   Select,
   SelectContent,
@@ -16,7 +16,7 @@ import {
 
 import TodoType from "@/types/TodoType";
 import UserType from "@/types/UserType";
-import AddTodoDialog from "./AddTodoDialog";
+import AddTodoDialog from "../AddTodoDialog";
 
 type Props = {
   todos: TodoType[];
@@ -32,7 +32,7 @@ const TodosTab = ({ todos, setTodos, user, isLoaderVisible }: Props) => {
 
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col relative mt-4 h-[440px]">
+      <div className="flex flex-col relative h-[440px]">
         <div className="flex justify-between border-b-[2px] h-12 items-center">
           <h1 className="font-bold text-lg">Todos</h1>
           <Select
@@ -59,7 +59,7 @@ const TodosTab = ({ todos, setTodos, user, isLoaderVisible }: Props) => {
           <TodoSkeleton isLoaderVisible={isLoaderVisible} />
           <TodoSkeleton isLoaderVisible={isLoaderVisible} />
           {todos
-            .filter((todo) => !todo.is_complete)
+            .filter((todo) => !todo.is_complete && !todo.deleted_at)
             .sort((a, b) => {
               if (a.is_pin && !b.is_pin) {
                 return -1;

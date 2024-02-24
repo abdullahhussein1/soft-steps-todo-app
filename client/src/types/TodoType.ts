@@ -10,6 +10,7 @@ type TodoType = {
   is_pin: boolean;
   created_at: Date;
   updated_at: Date;
+  deleted_at: Date;
   remind_at: Date;
 };
 
