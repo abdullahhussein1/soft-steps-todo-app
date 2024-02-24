@@ -167,7 +167,7 @@ const EditTodoDialog = ({
               </div>
               <div className="flex flex-col">
                 <Select
-                  defaultValue="none"
+                  defaultValue={todo.priority}
                   onValueChange={(value) =>
                     setPriority(value as TodoType["priority"])
                   }
@@ -181,7 +181,7 @@ const EditTodoDialog = ({
                       variant={"outline"}
                       className={cn(
                         " px-3 border-none rounded-xl w-32 justify-start text-left font-normal",
-                        !date && "text-muted-foreground"
+                        priority === "none" && "text-muted-foreground"
                       )}
                     >
                       <ArrowUpWideNarrow className="mr-2 h-4 w-4" />
@@ -363,7 +363,7 @@ const EditTodoDialog = ({
               </div>
               <div className="flex flex-col">
                 <Select
-                  defaultValue="none"
+                  defaultValue={todo.priority}
                   onValueChange={(value) =>
                     setPriority(value as TodoType["priority"])
                   }
@@ -377,7 +377,7 @@ const EditTodoDialog = ({
                       variant={"outline"}
                       className={cn(
                         " px-3 border-none rounded-xl w-32 justify-start text-left font-normal",
-                        !date && "text-muted-foreground"
+                        priority === "none" && "text-muted-foreground"
                       )}
                     >
                       <ArrowUpWideNarrow className="mr-2 h-4 w-4" />
@@ -427,8 +427,8 @@ const EditTodoDialog = ({
                           date && date !== todo.remind_at
                             ? new Date(date)
                             : null,
-                        priority,
-                        location,
+                        priority: priority,
+                        location: location,
                         updated_at:
                           date !== todo.remind_at ||
                           todoInput !== todo.task ||
@@ -445,6 +445,8 @@ const EditTodoDialog = ({
                           ...tdo,
                           task: todoInput,
                           note: todoNoteInput,
+                          priority: priority,
+                          location: location,
                           remind_at: date,
                         };
                       } else if (tdo.id === todo.id) {
@@ -452,8 +454,8 @@ const EditTodoDialog = ({
                           ...tdo,
                           task: todoInput,
                           note: todoNoteInput,
-                          priority: priority, // Use the existing priority if not updated
-                          location: location, // Use the existing location if not updated
+                          priority: priority,
+                          location: location,
                         };
                       }
                       return tdo;

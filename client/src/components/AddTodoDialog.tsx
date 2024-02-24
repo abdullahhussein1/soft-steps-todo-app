@@ -66,7 +66,9 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
   const [todoInput, setTodoInput] = useState<string | undefined>();
   const [todoNoteInput, setTodoNoteInput] = useState<string | undefined>();
   const [date, setDate] = React.useState<Date | undefined>();
-  const [priority, setPriority] = useState<TodoType["priority"] | undefined>();
+  const [priority, setPriority] = useState<TodoType["priority"] | undefined>(
+    "none"
+  );
   const [location, setLocation] = useState<TodoType["location"] | undefined>();
   const isDesktop = useMediaQuery("(min-width: 640px)");
 
@@ -171,7 +173,7 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
                       variant={"outline"}
                       className={cn(
                         " px-3 border-none rounded-xl w-32 justify-start text-left font-normal",
-                        !date && "text-muted-foreground"
+                        priority === "none" && "text-muted-foreground"
                       )}
                     >
                       <ArrowUpWideNarrow className="mr-2 h-4 w-4" />
@@ -334,7 +336,7 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
                       variant={"outline"}
                       className={cn(
                         " px-3 border-none rounded-xl w-32 justify-start text-left font-normal",
-                        !date && "text-muted-foreground"
+                        priority === "none" && "text-muted-foreground"
                       )}
                     >
                       <ArrowUpWideNarrow className="mr-2 h-4 w-4" />
@@ -372,8 +374,8 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
                         task: todoInput,
                         note: todoNoteInput,
                         remind_at: date ? new Date(date) : null,
-                        priority,
-                        location,
+                        priority: priority,
+                        location: location,
                       }
                     );
 

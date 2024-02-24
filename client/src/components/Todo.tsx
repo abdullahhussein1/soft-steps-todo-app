@@ -123,12 +123,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
           }}
           name="todo"
         />
-        <div
-          className={[
-            "flex flex-col flex-auto gap-2",
-            !todo.is_complete && "cursor-pointer",
-          ].join(" ")}
-        >
+        <div className={["flex flex-col flex-auto gap-2"].join(" ")}>
           <p
             className={[
               "text-foreground flex-auto leading-none",
@@ -149,7 +144,10 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
                 : todo.note.slice(0, 20) + "..."}
             </div>
           )}
-          {(todo.note || todo.location || todo.remind_at) &&
+          {(todo.note ||
+            todo.location ||
+            todo.remind_at ||
+            todo.priority !== "none") &&
             !todo.is_complete && (
               <div className="flex justify-between">
                 <div className="flex items-center gap-2">
@@ -204,11 +202,11 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
                       className={[
                         "px-2 py-1 rounded-full font-semibold text-[10px]",
                         todo.priority === "low" &&
-                          "text-yellow-500 bg-yellow-400/10",
+                          "text-yellow-500 bg-yellow-400/20",
                         todo.priority === "medium" &&
-                          "text-orange-500 bg-orange-400/10",
+                          "text-orange-500 bg-orange-400/20",
                         todo.priority === "high" &&
-                          "text-red-500 bg-red-400/10",
+                          "text-red-500 bg-red-400/20",
                       ].join(" ")}
                     >
                       {todo.priority}
