@@ -51,17 +51,17 @@ const AuthenticationPage: React.FC = () => {
       <h1 className="text-3xl font-thin">
         Welcome to <span className="font-semibold">Soft Steps</span>
       </h1>
-      <div className="bg-[#0b0b0b] max-w-xl w-full p-5 rounded-3xl">
+      <div className="bg-neutral-900/40 max-w-xl w-full p-5 rounded-3xl">
         <div className="flex justify-center items-center gap-5 flex-col">
           <button
-            className="flex gap-2 justify-center items-center rounded-xl p-3 hover:bg-neutral-900/50 transition-colors"
+            className="flex gap-2 justify-center items-center rounded-2xl p-3 border border-neutral-900/80 hover:bg-neutral-900/80 transition-colors"
             onClick={handleSignInWithGoogle}
           >
             <Sparkle size={18} />
             <p>Sign in With Google</p>
           </button>
           <button
-            className="flex gap-2 justify-center items-center rounded-xl p-3 hover:bg-neutral-900/50 transition-colors"
+            className="flex gap-2 justify-center items-center rounded-2xl p-3 border border-neutral-900/80 hover:bg-neutral-900/80 transition-colors"
             onClick={handleSignInWithGithub}
           >
             <Github size={18} />

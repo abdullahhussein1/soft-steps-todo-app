@@ -204,11 +204,11 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
                       className={[
                         "px-2 py-1 rounded-full font-semibold text-[10px]",
                         todo.priority === "low" &&
-                          "text-yellow-500 bg-yellow-600/20",
+                          "text-yellow-500 bg-yellow-400/10",
                         todo.priority === "medium" &&
-                          "text-orange-500 bg-orange-600/20",
+                          "text-orange-500 bg-orange-400/10",
                         todo.priority === "high" &&
-                          "text-red-500 bg-red-600/20",
+                          "text-red-500 bg-red-400/10",
                       ].join(" ")}
                     >
                       {todo.priority}
