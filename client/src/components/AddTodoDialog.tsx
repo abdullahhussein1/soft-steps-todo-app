@@ -65,7 +65,7 @@ type Props = {
 const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
   const [todoInput, setTodoInput] = useState<string | undefined>();
   const [todoNoteInput, setTodoNoteInput] = useState<string | undefined>();
-  const [date, setDate] = React.useState<Date | undefined>();
+  const [date, setDate] = React.useState<Date | undefined>(undefined);
   const [priority, setPriority] = useState<TodoType["priority"] | undefined>(
     "none"
   );
@@ -74,7 +74,17 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
 
   if (isDesktop) {
     return (
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <Dialog
+        open={isOpen}
+        onOpenChange={(value) => {
+          setIsOpen(value);
+          setTodoInput(undefined);
+          setTodoNoteInput(undefined);
+          setPriority("none");
+          setDate(undefined);
+          setLocation(undefined);
+        }}
+      >
         <DialogContent className="sm:rounded-3xl">
           <DialogHeader>
             <DialogTitle>Add Todo</DialogTitle>
@@ -237,7 +247,17 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
     );
   } else {
     return (
-      <Drawer open={isOpen} onOpenChange={setIsOpen}>
+      <Drawer
+        open={isOpen}
+        onOpenChange={(value) => {
+          setIsOpen(value);
+          setTodoInput(undefined);
+          setTodoNoteInput(undefined);
+          setPriority("none");
+          setDate(undefined);
+          setLocation(undefined);
+        }}
+      >
         <DrawerContent className="rounded-t-3xl px-4">
           <DrawerHeader>
             <DrawerTitle>Add Todo</DrawerTitle>
@@ -341,7 +361,7 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
                     >
                       <ArrowUpWideNarrow className="mr-2 h-4 w-4" />
                       {priority !== "none" ? (
-                        <SelectValue />
+                        priority
                       ) : (
                         <span>Set priority</span>
                       )}
@@ -367,29 +387,29 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
                   className="rounded-full bg-primary text-special sm:order-2 flex-auto w-full "
                   onMouseUp={async (e) => {
                     e.preventDefault();
-                    const response = await axios.post(
-                      `${import.meta.env.VITE_API_BASE_URL}/api/todos`,
-                      {
-                        user_id: user?.id,
-                        task: todoInput,
-                        note: todoNoteInput,
-                        remind_at: date ? new Date(date) : null,
-                        priority: priority,
-                        location: location,
-                      }
-                    );
+                    try {
+                      const response = await axios.post(
+                        `${import.meta.env.VITE_API_BASE_URL}/api/todos`,
+                        {
+                          user_id: user?.id,
+                          task: todoInput,
+                          note: todoNoteInput,
+                          remind_at: date ? new Date(date) : null,
+                          priority: priority,
+                          location: location,
+                        }
+                      );
 
-                    const newTodo = response.data;
-                    setTodos([...todos, newTodo]);
-                    setTodoInput(undefined);
-                    setTodoNoteInput(undefined);
-                    setPriority(undefined);
-                    setLocation(undefined);
+                      const newTodo = response.data;
+                      setTodos([...todos, newTodo]);
+                    } catch (error) {
+                      console.log(error);
+                    }
                   }}
                 >
                   Add
                 </Button>
-                <Button className="bg-transparent text-foreground sm:order-1 w-24 hover:bg-foreground/5  rounded-full  ">
+                <Button className="bg-transparent text-foreground sm:order-1 w-24 hover:bg-foreground/5  rounded-full">
                   Close
                 </Button>
               </div>
