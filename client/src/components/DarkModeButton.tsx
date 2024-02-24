@@ -64,7 +64,7 @@ export default function DarkModeButton() {
         defaultValue="System"
         onValueChange={(value) => handleDarkModeValueChange(value)}
       >
-        <SelectTrigger className="flex border-none text-xs font-normal bg-secondary/25 justify-between hover:bg-border/50 w-20 h-7 items-center  px-2 rounded-full transition-all">
+        <SelectTrigger className="flex border-none text-xs font-normal bg-secondary/50 justify-between hover:bg-border/50 w-20 h-7 items-center  px-2 rounded-full transition-all">
           <SelectValue />
         </SelectTrigger>
         <SelectContent className="flex flex-col w-fit p-2 rounded-xl text-foreground/80">
