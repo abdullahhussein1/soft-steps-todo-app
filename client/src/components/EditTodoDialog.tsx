@@ -82,7 +82,17 @@ const EditTodoDialog = ({
 
   if (isDesktop) {
     return (
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <Dialog
+        open={isOpen}
+        onOpenChange={(value) => {
+          setIsOpen(value);
+          setTodoInput(todo.task);
+          setTodoNoteInput(todo.note);
+          setPriority(todo.priority);
+          setDate(todo.remind_at ? new Date(todo.remind_at) : undefined);
+          setLocation(todo.location);
+        }}
+      >
         <DialogContent className="sm:rounded-3xl">
           <DialogHeader>
             <DialogTitle>Edit Todo</DialogTitle>
@@ -278,7 +288,17 @@ const EditTodoDialog = ({
     );
   } else {
     return (
-      <Drawer open={isOpen} onOpenChange={setIsOpen}>
+      <Drawer
+        open={isOpen}
+        onOpenChange={(value) => {
+          setIsOpen(value);
+          setTodoInput(todo.task);
+          setTodoNoteInput(todo.note);
+          setPriority(todo.priority);
+          setDate(todo.remind_at ? new Date(todo.remind_at) : undefined);
+          setLocation(todo.location);
+        }}
+      >
         <DrawerContent className="rounded-t-3xl px-4">
           <DrawerHeader>
             <DrawerTitle>Edit Todo</DrawerTitle>
@@ -465,7 +485,7 @@ const EditTodoDialog = ({
                 >
                   Edit
                 </Button>
-                <Button className="bg-transparent text-foreground sm:order-1 w-24 hover:bg-foreground/5  rounded-full  ">
+                <Button className="bg-transparent text-foreground sm:order-1 w-24 hover:bg-foreground/5  rounded-full">
                   Close
                 </Button>
               </div>
