@@ -1,8 +1,4 @@
 import Todo from "../Todo";
-import axios from "axios";
-
-import { Trash } from "lucide-react";
-
 import TodoType from "@/types/TodoType";
 
 type Props = {
