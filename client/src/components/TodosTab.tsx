@@ -49,6 +49,7 @@ const TodosTab = ({ todos, setTodos, user, isLoaderVisible }: Props) => {
               <SelectGroup>
                 <SelectItem value="dateEdited">Date Edited</SelectItem>
                 <SelectItem value="dateCreated">Date Created</SelectItem>
+                <SelectItem value="priority">Priority</SelectItem>
                 <SelectItem value="title">Title</SelectItem>
               </SelectGroup>
             </SelectContent>
@@ -58,18 +59,16 @@ const TodosTab = ({ todos, setTodos, user, isLoaderVisible }: Props) => {
           <TodoSkeleton isLoaderVisible={isLoaderVisible} />
           <TodoSkeleton isLoaderVisible={isLoaderVisible} />
           {todos
-            .filter((todo) => todo.is_pin && !todo.is_complete)
-            .map((todo) => (
-              <Todo
-                key={todo.id}
-                todo={todo}
-                todos={todos}
-                setTodos={setTodos}
-              />
-            ))}
-          {todos
-            .filter((todo) => !todo.is_pin && !todo.is_complete)
+            .filter((todo) => !todo.is_complete)
             .sort((a, b) => {
+              if (a.is_pin && !b.is_pin) {
+                return -1;
+              } else if (!a.is_pin && b.is_pin) {
+                return 1;
+              }
+
+              if (a.is_pin || b.is_pin) return 0;
+
               if (sortByValue === "dateEdited") {
                 return (
                   new Date(b.updated_at).getTime() -
@@ -80,6 +79,9 @@ const TodosTab = ({ todos, setTodos, user, isLoaderVisible }: Props) => {
                   new Date(b.created_at).getTime() -
                   new Date(a.created_at).getTime()
                 );
+              } else if (sortByValue === "priority") {
+                const priorityOrder = { high: 3, medium: 2, low: 1, none: 0 };
+                return priorityOrder[b.priority] - priorityOrder[a.priority];
               } else {
                 return a.task.localeCompare(b.task);
               }
@@ -92,6 +94,7 @@ const TodosTab = ({ todos, setTodos, user, isLoaderVisible }: Props) => {
                 setTodos={setTodos}
               />
             ))}
+
           <div className="w-full h-10 bg-gradient-to-t from-background via-background to-transparent absolute bottom-8 z-10"></div>
         </div>
       </div>
