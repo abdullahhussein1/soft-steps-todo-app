@@ -7,6 +7,7 @@ import {
   MapPin,
   PencilLine,
   Star,
+  Undo2,
 } from "lucide-react";
 import { MoreHorizontal } from "lucide-react";
 import { Trash } from "lucide-react";
@@ -233,7 +234,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
       />
       <DropdownMenu>
         <DropdownMenuTrigger className="flex-initial self-start">
-          <div className="px-2 ">
+          <div className="px-2">
             <MoreHorizontal size={16} />
           </div>
         </DropdownMenuTrigger>
@@ -279,7 +280,39 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
             <p>Edit</p>
           </DropdownMenuItem>
           <DropdownMenuItem
-            className="flex gap-2"
+            className={[
+              "hidden focus:bg-green-400/10 focus:text-green-500 transition-all",
+              todo.deleted_at && "flex gap-2",
+            ].join(" ")}
+            onClick={() => {
+              axios.put(
+                `${import.meta.env.VITE_API_BASE_URL}/api/todos/${todo.id}`,
+                {
+                  deleted_at: null,
+                }
+              );
+              const mapTodos = todos.map((tdo) => {
+                if (tdo.id === todo.id) {
+                  return {
+                    ...tdo,
+                    deleted_at: null,
+                  };
+                }
+                return tdo;
+              });
+              setTodos(mapTodos);
+            }}
+          >
+            <Undo2 size={15} />
+            <p>Recover</p>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className={[
+              "flex gap-2",
+              todo.deleted_at &&
+                "focus:bg-red-400/10 focus:text-red-500 transition-all",
+            ].join(" ")}
+            color="blue"
             onClick={() => {
               axios.put(
                 `${import.meta.env.VITE_API_BASE_URL}/api/todos/${todo.id}`,
@@ -300,7 +333,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
             }}
           >
             <Trash size={15} />
-            <p>Delete</p>
+            <p>{todo.deleted_at ? "Delete" : "Remove"}</p>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
