@@ -47,21 +47,23 @@ const AuthenticationPage: React.FC = () => {
   }
 
   return (
-    <div className="p-5 bg-black text-white flex items-center  justify-center flex-col gap-4 h-screen">
-      <h1 className="text-3xl font-thin">
-        Welcome to <span className="font-semibold">Soft Steps</span>
-      </h1>
+    <div className="p-5 bg-black text-white flex items-center justify-center flex-col gap-10 h-screen">
+      <h1 className="text-xl self-start  font-semibold">🇵🇸 Soft Steps</h1>
+      <div className="flex flex-col self-start justify-self-start gap-1">
+        <h1 className="text-xl">Get started</h1>
+        <p className="text-sm font-thin">Create a new account</p>
+      </div>
       <div className="bg-neutral-900/40 max-w-xl w-full p-5 rounded-3xl">
         <div className="flex justify-center items-center gap-5 flex-col">
           <button
-            className="flex gap-2 justify-center items-center rounded-2xl p-3 border border-neutral-900/80 hover:bg-neutral-900/80 transition-colors"
+            className="flex gap-2 justify-center items-center rounded-2xl p-3 border-2 border-neutral-900 hover:bg-neutral-900 transition-colors"
             onClick={handleSignInWithGoogle}
           >
             <Sparkle size={18} />
             <p>Sign in With Google</p>
           </button>
           <button
-            className="flex gap-2 justify-center items-center rounded-2xl p-3 border border-neutral-900/80 hover:bg-neutral-900/80 transition-colors"
+            className="flex gap-2 justify-center items-center rounded-2xl p-3 border-2 border-neutral-900 hover:bg-neutral-900 transition-colors"
             onClick={handleSignInWithGithub}
           >
             <Github size={18} />
