@@ -1,4 +1,4 @@
-import { Calendar, Star } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 import DarkModeButton from "./DarkModeButton";
 import ColorThemeButton from "./ColorThemeButton";
 import { useState } from "react";
@@ -6,7 +6,6 @@ import { Checkbox } from "./ui/checkbox";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 
 const ColorThemeContent = () => {
-  const [isPinned, setIsPinned] = useState(true);
   const [isChecked, setIsChecked] = useState(false);
 
   return (
@@ -17,7 +16,7 @@ const ColorThemeContent = () => {
           <div
             className={[
               "flex items-start border-[0.7px] rounded-xl px-3 py-2 space-x-2",
-              isPinned && !isChecked && "bg-secondary",
+              !isChecked && "bg-secondary",
             ].join(" ")}
           >
             <Checkbox
@@ -32,27 +31,15 @@ const ColorThemeContent = () => {
                   isChecked && "line-through text-foreground/80",
                 ].join(" ")}
               >
-                Pray all prayers in mosque
+                Pray for Palestinians
               </div>
               {!isChecked && (
                 <div className="h-[6px] w-2/5 flex text-foreground/70 items-center gap-[3px] text-[8px]">
-                  <Calendar size={8} />
                   <p className="mt-[2px]">tomorrow</p>
                 </div>
               )}
             </div>
-            <Star
-              size={10}
-              className={[
-                "flex-initial cursor-pointer mt-[1px]",
-                isChecked
-                  ? "hidden"
-                  : isPinned
-                  ? "text-yellow-500 fill-yellow-500  hover:text-yellow-600 hover:fill-yellow-600"
-                  : "text-foreground/50  hover:text-foreground/90",
-              ].join(" ")}
-              onClick={() => setIsPinned(!isPinned)}
-            />
+            <MoreHorizontal size={10} />
           </div>
           <div className="flex h-6 space-x-1">
             <div className="flex items-center w-full rounded-full border p-2 text-[9px] text-foreground/40">
