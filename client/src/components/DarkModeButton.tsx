@@ -8,6 +8,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Monitor, Moon, Sun } from "lucide-react";
+import { useState } from "react";
 
 type Theme =
   | "blue"
@@ -20,6 +22,9 @@ type Theme =
   | "orange-dark";
 
 export default function DarkModeButton() {
+  const [darkModeState, setDarkModeState] = useState<string>(
+    localStorage.getItem("selectedTheme") as string
+  );
   const { theme, setTheme } = useTheme();
 
   const isSystemThemeDark = window.matchMedia(
@@ -27,6 +32,7 @@ export default function DarkModeButton() {
   ).matches;
 
   function handleDarkModeValueChange(value: string) {
+    setDarkModeState(value);
     if (value === "System") {
       if (isSystemThemeDark) {
         const newTheme = theme.includes("-dark")
@@ -61,15 +67,26 @@ export default function DarkModeButton() {
     <div className="flex w-full justify-between items-center">
       <label htmlFor="darkMode">Dark Mode</label>
       <Select
-        defaultValue="System"
+        defaultValue={darkModeState}
         onValueChange={(value) => handleDarkModeValueChange(value)}
       >
-        <SelectTrigger className="flex border-none text-xs font-normal bg-secondary/50 justify-between hover:bg-border/50 w-20 h-7 items-center  px-2 rounded-full transition-all">
-          <SelectValue />
+        <SelectTrigger className="flex border-none text-xs font-normal bg-secondary/70 justify-between hover:bg-border/20 w-fit h-7 items-center rounded-full transition-all">
+          <div className="flex items-center gap-1 mr-2">
+            {darkModeState === "Light" ? (
+              <Sun size={12} />
+            ) : darkModeState === "System" ? (
+              <Monitor size={12} />
+            ) : (
+              <Moon size={12} />
+            )}
+            <SelectValue />
+          </div>
         </SelectTrigger>
         <SelectContent className="flex flex-col w-fit p-2 rounded-xl text-foreground/80">
           <SelectGroup>
-            <SelectItem value="Light">Light</SelectItem>
+            <SelectItem value="Light">
+              <p>Light</p>
+            </SelectItem>
             <SelectItem value="Dark">Dark</SelectItem>
             <SelectItem value="System">System</SelectItem>
           </SelectGroup>
