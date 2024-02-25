@@ -63,13 +63,11 @@ type Props = {
 };
 
 const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
-  const [todoInput, setTodoInput] = useState<string | undefined>();
-  const [todoNoteInput, setTodoNoteInput] = useState<string | undefined>();
-  const [date, setDate] = React.useState<Date | undefined>(undefined);
-  const [priority, setPriority] = useState<TodoType["priority"] | undefined>(
-    "none"
-  );
-  const [location, setLocation] = useState<TodoType["location"] | undefined>();
+  const [todoInput, setTodoInput] = useState<string | null>();
+  const [todoNoteInput, setTodoNoteInput] = useState<string | null>();
+  const [date, setDate] = React.useState<Date | null>(null);
+  const [priority, setPriority] = useState<TodoType["priority"] | null>("none");
+  const [location, setLocation] = useState<TodoType["location"] | null>();
   const isDesktop = useMediaQuery("(min-width: 640px)");
 
   if (isDesktop) {
@@ -78,11 +76,11 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
         open={isOpen}
         onOpenChange={(value) => {
           setIsOpen(value);
-          setTodoInput(undefined);
-          setTodoNoteInput(undefined);
+          setTodoInput(null);
+          setTodoNoteInput(null);
           setPriority("none");
-          setDate(undefined);
-          setLocation(undefined);
+          setDate(null);
+          setLocation(null);
         }}
       >
         <DialogContent className="sm:rounded-3xl">
@@ -160,7 +158,7 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
                       selected={date ?? new Date()}
                       fromDate={new Date()}
                       onSelect={(selectedDate) => {
-                        setDate(selectedDate ?? undefined);
+                        setDate(selectedDate ?? null);
                       }}
                       initialFocus
                     />
@@ -228,10 +226,10 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
 
                     const newTodo = response.data;
                     setTodos([...todos, newTodo]);
-                    setTodoInput(undefined);
-                    setTodoNoteInput(undefined);
-                    setPriority(undefined);
-                    setLocation(undefined);
+                    setTodoInput(null);
+                    setTodoNoteInput(null);
+                    setPriority(null);
+                    setLocation(null);
                   }}
                 >
                   Add
@@ -251,11 +249,11 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
         open={isOpen}
         onOpenChange={(value) => {
           setIsOpen(value);
-          setTodoInput(undefined);
-          setTodoNoteInput(undefined);
+          setTodoInput(null);
+          setTodoNoteInput(null);
           setPriority("none");
-          setDate(undefined);
-          setLocation(undefined);
+          setDate(null);
+          setLocation(null);
         }}
       >
         <DrawerContent className="rounded-t-3xl px-4">
@@ -333,7 +331,7 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
                       selected={date ?? new Date()}
                       fromDate={new Date()}
                       onSelect={(selectedDate) => {
-                        setDate(selectedDate ?? undefined);
+                        setDate(selectedDate ?? null);
                       }}
                       initialFocus
                     />
@@ -355,7 +353,7 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
                     <Button
                       variant={"outline"}
                       className={cn(
-                        " px-3 border-none rounded-xl w-32 justify-start text-left font-normal",
+                        "flex items-center text-sm w-fit border-none rounded-xl justify-start text-left font-normal px-3",
                         priority === "none" && "text-muted-foreground"
                       )}
                     >
