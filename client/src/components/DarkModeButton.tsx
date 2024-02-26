@@ -23,12 +23,12 @@ type Theme =
 
 export default function DarkModeButton() {
   const [darkModeState, setDarkModeState] = useState<string>(
-    localStorage.getItem("selectedTheme") as string
+    localStorage.getItem("selectedTheme") as string,
   );
   const { theme, setTheme } = useTheme();
 
   const isSystemThemeDark = window.matchMedia(
-    "(prefers-color-scheme: dark)"
+    "(prefers-color-scheme: dark)",
   ).matches;
 
   function handleDarkModeValueChange(value: string) {
@@ -64,14 +64,14 @@ export default function DarkModeButton() {
   }
 
   return (
-    <div className="flex w-full justify-between items-center">
+    <div className="flex w-full items-center justify-between">
       <label htmlFor="darkMode">Dark Mode</label>
       <Select
         defaultValue={darkModeState}
         onValueChange={(value) => handleDarkModeValueChange(value)}
       >
-        <SelectTrigger className="flex border-none text-xs font-normal bg-secondary/70 justify-between hover:bg-border/20 w-fit h-7 items-center rounded-full transition-all">
-          <div className="flex items-center gap-1 mr-2">
+        <SelectTrigger className="flex h-7 w-fit items-center justify-between rounded-full border-none bg-secondary/70 text-xs font-normal transition-all hover:bg-border/20">
+          <div className="mr-2 flex items-center gap-1">
             {darkModeState === "Light" ? (
               <Sun size={12} />
             ) : darkModeState === "System" ? (
@@ -82,7 +82,7 @@ export default function DarkModeButton() {
             <SelectValue />
           </div>
         </SelectTrigger>
-        <SelectContent className="flex flex-col w-fit p-2 rounded-xl text-foreground/80">
+        <SelectContent className="flex w-fit flex-col rounded-xl p-2 text-foreground/80">
           <SelectGroup>
             <SelectItem value="Light">
               <p>Light</p>

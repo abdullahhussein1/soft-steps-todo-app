@@ -37,12 +37,12 @@ const TodoApp = () => {
   }
 
   return (
-    <div className="h-[100dvh] flex flex-col bg-secondary justify-center items-center">
-      <div className="w-full max-w-xl gap-2 flex flex-col p-5">
+    <div className="flex h-[100dvh] flex-col items-center justify-center bg-secondary">
+      <div className="flex w-full max-w-xl flex-col gap-2 p-5">
         <div className="flex items-center justify-end">
           <Menu user={user} />
         </div>
-        <div className="container bg-background shadow-2xl shadow-gray-950/20 rounded-[30px] h-[590px] max-w-xl flex flex-col p-5">
+        <div className="container flex h-[590px] max-w-xl flex-col rounded-[30px] bg-background p-5 shadow-2xl shadow-gray-950/20">
           <TodoList user={user} />
         </div>
       </div>

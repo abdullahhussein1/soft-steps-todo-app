@@ -23,17 +23,17 @@ type Props = {
 const CompletedTab = ({ todos, setTodos }: Props) => {
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex justify-between border-b-[2px] h-12 items-center">
-        <h1 className="font-bold text-lg">Trash</h1>
+      <div className="flex h-12 items-center justify-between border-b-[2px]">
+        <h1 className="text-lg font-bold">Trash</h1>
         <DropdownMenu>
-          <DropdownMenuTrigger className="hover:bg-border/50 rounded-full transition-colors">
+          <DropdownMenuTrigger className="rounded-full transition-colors hover:bg-border/50">
             <div className="p-2">
               <MoreHorizontal size={20} />
             </div>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="flex flex-col w-fit rounded-xl">
+          <DropdownMenuContent className="flex w-fit flex-col rounded-xl">
             <DropdownMenuItem
-              className="flex gap-[6px] w-full items-center focus:bg-green-400/10 px-2 focus:text-green-500 transition-all"
+              className="flex w-full items-center gap-[6px] px-2 transition-all focus:bg-green-400/10 focus:text-green-500"
               onClick={() => {
                 const deletedTodos = todos.filter((todo) => todo.deleted_at);
 
@@ -45,7 +45,7 @@ const CompletedTab = ({ todos, setTodos }: Props) => {
                       }`,
                       {
                         deleted_at: null,
-                      }
+                      },
                     );
 
                     setTodos((prevTodos) =>
@@ -57,7 +57,7 @@ const CompletedTab = ({ todos, setTodos }: Props) => {
                           };
                         }
                         return tdo;
-                      })
+                      }),
                     );
                   }
                 }
@@ -69,20 +69,20 @@ const CompletedTab = ({ todos, setTodos }: Props) => {
               <p className="whitespace-nowrap">Recover All</p>
             </DropdownMenuItem>
             <DropdownMenuItem
-              className="flex gap-[6px] w-full items-center focus:bg-red-400/10 px-2 focus:text-red-500 transition-all"
+              className="flex w-full items-center gap-[6px] px-2 transition-all focus:bg-red-400/10 focus:text-red-500"
               onClick={async () => {
                 const deletedTodos = todos.filter((todo) => todo.deleted_at);
 
                 if (deletedTodos.length > 0) {
                   setTodos((prevTodos) =>
-                    prevTodos.filter((todo) => !todo.deleted_at)
+                    prevTodos.filter((todo) => !todo.deleted_at),
                   );
 
                   for (const todo of deletedTodos) {
                     await axios.delete(
                       `${import.meta.env.VITE_API_BASE_URL}/api/todos/${
                         todo.id
-                      }`
+                      }`,
                     );
                   }
                 }
@@ -96,7 +96,7 @@ const CompletedTab = ({ todos, setTodos }: Props) => {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="flex flex-col gap-2 overflow-x-clip overflow-y-auto px-2">
+      <div className="flex flex-col gap-2 overflow-y-auto overflow-x-clip px-2">
         {todos
           .filter((todo) => todo.deleted_at)
           .map((todo) => (

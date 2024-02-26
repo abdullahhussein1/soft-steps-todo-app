@@ -1,21 +1,23 @@
 import React from "react";
 import supabase from "@/supabase/supabase";
-import { Sparkle } from "lucide-react";
-import { Github } from "lucide-react";
+import github from "../assets/images/github.png";
+import google from "../assets/images/google.png";
+import palestineIcon from "../assets/images/favicon.png";
+import palestineCountryFilledIcon from "../assets/images/palestineCountryFilled.png";
 
 const AuthenticationPage: React.FC = () => {
   supabase.auth.onAuthStateChange((event, session) => {
     if (session && session.provider_token) {
       window.localStorage.setItem(
         "oauth_provider_token",
-        session.provider_token
+        session.provider_token,
       );
     }
 
     if (session && session.provider_refresh_token) {
       window.localStorage.setItem(
         "oauth_provider_refresh_token",
-        session.provider_refresh_token
+        session.provider_refresh_token,
       );
     }
 
@@ -47,30 +49,46 @@ const AuthenticationPage: React.FC = () => {
   }
 
   return (
-    <div className="px-12 py-5 relative bg-black text-white  flex items-center justify-center flex-col gap-10 h-screen">
-      <h1 className="text-2xl self-start   font-semibold">🇵🇸 Soft Steps</h1>
-      <div className="flex flex-col w-full gap-2">
-        <div className="flex flex-col self-start justify-self-start gap-1">
+    <div className="flex h-screen flex-col items-center justify-start bg-black p-12 text-white">
+      <div className="mx-auto flex max-w-xl flex-col gap-1 self-start">
+        <h1 className="flex items-center gap-2 text-xl font-semibold">
+          <img src={palestineIcon} alt="palestineIcon" className="h-6 w-6" />
+          Soft Steps
+        </h1>
+        <p className="text-justify text-xs font-thin">
+          He has already revealed to you in the Book that when you hear Allah's
+          revelations being denied or ridiculed, then do not sit in that company
+          unless they engage in a different topic, or else you will be like
+          them. Surely Allah will gather the hypocrites and disbelievers all
+          together in Hell. [4:140]
+        </p>
+      </div>
+
+      <div className="relative -mt-14 flex w-full max-w-xl flex-1 flex-col justify-center gap-2">
+        <img
+          src={palestineCountryFilledIcon}
+          alt="palestineCountryFilledIcon"
+          className="absolute h-full w-full object-cover opacity-5 brightness-50"
+        />
+        <div className="flex flex-col gap-1">
           <h1 className="text-xl">Get started</h1>
           <p className="text-sm font-thin">Create a new account</p>
         </div>
-        <div className="border max-w-xl w-full h-80 flex items-center justify-center p-5 rounded-3xl">
-          <div className="flex justify-center items-center gap-5 flex-col">
-            <button
-              className="flex gap-2 justify-center items-center rounded-2xl p-3 bg-neutral-900 hover:bg-neutral-800 transition-colors"
-              onClick={handleSignInWithGoogle}
-            >
-              <Sparkle size={18} />
-              <p>Sign in With Google</p>
-            </button>
-            <button
-              className="flex gap-2 justify-center items-center rounded-2xl p-3  bg-neutral-900 hover:bg-neutral-800 transition-colors"
-              onClick={handleSignInWithGithub}
-            >
-              <Github size={18} />
-              <p>Sign in With Github</p>
-            </button>
-          </div>
+        <div className="z-10 flex w-full  flex-col items-center justify-center gap-4 rounded-3xl py-5 md:flex-row">
+          <button
+            className="flex w-full items-center justify-center gap-2 rounded-lg bg-neutral-900/60 p-3 backdrop-blur-md transition-colors hover:bg-neutral-900"
+            onClick={handleSignInWithGoogle}
+          >
+            <img src={google} className="h-[17px] w-[17px]" />
+            <p>Continue With Google</p>
+          </button>
+          <button
+            className="flex w-full items-center justify-center gap-2 rounded-lg bg-neutral-900/60 p-3 backdrop-blur-md transition-colors hover:bg-neutral-900"
+            onClick={handleSignInWithGithub}
+          >
+            <img src={github} className="h-[17px] w-[17px]" />
+            <p>Continue With Github</p>
+          </button>
         </div>
       </div>
     </div>

@@ -87,7 +87,7 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
           <DialogHeader>
             <DialogTitle>Add Todo</DialogTitle>
           </DialogHeader>
-          <div className="flex flex-col gap-5 mt-3">
+          <div className="mt-3 flex flex-col gap-5">
             <div className="flex flex-col gap-[6px]">
               <label
                 htmlFor="title"
@@ -117,7 +117,7 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
                 value={todoNoteInput ?? ""}
                 placeholder="Add note"
                 onChange={(e) => setTodoNoteInput(e.target.value)}
-                className="rounded-xl text-xs text-foreground/60 resize-none border-[0.7px] "
+                className="resize-none rounded-xl border-[0.7px] text-xs text-foreground/60 "
                 id="note"
               />
             </div>
@@ -144,8 +144,8 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
                     <Button
                       variant={"outline"}
                       className={cn(
-                        "w-fit px-3 border-none rounded-xl justify-start text-left font-normal",
-                        !date && "text-muted-foreground"
+                        "w-fit justify-start rounded-xl border-none px-3 text-left font-normal",
+                        !date && "text-muted-foreground",
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
@@ -174,14 +174,14 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
                 >
                   <SelectTrigger
                     className={cn(
-                      "flex items-center text-sm w-fit border-none rounded-xl justify-start text-left font-normal"
+                      "flex w-fit items-center justify-start rounded-xl border-none text-left text-sm font-normal",
                     )}
                   >
                     <Button
                       variant={"outline"}
                       className={cn(
-                        " px-3 border-none rounded-xl w-32 justify-start text-left font-normal",
-                        priority === "none" && "text-muted-foreground"
+                        " w-32 justify-start rounded-xl border-none px-3 text-left font-normal",
+                        priority === "none" && "text-muted-foreground",
                       )}
                     >
                       <ArrowUpWideNarrow className="mr-2 h-4 w-4" />
@@ -192,7 +192,7 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
                       )}
                     </Button>
                   </SelectTrigger>
-                  <SelectContent className="flex flex-col w-fit rounded-xl text-foreground/80">
+                  <SelectContent className="flex w-fit flex-col rounded-xl text-foreground/80">
                     <SelectGroup>
                       <SelectItem value="high">high</SelectItem>
                       <SelectItem value="medium">medium</SelectItem>
@@ -207,9 +207,9 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <div className="flex flex-col gap-1 items-center sm:flex-row">
+              <div className="flex flex-col items-center gap-1 sm:flex-row">
                 <Button
-                  className="rounded-full bg-primary text-special sm:order-2 flex-auto w-full "
+                  className="w-full flex-auto rounded-full bg-primary text-special sm:order-2 "
                   onMouseUp={async (e) => {
                     e.preventDefault();
                     const response = await axios.post(
@@ -221,7 +221,7 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
                         remind_at: date ? new Date(date) : null,
                         priority,
                         location,
-                      }
+                      },
                     );
 
                     const newTodo = response.data;
@@ -234,7 +234,7 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
                 >
                   Add
                 </Button>
-                <Button className="bg-transparent text-foreground sm:order-1 w-24 hover:bg-foreground/5  rounded-full  ">
+                <Button className="w-24 rounded-full bg-transparent text-foreground hover:bg-foreground/5  sm:order-1  ">
                   Close
                 </Button>
               </div>
@@ -260,7 +260,7 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
           <DrawerHeader>
             <DrawerTitle>Add Todo</DrawerTitle>
           </DrawerHeader>
-          <div className="flex flex-col gap-5 mt-3">
+          <div className="mt-3 flex flex-col gap-5">
             <div className="flex flex-col gap-[6px]">
               <label
                 htmlFor="title"
@@ -290,7 +290,7 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
                 value={todoNoteInput ?? ""}
                 placeholder="Add note"
                 onChange={(e) => setTodoNoteInput(e.target.value)}
-                className="rounded-xl text-xs text-foreground/60 resize-none border-[0.7px] "
+                className="resize-none rounded-xl border-[0.7px] text-xs text-foreground/60 "
                 id="note"
               />
             </div>
@@ -317,8 +317,8 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
                     <Button
                       variant={"outline"}
                       className={cn(
-                        "w-fit px-3 border-none rounded-xl justify-start text-left font-normal",
-                        !date && "text-muted-foreground"
+                        "w-fit justify-start rounded-xl border-none px-3 text-left font-normal",
+                        !date && "text-muted-foreground",
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
@@ -347,14 +347,14 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
                 >
                   <SelectTrigger
                     className={cn(
-                      "flex items-center text-sm w-fit border-none rounded-xl justify-start text-left font-normal"
+                      "flex w-fit items-center justify-start rounded-xl border-none text-left text-sm font-normal",
                     )}
                   >
                     <Button
                       variant={"outline"}
                       className={cn(
-                        "flex items-center text-sm w-fit border-none rounded-xl justify-start text-left font-normal px-3",
-                        priority === "none" && "text-muted-foreground"
+                        "flex w-fit items-center justify-start rounded-xl border-none px-3 text-left text-sm font-normal",
+                        priority === "none" && "text-muted-foreground",
                       )}
                     >
                       <ArrowUpWideNarrow className="mr-2 h-4 w-4" />
@@ -365,7 +365,7 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
                       )}
                     </Button>
                   </SelectTrigger>
-                  <SelectContent className="flex flex-col w-fit rounded-xl text-foreground/80">
+                  <SelectContent className="flex w-fit flex-col rounded-xl text-foreground/80">
                     <SelectGroup>
                       <SelectItem value="high">high</SelectItem>
                       <SelectItem value="medium">medium</SelectItem>
@@ -380,9 +380,9 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
           </div>
           <DrawerFooter>
             <DrawerClose asChild>
-              <div className="flex flex-col gap-1 items-center sm:flex-row">
+              <div className="flex flex-col items-center gap-1 sm:flex-row">
                 <Button
-                  className="rounded-full bg-primary text-special sm:order-2 flex-auto w-full "
+                  className="w-full flex-auto rounded-full bg-primary text-special sm:order-2 "
                   onMouseUp={async (e) => {
                     e.preventDefault();
                     try {
@@ -395,7 +395,7 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
                           remind_at: date ? new Date(date) : null,
                           priority: priority,
                           location: location,
-                        }
+                        },
                       );
 
                       const newTodo = response.data;
@@ -407,7 +407,7 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
                 >
                   Add
                 </Button>
-                <Button className="bg-transparent text-foreground sm:order-1 w-24 hover:bg-foreground/5  rounded-full">
+                <Button className="w-24 rounded-full bg-transparent text-foreground hover:bg-foreground/5  sm:order-1">
                   Close
                 </Button>
               </div>
