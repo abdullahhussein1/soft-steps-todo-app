@@ -1,29 +1,67 @@
 import Menu from "../components/Menu";
 import TodoList from "../components/TodoList";
-import React from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { User } from "@supabase/supabase-js";
 import supabase from "@/supabase/supabase";
+import useTheme from "@/hooks/useTheme";
+import useDarkMode from "@/hooks/useDarkMode";
+import ColorThemeType from "@/types/ColorThemeType";
 
-const TodoApp = () => {
-  const [user, setUser] = React.useState<User | null>(null);
+const HomePage = () => {
+  const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
+  const { theme, setTheme } = useTheme();
+  const { darkModeState } = useDarkMode();
 
-  supabase.auth.onAuthStateChange((event, session) => {
-    console.log(event, session);
-  });
+  console.log(darkModeState);
 
-  React.useEffect(() => {
+  const systemThemeDark = window.matchMedia("(prefers-color-scheme: dark)");
+
+  useEffect(() => {
+    if (darkModeState !== "System") return;
+
+    if (systemThemeDark.matches) {
+      const newTheme = theme.includes("-dark")
+        ? theme
+        : ((theme + "-dark") as ColorThemeType);
+
+      setTheme(newTheme);
+    } else {
+      const newTheme = theme.includes("-dark")
+        ? (theme.replace("-dark", "") as ColorThemeType)
+        : theme;
+
+      setTheme(newTheme);
+    }
+
+    // This callback will fire if the perferred color scheme changes without a reload
+    systemThemeDark.addEventListener("change", (evt) => {
+      if (darkModeState !== "System") return;
+      if (evt.matches) {
+        const newTheme = theme.includes("-dark")
+          ? theme
+          : ((theme + "-dark") as ColorThemeType);
+
+        setTheme(newTheme);
+      } else {
+        const newTheme = theme.includes("-dark")
+          ? (theme.replace("-dark", "") as ColorThemeType)
+          : theme;
+
+        setTheme(newTheme);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
     const fetchUser = async () => {
       const {
         data: { user },
-        error,
       } = await supabase.auth.getUser();
       if (user) {
         setUser(user);
-        console.log(user.id);
       } else {
-        console.error("Error fetching user:", error);
         setUser(null);
         navigate("/auth");
       }
@@ -50,4 +88,4 @@ const TodoApp = () => {
   );
 };
 
-export default TodoApp;
+export default HomePage;

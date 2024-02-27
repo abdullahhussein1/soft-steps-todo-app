@@ -9,53 +9,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Monitor, Moon, Sun } from "lucide-react";
-import { useEffect, useState } from "react";
 import ColorThemeType from "@/types/ColorThemeType";
+import useDarkMode from "@/hooks/useDarkMode";
+import DarkModeStateType from "@/types/DarkModeStateType";
 
 export default function DarkModeButton() {
-  const [darkModeState, setDarkModeState] = useState<string>(
-    localStorage.getItem("selectedTheme") as string,
-  );
+  const { darkModeState, setDarkModeState } = useDarkMode();
   const { theme, setTheme } = useTheme();
 
   const systemThemeDark = window.matchMedia("(prefers-color-scheme: dark)");
 
-  useEffect(() => {
-    if (darkModeState !== "System") return;
-
-    if (systemThemeDark.matches) {
-      const newTheme = theme.includes("-dark")
-        ? theme
-        : ((theme + "-dark") as ColorThemeType);
-
-      setTheme(newTheme);
-    } else {
-      const newTheme = theme.includes("-dark")
-        ? (theme.replace("-dark", "") as ColorThemeType)
-        : theme;
-
-      setTheme(newTheme);
-    }
-
-    // This callback will fire if the perferred color scheme changes without a reload
-    systemThemeDark.addEventListener("change", (evt) => {
-      if (evt.matches) {
-        const newTheme = theme.includes("-dark")
-          ? theme
-          : ((theme + "-dark") as ColorThemeType);
-
-        setTheme(newTheme);
-      } else {
-        const newTheme = theme.includes("-dark")
-          ? (theme.replace("-dark", "") as ColorThemeType)
-          : theme;
-
-        setTheme(newTheme);
-      }
-    });
-  }, []);
-
-  function handleDarkModeValueChange(value: string) {
+  function handleDarkModeValueChange(value: DarkModeStateType) {
     setDarkModeState(value);
     if (value === "System") {
       if (systemThemeDark.matches) {
@@ -92,7 +56,9 @@ export default function DarkModeButton() {
       <label htmlFor="darkMode">Dark Mode</label>
       <Select
         defaultValue={darkModeState}
-        onValueChange={(value) => handleDarkModeValueChange(value)}
+        onValueChange={(value) =>
+          handleDarkModeValueChange(value as DarkModeStateType)
+        }
       >
         <SelectTrigger className="flex h-7 w-fit items-center justify-between rounded-full border-none bg-secondary/70 text-xs font-normal transition-all hover:bg-border/20">
           <div className="mr-2 flex items-center gap-1">
