@@ -9,17 +9,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Monitor, Moon, Sun } from "lucide-react";
-import { useState } from "react";
-
-type Theme =
-  | "blue"
-  | "blue-dark"
-  | "red"
-  | "red-dark"
-  | "green"
-  | "green-dark"
-  | "orange"
-  | "orange-dark";
+import { useEffect, useState } from "react";
+import ColorThemeType from "@/types/ColorThemeType";
 
 export default function DarkModeButton() {
   const [darkModeState, setDarkModeState] = useState<string>(
@@ -27,22 +18,55 @@ export default function DarkModeButton() {
   );
   const { theme, setTheme } = useTheme();
 
-  const isSystemThemeDark = window.matchMedia(
-    "(prefers-color-scheme: dark)",
-  ).matches;
+  const systemThemeDark = window.matchMedia("(prefers-color-scheme: dark)");
 
-  function handleDarkModeValueChange(value: string) {
-    setDarkModeState(value);
-    if (value === "System") {
-      if (isSystemThemeDark) {
+  useEffect(() => {
+    if (darkModeState !== "System") return;
+
+    if (systemThemeDark.matches) {
+      const newTheme = theme.includes("-dark")
+        ? theme
+        : ((theme + "-dark") as ColorThemeType);
+
+      setTheme(newTheme);
+    } else {
+      const newTheme = theme.includes("-dark")
+        ? (theme.replace("-dark", "") as ColorThemeType)
+        : theme;
+
+      setTheme(newTheme);
+    }
+
+    // This callback will fire if the perferred color scheme changes without a reload
+    systemThemeDark.addEventListener("change", (evt) => {
+      if (evt.matches) {
         const newTheme = theme.includes("-dark")
           ? theme
-          : ((theme + "-dark") as Theme);
+          : ((theme + "-dark") as ColorThemeType);
 
         setTheme(newTheme);
       } else {
         const newTheme = theme.includes("-dark")
-          ? (theme.replace("-dark", "") as Theme)
+          ? (theme.replace("-dark", "") as ColorThemeType)
+          : theme;
+
+        setTheme(newTheme);
+      }
+    });
+  }, []);
+
+  function handleDarkModeValueChange(value: string) {
+    setDarkModeState(value);
+    if (value === "System") {
+      if (systemThemeDark.matches) {
+        const newTheme = theme.includes("-dark")
+          ? theme
+          : ((theme + "-dark") as ColorThemeType);
+
+        setTheme(newTheme);
+      } else {
+        const newTheme = theme.includes("-dark")
+          ? (theme.replace("-dark", "") as ColorThemeType)
           : theme;
 
         setTheme(newTheme);
@@ -50,12 +74,12 @@ export default function DarkModeButton() {
     } else if (value === "Dark") {
       const newTheme = theme.includes("-dark")
         ? theme
-        : ((theme + "-dark") as Theme);
+        : ((theme + "-dark") as ColorThemeType);
 
       setTheme(newTheme);
     } else {
       const newTheme = theme.includes("-dark")
-        ? (theme.replace("-dark", "") as Theme)
+        ? (theme.replace("-dark", "") as ColorThemeType)
         : theme;
 
       setTheme(newTheme);

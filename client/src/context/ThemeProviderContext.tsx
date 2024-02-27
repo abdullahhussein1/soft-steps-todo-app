@@ -1,24 +1,9 @@
 import { createContext } from "react";
-
-type Theme =
-  | "blue"
-  | "blue-dark"
-  | "red"
-  | "red-dark"
-  | "green"
-  | "green-dark"
-  | "orange"
-  | "orange-dark"
-  | "neutral"
-  | "neutral-dark"
-  | "purple"
-  | "purple-dark"
-  | "yellow"
-  | "yellow-dark";
+import ColorThemeType from "@/types/ColorThemeType";
 
 type ThemeProviderState = {
-  theme: Theme;
-  setTheme: (theme: Theme) => void;
+  theme: ColorThemeType;
+  setTheme: (theme: ColorThemeType) => void;
 };
 
 const initialState: ThemeProviderState = {

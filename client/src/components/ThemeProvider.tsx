@@ -1,25 +1,10 @@
 import ThemeProviderContext from "@/context/ThemeProviderContext";
 import { useEffect, useState } from "react";
-
-type Theme =
-  | "blue"
-  | "blue-dark"
-  | "red"
-  | "red-dark"
-  | "green"
-  | "green-dark"
-  | "orange"
-  | "orange-dark"
-  | "neutral"
-  | "neutral-dark"
-  | "purple"
-  | "purple-dark"
-  | "yellow"
-  | "yellow-dark";
+import ColorThemeType from "@/types/ColorThemeType";
 
 type ThemeProviderProps = {
   children: React.ReactNode;
-  defaultTheme?: Theme;
+  defaultTheme?: ColorThemeType;
   storageKey?: string;
 };
 
@@ -29,8 +14,8 @@ export default function ThemeProvider({
   storageKey = "vite-ui-theme",
   ...props
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(
-    () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
+  const [theme, setTheme] = useState<ColorThemeType>(
+    () => (localStorage.getItem(storageKey) as ColorThemeType) || defaultTheme,
   );
 
   useEffect(() => {
@@ -41,7 +26,7 @@ export default function ThemeProvider({
 
   const value = {
     theme,
-    setTheme: (theme: Theme) => {
+    setTheme: (theme: ColorThemeType) => {
       localStorage.setItem(storageKey, theme);
       setTheme(theme);
     },

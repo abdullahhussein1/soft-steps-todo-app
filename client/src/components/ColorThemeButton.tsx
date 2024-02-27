@@ -1,21 +1,6 @@
 import useTheme from "@/hooks/useTheme";
 import { Check } from "lucide-react";
-
-type Theme =
-  | "blue"
-  | "blue-dark"
-  | "red"
-  | "red-dark"
-  | "green"
-  | "green-dark"
-  | "orange"
-  | "orange-dark"
-  | "neutral"
-  | "neutral-dark"
-  | "purple"
-  | "purple-dark"
-  | "yellow"
-  | "yellow-dark";
+import ColorThemeType from "@/types/ColorThemeType";
 
 type Props = {
   color: string;
@@ -24,12 +9,12 @@ type Props = {
 const ColorThemeButton = ({ color }: Props) => {
   const { setTheme, theme } = useTheme();
 
-  const handleThemeChange = (selectedTheme: Theme) => {
+  const handleThemeChange = (selectedTheme: ColorThemeType) => {
     const isDarkMode = theme.includes("-dark");
 
     const newTheme = isDarkMode ? `${selectedTheme}-dark` : selectedTheme;
 
-    setTheme(newTheme as Theme);
+    setTheme(newTheme as ColorThemeType);
   };
 
   const getButtonColor = (color: string) => {
@@ -54,14 +39,14 @@ const ColorThemeButton = ({ color }: Props) => {
   return (
     <button
       className={[
-        "flex justify-center items-center w-10 h-10 p-2 rounded-full",
+        "flex h-10 w-10 items-center justify-center rounded-full p-2",
         getButtonColor(color),
       ].join(" ")}
-      onClick={() => handleThemeChange(color as Theme)}
+      onClick={() => handleThemeChange(color as ColorThemeType)}
     >
       {theme.includes(color) && (
-        <div className="w-5 h-5 rounded-full bg-white">
-          <Check className="w-full h-full p-1 text-black" />
+        <div className="h-5 w-5 rounded-full bg-white">
+          <Check className="h-full w-full p-1 text-black" />
         </div>
       )}
     </button>
