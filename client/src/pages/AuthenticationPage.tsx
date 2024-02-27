@@ -55,7 +55,7 @@ const AuthenticationPage: React.FC = () => {
           <img src={palestineIcon} alt="palestineIcon" className="h-6 w-6" />
           Soft Steps
         </h1>
-        <p className="text-justify text-xs font-thin text-foreground/70">
+        <p className="text-justify text-xs font-thin text-foreground">
           He has already revealed to you in the Book that when you hear Allah's
           revelations being denied or ridiculed, then do not sit in that company
           unless they engage in a different topic, or else you will be like
