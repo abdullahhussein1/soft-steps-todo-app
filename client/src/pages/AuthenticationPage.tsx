@@ -55,7 +55,7 @@ const AuthenticationPage: React.FC = () => {
           <img src={palestineIcon} alt="palestineIcon" className="h-6 w-6" />
           Soft Steps
         </h1>
-        <p className="text-justify text-xs font-thin">
+        <p className="text-justify text-xs font-thin text-foreground/70">
           He has already revealed to you in the Book that when you hear Allah's
           revelations being denied or ridiculed, then do not sit in that company
           unless they engage in a different topic, or else you will be like
@@ -68,22 +68,22 @@ const AuthenticationPage: React.FC = () => {
         <img
           src={palestineCountryFilledIcon}
           alt="palestineCountryFilledIcon"
-          className="absolute h-full w-full object-cover opacity-5 brightness-50"
+          className="absolute h-full w-full object-cover opacity-5 brightness-75"
         />
         <div className="flex flex-col gap-1">
-          <h1 className="text-xl">Get started</h1>
+          <h1 className="text-xl font-medium">Get started</h1>
           <p className="text-sm font-thin">Create a new account</p>
         </div>
         <div className="z-10 flex w-full  flex-col items-center justify-center gap-4 rounded-3xl py-5 md:flex-row">
           <button
-            className="flex w-full items-center justify-center gap-2 rounded-lg bg-neutral-900/60 p-3 backdrop-blur-md transition-colors hover:bg-neutral-900"
+            className="flex w-full items-center justify-center gap-2 rounded-lg border border-neutral-900 p-3 backdrop-blur-md transition-colors hover:bg-neutral-900/60"
             onClick={handleSignInWithGoogle}
           >
             <img src={google} className="h-[17px] w-[17px]" />
             <p>Continue With Google</p>
           </button>
           <button
-            className="flex w-full items-center justify-center gap-2 rounded-lg bg-neutral-900/60 p-3 backdrop-blur-md transition-colors hover:bg-neutral-900"
+            className="flex w-full items-center justify-center gap-2 rounded-lg border border-neutral-900 p-3 backdrop-blur-md transition-colors hover:bg-neutral-900/60"
             onClick={handleSignInWithGithub}
           >
             <img src={github} className="h-[17px] w-[17px]" />
