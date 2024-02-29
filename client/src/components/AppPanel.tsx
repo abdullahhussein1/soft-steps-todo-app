@@ -67,9 +67,6 @@ const AppPanel = ({ user }: params) => {
         <TabsContent value="completed" className=" col-span-full">
           <CompletedTab steps={steps} setSteps={setSteps} />
         </TabsContent>
-        <TabsContent value="Completed" className=" col-span-full">
-          <CompletedTab steps={steps} setSteps={setSteps} />
-        </TabsContent>
         <TabsContent value="deleted" className=" col-span-full">
           <TrashTab steps={steps} setSteps={setSteps} />
         </TabsContent>

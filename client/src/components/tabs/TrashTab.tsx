@@ -1,4 +1,4 @@
-import Todo from "../Step";
+import Step from "../Step";
 import axios from "axios";
 
 import { Trash } from "lucide-react";
@@ -20,7 +20,7 @@ type Props = {
   setSteps: React.Dispatch<React.SetStateAction<TodoType[]>>;
 };
 
-const CompletedTab = ({ steps, setSteps }: Props) => {
+const TrashTab = ({ steps, setSteps }: Props) => {
   const deletedTodos = steps.filter((todo) => todo.deleted_at);
 
   return (
@@ -113,4 +113,4 @@ const CompletedTab = ({ steps, setSteps }: Props) => {
   );
 };
 
-export default CompletedTab;
+export default TrashTab;
