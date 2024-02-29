@@ -1,9 +1,9 @@
-import Todo from "../Step";
 import axios from "axios";
 
 import { CheckCheck, Trash } from "lucide-react";
 
 import TodoType from "@/types/TodoType";
+import Step from "../Step";
 
 type Props = {
   steps: TodoType[];
