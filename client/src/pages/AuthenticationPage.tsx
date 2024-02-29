@@ -49,7 +49,7 @@ const AuthenticationPage: React.FC = () => {
   }
 
   return (
-    <div className="h-screen bg-black p-12">
+    <div className="h-screen bg-black p-12 text-white">
       <div className="relative mx-auto flex h-full max-w-xl flex-col items-center justify-center">
         <div className="absolute top-0 flex flex-col items-start gap-1 self-start">
           <div className="flex items-center gap-1 text-xl font-semibold">
