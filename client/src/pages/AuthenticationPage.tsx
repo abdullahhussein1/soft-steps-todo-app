@@ -69,7 +69,7 @@ const AuthenticationPage: React.FC = () => {
         alt="palestineCountryFilledIcon"
         className="absolute h-fit w-fit justify-self-center object-cover opacity-5 brightness-75"
       />
-      <div className="z-10 flex w-full max-w-xl flex-col justify-center rounded-3xl border border-b-green-900 border-l-red-900 border-r-neutral-500 p-5 backdrop-blur-sm">
+      <div className="z-10 flex w-full max-w-xl flex-col justify-center rounded-3xl border border-b-green-900 border-l-red-900 border-t-neutral-500 p-5 backdrop-blur-sm">
         <div className="flex flex-col gap-1">
           <h1 className="text-xl font-medium">Get started</h1>
           <p className="text-xs font-thin">
