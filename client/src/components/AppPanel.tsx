@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 import TodosTab from "./tabs/StepsTab";
 import CompletedTab from "./tabs/CompletedTab";
 import TrashTab from "./tabs/TrashTab";
-import SettingsTab from "./tabs/SettingsTab";
+import ProgressTab from "./tabs/ProgressTab";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import StepType from "@/types/StepType";
 import UserType from "@/types/UserType";
-import { LayoutList, ListChecks, Settings2, TrashIcon } from "lucide-react";
+import { BarChart3Icon, LayoutList, ListChecks, TrashIcon } from "lucide-react";
 
 type params = {
   user: UserType;
@@ -53,8 +53,8 @@ const AppPanel = ({ user }: params) => {
         <TabsTrigger value="deleted" className="flex gap-2 rounded-full">
           <TrashIcon size={16} />
         </TabsTrigger>
-        <TabsTrigger value="settings" className="flex gap-2 rounded-full">
-          <Settings2 size={16} />
+        <TabsTrigger value="statistics" className="flex gap-2 rounded-full">
+          <BarChart3Icon size={16} />
         </TabsTrigger>
         <TabsContent value="steps" className="col-span-full">
           <TodosTab
@@ -70,8 +70,8 @@ const AppPanel = ({ user }: params) => {
         <TabsContent value="deleted" className=" col-span-full">
           <TrashTab steps={steps} setSteps={setSteps} />
         </TabsContent>
-        <TabsContent value="settings" className=" col-span-full">
-          <SettingsTab />
+        <TabsContent value="statistics" className=" col-span-full">
+          <ProgressTab steps={steps} />
         </TabsContent>
       </TabsList>
     </Tabs>
