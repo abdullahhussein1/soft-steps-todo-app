@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import todosRoute from "./routes/api/todosRouteApi";
+import stepsRoute from "./routes/api/stepsRouteApi";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use("/api/steps", todosRoute);
+app.use("/api/steps", stepsRoute);
 
 // Start the server
 app.listen(PORT, () => {

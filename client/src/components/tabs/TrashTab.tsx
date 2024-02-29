@@ -13,11 +13,11 @@ import {
 
 import { MoreHorizontal } from "lucide-react";
 
-import TodoType from "@/types/TodoType";
+import StepType from "@/types/StepType";
 
 type Props = {
-  steps: TodoType[];
-  setSteps: React.Dispatch<React.SetStateAction<TodoType[]>>;
+  steps: StepType[];
+  setSteps: React.Dispatch<React.SetStateAction<StepType[]>>;
 };
 
 const TrashTab = ({ steps, setSteps }: Props) => {

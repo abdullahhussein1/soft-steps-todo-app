@@ -5,7 +5,7 @@ import CompletedTab from "./tabs/CompletedTab";
 import TrashTab from "./tabs/TrashTab";
 import SettingsTab from "./tabs/SettingsTab";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import TodoType from "@/types/TodoType";
+import StepType from "@/types/StepType";
 import UserType from "@/types/UserType";
 import { LayoutList, ListChecks, Settings2, TrashIcon } from "lucide-react";
 
@@ -14,7 +14,7 @@ type params = {
 };
 
 const AppPanel = ({ user }: params) => {
-  const [steps, setSteps] = useState<TodoType[]>([]);
+  const [steps, setSteps] = useState<StepType[]>([]);
   const [isLoaderVisible, setIsLoaderVisible] = useState<boolean>(true);
 
   const fetchTodos = async () => {

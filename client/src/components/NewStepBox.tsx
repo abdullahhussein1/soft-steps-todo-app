@@ -51,12 +51,12 @@ import {
 } from "@/components/ui/popover";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
-import TodoType from "@/types/TodoType";
+import StepType from "@/types/StepType";
 import UserType from "@/types/UserType";
 
 type Props = {
-  steps: TodoType[];
-  setSteps: React.Dispatch<React.SetStateAction<TodoType[]>>;
+  steps: StepType[];
+  setSteps: React.Dispatch<React.SetStateAction<StepType[]>>;
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   user: UserType;
@@ -66,8 +66,8 @@ const NewStepBox = ({ steps, setSteps, isOpen, setIsOpen, user }: Props) => {
   const [stepInput, setStepInput] = useState<string | null>();
   const [stepNoteInput, setStepNoteInput] = useState<string | null>();
   const [date, setDate] = React.useState<Date | null>(null);
-  const [priority, setPriority] = useState<TodoType["priority"] | null>("none");
-  const [location, setLocation] = useState<TodoType["location"] | null>();
+  const [priority, setPriority] = useState<StepType["priority"] | null>("none");
+  const [location, setLocation] = useState<StepType["location"] | null>();
   const isDesktop = useMediaQuery("(min-width: 640px)");
 
   if (isDesktop) {
@@ -169,7 +169,7 @@ const NewStepBox = ({ steps, setSteps, isOpen, setIsOpen, user }: Props) => {
                 <Select
                   defaultValue="none"
                   onValueChange={(value) =>
-                    setPriority(value as TodoType["priority"])
+                    setPriority(value as StepType["priority"])
                   }
                 >
                   <SelectTrigger
@@ -342,7 +342,7 @@ const NewStepBox = ({ steps, setSteps, isOpen, setIsOpen, user }: Props) => {
                 <Select
                   defaultValue="none"
                   onValueChange={(value) =>
-                    setPriority(value as TodoType["priority"])
+                    setPriority(value as StepType["priority"])
                   }
                 >
                   <SelectTrigger

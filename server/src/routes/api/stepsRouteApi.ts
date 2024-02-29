@@ -2,14 +2,13 @@ import { Router, Request, Response } from "express";
 import { createClient, PostgrestResponse } from "@supabase/supabase-js";
 import "dotenv/config";
 
-type Todo = {
+type Step = {
   id: number;
   user_id: string;
   task: string;
   note: string;
   priority: "none" | "low" | "medium" | "high";
   location?: string;
-  attachment?: string;
   is_complete: boolean;
   is_pin: boolean;
   created_at: Date;
@@ -25,7 +24,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 const router = Router();
 
-// CREATE TODO
+// CREATE STEP
 router.post("/", async (req: Request, res: Response) => {
   try {
     const {
@@ -34,11 +33,10 @@ router.post("/", async (req: Request, res: Response) => {
       note,
       priority,
       location,
-      attachment,
       is_complete,
       is_pin,
       remind_at,
-    } = req.body as Todo;
+    } = req.body as Step;
 
     const { data: newTodo, error }: PostgrestResponse<Step[]> = await supabase
       .from("steps")
@@ -48,7 +46,6 @@ router.post("/", async (req: Request, res: Response) => {
         note,
         priority,
         location,
-        attachment,
         is_complete,
         is_pin,
         remind_at,
@@ -95,7 +92,7 @@ router.get("/", async (req: Request, res: Response) => {
   }
 });
 
-// GET SINGLE TODO
+// GET SINGLE STEP
 router.get("/:id", async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -120,7 +117,7 @@ router.get("/:id", async (req: Request, res: Response) => {
   }
 });
 
-// UPDATE TODO
+// UPDATE STEP
 router.put("/:id", async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -129,12 +126,11 @@ router.put("/:id", async (req: Request, res: Response) => {
       note,
       priority,
       location,
-      attachment,
       is_complete,
       is_pin,
       remind_at,
       updated_at,
-    } = req.body as Todo;
+    } = req.body as Step;
 
     const { data: updatedTodo, error }: PostgrestResponse<Step[]> =
       await supabase
@@ -146,7 +142,6 @@ router.put("/:id", async (req: Request, res: Response) => {
             note,
             priority,
             location,
-            attachment,
             is_complete,
             is_pin,
             remind_at,
@@ -171,7 +166,7 @@ router.put("/:id", async (req: Request, res: Response) => {
   }
 });
 
-// DELETE TODO
+// DELETE STEP
 router.delete("/:id", async (req: Request, res: Response) => {
   try {
     const { id } = req.params;

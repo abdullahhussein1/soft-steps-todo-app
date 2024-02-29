@@ -6,7 +6,7 @@ import {
   Calendar,
   MapPin,
   PencilLine,
-  Star,
+  Pin,
   Undo2,
 } from "lucide-react";
 import { MoreHorizontal } from "lucide-react";
@@ -29,12 +29,12 @@ import {
 } from "date-fns";
 import { Checkbox } from "./ui/checkbox";
 
-import TodoType from "@/types/TodoType";
+import StepType from "@/types/StepType";
 
 type Props = {
-  todo: TodoType;
-  steps: TodoType[];
-  setSteps: React.Dispatch<React.SetStateAction<TodoType[]>>;
+  todo: StepType;
+  steps: StepType[];
+  setSteps: React.Dispatch<React.SetStateAction<StepType[]>>;
 };
 
 const Step = ({ todo, steps, setSteps }: Props) => {
@@ -264,8 +264,8 @@ const Step = ({ todo, steps, setSteps }: Props) => {
               setIsPinned(!isPinned);
             }}
           >
-            <Star size={15} className={[isPinned && "fill-current"].join()} />
-            <p>{isPinned ? "Unstar" : "Star"}</p>
+            <Pin size={15} className={[isPinned && "fill-current"].join()} />
+            <p>{isPinned ? "Unpin" : "Pin"}</p>
           </DropdownMenuItem>
           <DropdownMenuItem
             className={[

@@ -1,11 +1,10 @@
-type TodoType = {
+type StepType = {
   id: number;
   user_id: string;
   task: string;
   note: string;
   priority: "none" | "low" | "medium" | "high";
   location?: string;
-  attachment?: string;
   is_complete: boolean;
   is_pin: boolean;
   created_at: Date;
@@ -14,4 +13,4 @@ type TodoType = {
   remind_at: Date;
 };
 
-export default TodoType;
+export default StepType;

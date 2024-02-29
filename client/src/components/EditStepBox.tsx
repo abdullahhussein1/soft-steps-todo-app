@@ -51,12 +51,12 @@ import {
 } from "@/components/ui/popover";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
-import TodoType from "@/types/TodoType";
+import StepType from "@/types/StepType";
 
 type Props = {
-  todo: TodoType;
-  steps: TodoType[];
-  setSteps: React.Dispatch<React.SetStateAction<TodoType[]>>;
+  todo: StepType;
+  steps: StepType[];
+  setSteps: React.Dispatch<React.SetStateAction<StepType[]>>;
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -67,8 +67,8 @@ const EditStepBox = ({ todo, steps, setSteps, isOpen, setIsOpen }: Props) => {
   const [date, setDate] = React.useState<Date | undefined>(
     todo.remind_at ? new Date(todo.remind_at) : undefined,
   );
-  const [priority, setPriority] = useState<TodoType["priority"]>(todo.priority);
-  const [location, setLocation] = useState<TodoType["location"] | undefined>(
+  const [priority, setPriority] = useState<StepType["priority"]>(todo.priority);
+  const [location, setLocation] = useState<StepType["location"] | undefined>(
     todo.location,
   );
 
@@ -173,7 +173,7 @@ const EditStepBox = ({ todo, steps, setSteps, isOpen, setIsOpen }: Props) => {
                 <Select
                   defaultValue={todo.priority}
                   onValueChange={(value) =>
-                    setPriority(value as TodoType["priority"])
+                    setPriority(value as StepType["priority"])
                   }
                 >
                   <SelectTrigger
@@ -379,7 +379,7 @@ const EditStepBox = ({ todo, steps, setSteps, isOpen, setIsOpen }: Props) => {
                 <Select
                   defaultValue={todo.priority}
                   onValueChange={(value) =>
-                    setPriority(value as TodoType["priority"])
+                    setPriority(value as StepType["priority"])
                   }
                 >
                   <SelectTrigger

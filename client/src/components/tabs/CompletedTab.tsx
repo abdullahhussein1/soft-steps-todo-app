@@ -2,12 +2,12 @@ import axios from "axios";
 
 import { CheckCheck, Trash } from "lucide-react";
 
-import TodoType from "@/types/TodoType";
+import StepType from "@/types/StepType";
 import Step from "../Step";
 
 type Props = {
-  steps: TodoType[];
-  setSteps: React.Dispatch<React.SetStateAction<TodoType[]>>;
+  steps: StepType[];
+  setSteps: React.Dispatch<React.SetStateAction<StepType[]>>;
 };
 
 const CompletedTab = ({ steps, setSteps }: Props) => {

@@ -14,13 +14,13 @@ import {
   SelectTrigger,
 } from "@/components/ui/select";
 
-import TodoType from "@/types/TodoType";
+import StepType from "@/types/StepType";
 import UserType from "@/types/UserType";
 import NewStepBox from "../NewStepBox";
 
 type Props = {
-  steps: TodoType[];
-  setSteps: React.Dispatch<React.SetStateAction<TodoType[]>>;
+  steps: StepType[];
+  setSteps: React.Dispatch<React.SetStateAction<StepType[]>>;
   user: UserType;
   isLoaderVisible: boolean;
 };
