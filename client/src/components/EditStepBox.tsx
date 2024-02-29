@@ -55,27 +55,21 @@ import TodoType from "@/types/TodoType";
 
 type Props = {
   todo: TodoType;
-  todos: TodoType[];
-  setTodos: React.Dispatch<React.SetStateAction<TodoType[]>>;
+  steps: TodoType[];
+  setSteps: React.Dispatch<React.SetStateAction<TodoType[]>>;
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const EditTodoDialog = ({
-  todo,
-  todos,
-  setTodos,
-  isOpen,
-  setIsOpen,
-}: Props) => {
-  const [todoInput, setTodoInput] = useState(todo.task);
-  const [todoNoteInput, setTodoNoteInput] = useState(todo.note);
+const EditStepBox = ({ todo, steps, setSteps, isOpen, setIsOpen }: Props) => {
+  const [stepInput, setStepInput] = useState(todo.task);
+  const [stepNoteInput, setStepNoteInput] = useState(todo.note);
   const [date, setDate] = React.useState<Date | undefined>(
-    todo.remind_at ? new Date(todo.remind_at) : undefined
+    todo.remind_at ? new Date(todo.remind_at) : undefined,
   );
   const [priority, setPriority] = useState<TodoType["priority"]>(todo.priority);
   const [location, setLocation] = useState<TodoType["location"] | undefined>(
-    todo.location
+    todo.location,
   );
 
   const isDesktop = useMediaQuery("(min-width: 640px)");
@@ -86,8 +80,8 @@ const EditTodoDialog = ({
         open={isOpen}
         onOpenChange={(value) => {
           setIsOpen(value);
-          setTodoInput(todo.task);
-          setTodoNoteInput(todo.note);
+          setStepInput(todo.task);
+          setStepNoteInput(todo.note);
           setPriority(todo.priority);
           setDate(todo.remind_at ? new Date(todo.remind_at) : undefined);
           setLocation(todo.location);
@@ -95,9 +89,9 @@ const EditTodoDialog = ({
       >
         <DialogContent className="sm:rounded-3xl">
           <DialogHeader>
-            <DialogTitle>Edit Todo</DialogTitle>
+            <DialogTitle>Edit Step</DialogTitle>
           </DialogHeader>
-          <div className="flex flex-col gap-5 mt-3">
+          <div className="mt-3 flex flex-col gap-5">
             <div className="flex flex-col gap-[6px]">
               <label
                 htmlFor="title"
@@ -108,9 +102,9 @@ const EditTodoDialog = ({
               </label>
               <Input
                 type="text"
-                value={todoInput ?? ""}
+                value={stepInput ?? ""}
                 placeholder="I want to..."
-                onChange={(e) => setTodoInput(e.target.value)}
+                onChange={(e) => setStepInput(e.target.value)}
                 className="rounded-xl border-[0.7px]"
                 id="title"
               />
@@ -124,10 +118,10 @@ const EditTodoDialog = ({
                 <p>Note</p>
               </label>
               <Textarea
-                value={todoNoteInput ?? ""}
+                value={stepNoteInput ?? ""}
                 placeholder="Add note"
-                onChange={(e) => setTodoNoteInput(e.target.value)}
-                className="rounded-xl text-xs text-foreground/60 resize-none border-[0.7px] "
+                onChange={(e) => setStepNoteInput(e.target.value)}
+                className="resize-none rounded-xl border-[0.7px] text-xs text-foreground/60 "
                 id="note"
               />
             </div>
@@ -154,8 +148,8 @@ const EditTodoDialog = ({
                     <Button
                       variant={"outline"}
                       className={cn(
-                        "w-fit px-3 border-none rounded-xl justify-start text-left font-normal",
-                        !date && "text-muted-foreground"
+                        "w-fit justify-start rounded-xl border-none px-3 text-left font-normal",
+                        !date && "text-muted-foreground",
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
@@ -184,14 +178,14 @@ const EditTodoDialog = ({
                 >
                   <SelectTrigger
                     className={cn(
-                      "flex items-center text-sm w-fit border-none rounded-xl justify-start text-left font-normal"
+                      "flex w-fit items-center justify-start rounded-xl border-none text-left text-sm font-normal",
                     )}
                   >
                     <Button
                       variant={"outline"}
                       className={cn(
-                        " px-3 border-none rounded-xl w-32 justify-start text-left font-normal",
-                        priority === "none" && "text-muted-foreground"
+                        " w-32 justify-start rounded-xl border-none px-3 text-left font-normal",
+                        priority === "none" && "text-muted-foreground",
                       )}
                     >
                       <ArrowUpWideNarrow className="mr-2 h-4 w-4" />
@@ -202,7 +196,7 @@ const EditTodoDialog = ({
                       )}
                     </Button>
                   </SelectTrigger>
-                  <SelectContent className="flex flex-col w-fit rounded-xl text-foreground/80">
+                  <SelectContent className="flex w-fit flex-col rounded-xl text-foreground/80">
                     <SelectGroup>
                       <SelectItem value="high">high</SelectItem>
                       <SelectItem value="medium">medium</SelectItem>
@@ -215,7 +209,7 @@ const EditTodoDialog = ({
               </div>
             </div>
             {todo.updated_at && (
-              <p className="-mt-3 text-foreground/70 font-light text-xs">
+              <p className="-mt-3 text-xs font-light text-foreground/70">
                 {"edited " +
                   formatDistanceToNow(new Date(todo.updated_at), {
                     addSuffix: true,
@@ -225,18 +219,18 @@ const EditTodoDialog = ({
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <div className="flex flex-col gap-1 items-center sm:flex-row">
+              <div className="flex flex-col items-center gap-1 sm:flex-row">
                 <Button
-                  className="rounded-full bg-primary text-special sm:order-2 flex-auto w-full "
+                  className="w-full flex-auto rounded-full bg-primary text-special sm:order-2 "
                   onMouseUp={(e) => {
                     e.preventDefault();
                     axios.put(
-                      `${import.meta.env.VITE_API_BASE_URL}/api/todos/${
+                      `${import.meta.env.VITE_API_BASE_URL}/api/steps/${
                         todo.id
                       }`,
                       {
-                        task: todoInput,
-                        note: todoNoteInput,
+                        task: stepInput,
+                        note: stepNoteInput,
                         remind_at:
                           date && date !== todo.remind_at
                             ? new Date(date)
@@ -245,39 +239,39 @@ const EditTodoDialog = ({
                         location,
                         updated_at:
                           date !== todo.remind_at ||
-                          todoInput !== todo.task ||
-                          todoNoteInput !== todo.note ||
+                          stepInput !== todo.task ||
+                          stepNoteInput !== todo.note ||
                           priority !== todo.priority ||
                           location !== todo.location
                             ? new Date()
                             : null,
-                      }
+                      },
                     );
-                    const mappedTodos = todos.map((tdo) => {
+                    const mappedTodos = steps.map((tdo) => {
                       if (tdo.id === todo.id && date) {
                         return {
                           ...tdo,
-                          task: todoInput,
-                          note: todoNoteInput,
+                          task: stepInput,
+                          note: stepNoteInput,
                           remind_at: date,
                         };
                       } else if (tdo.id === todo.id) {
                         return {
                           ...tdo,
-                          task: todoInput,
-                          note: todoNoteInput,
+                          task: stepInput,
+                          note: stepNoteInput,
                           priority: priority, // Use the existing priority if not updated
                           location: location, // Use the existing location if not updated
                         };
                       }
                       return tdo;
                     });
-                    setTodos(mappedTodos);
+                    setSteps(mappedTodos);
                   }}
                 >
                   Edit
                 </Button>
-                <Button className="bg-transparent text-foreground sm:order-1 w-24 hover:bg-foreground/5  rounded-full  ">
+                <Button className="w-24 rounded-full bg-transparent text-foreground hover:bg-foreground/5  sm:order-1  ">
                   Close
                 </Button>
               </div>
@@ -292,8 +286,8 @@ const EditTodoDialog = ({
         open={isOpen}
         onOpenChange={(value) => {
           setIsOpen(value);
-          setTodoInput(todo.task);
-          setTodoNoteInput(todo.note);
+          setStepInput(todo.task);
+          setStepNoteInput(todo.note);
           setPriority(todo.priority);
           setDate(todo.remind_at ? new Date(todo.remind_at) : undefined);
           setLocation(todo.location);
@@ -301,9 +295,9 @@ const EditTodoDialog = ({
       >
         <DrawerContent className="rounded-t-3xl px-4">
           <DrawerHeader>
-            <DrawerTitle>Edit Todo</DrawerTitle>
+            <DrawerTitle>Edit Step</DrawerTitle>
           </DrawerHeader>
-          <div className="flex flex-col gap-5 mt-3">
+          <div className="mt-3 flex flex-col gap-5">
             <div className="flex flex-col gap-[6px]">
               <label
                 htmlFor="title"
@@ -314,9 +308,9 @@ const EditTodoDialog = ({
               </label>
               <Input
                 type="text"
-                value={todoInput ?? ""}
+                value={stepInput ?? ""}
                 placeholder="I want to..."
-                onChange={(e) => setTodoInput(e.target.value)}
+                onChange={(e) => setStepInput(e.target.value)}
                 className="rounded-xl border-[0.7px]"
                 id="title"
               />
@@ -330,10 +324,10 @@ const EditTodoDialog = ({
                 <p>Note</p>
               </label>
               <Textarea
-                value={todoNoteInput ?? ""}
+                value={stepNoteInput ?? ""}
                 placeholder="Add note"
-                onChange={(e) => setTodoNoteInput(e.target.value)}
-                className="rounded-xl text-xs text-foreground/60 resize-none border-[0.7px] "
+                onChange={(e) => setStepNoteInput(e.target.value)}
+                className="resize-none rounded-xl border-[0.7px] text-xs text-foreground/60 "
                 id="note"
               />
             </div>
@@ -360,8 +354,8 @@ const EditTodoDialog = ({
                     <Button
                       variant={"outline"}
                       className={cn(
-                        "w-fit px-3 border-none rounded-xl justify-start text-left font-normal",
-                        !date && "text-muted-foreground"
+                        "w-fit justify-start rounded-xl border-none px-3 text-left font-normal",
+                        !date && "text-muted-foreground",
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
@@ -390,14 +384,14 @@ const EditTodoDialog = ({
                 >
                   <SelectTrigger
                     className={cn(
-                      "flex items-center text-sm w-fit border-none rounded-xl justify-start text-left font-normal"
+                      "flex w-fit items-center justify-start rounded-xl border-none text-left text-sm font-normal",
                     )}
                   >
                     <Button
                       variant={"outline"}
                       className={cn(
-                        " px-3 border-none rounded-xl w-32 justify-start text-left font-normal",
-                        priority === "none" && "text-muted-foreground"
+                        " w-32 justify-start rounded-xl border-none px-3 text-left font-normal",
+                        priority === "none" && "text-muted-foreground",
                       )}
                     >
                       <ArrowUpWideNarrow className="mr-2 h-4 w-4" />
@@ -408,7 +402,7 @@ const EditTodoDialog = ({
                       )}
                     </Button>
                   </SelectTrigger>
-                  <SelectContent className="flex flex-col w-fit rounded-xl text-foreground/80">
+                  <SelectContent className="flex w-fit flex-col rounded-xl text-foreground/80">
                     <SelectGroup>
                       <SelectItem value="high">high</SelectItem>
                       <SelectItem value="medium">medium</SelectItem>
@@ -421,7 +415,7 @@ const EditTodoDialog = ({
               </div>
             </div>
             {todo.updated_at && (
-              <p className="-mt-3 text-foreground/70 font-light text-xs">
+              <p className="-mt-3 text-xs font-light text-foreground/70">
                 {"edited " +
                   formatDistanceToNow(new Date(todo.updated_at), {
                     addSuffix: true,
@@ -431,18 +425,18 @@ const EditTodoDialog = ({
           </div>
           <DrawerFooter>
             <DrawerClose asChild>
-              <div className="flex flex-col gap-1 items-center sm:flex-row">
+              <div className="flex flex-col items-center gap-1 sm:flex-row">
                 <Button
-                  className="rounded-full bg-primary text-special sm:order-2 flex-auto w-full "
+                  className="w-full flex-auto rounded-full bg-primary text-special sm:order-2 "
                   onMouseUp={(e) => {
                     e.preventDefault();
                     axios.put(
-                      `${import.meta.env.VITE_API_BASE_URL}/api/todos/${
+                      `${import.meta.env.VITE_API_BASE_URL}/api/steps/${
                         todo.id
                       }`,
                       {
-                        task: todoInput,
-                        note: todoNoteInput,
+                        task: stepInput,
+                        note: stepNoteInput,
                         remind_at:
                           date && date !== todo.remind_at
                             ? new Date(date)
@@ -451,20 +445,20 @@ const EditTodoDialog = ({
                         location: location,
                         updated_at:
                           date !== todo.remind_at ||
-                          todoInput !== todo.task ||
-                          todoNoteInput !== todo.note ||
+                          stepInput !== todo.task ||
+                          stepNoteInput !== todo.note ||
                           priority !== todo.priority ||
                           location !== todo.location
                             ? new Date()
                             : null,
-                      }
+                      },
                     );
-                    const mappedTodos = todos.map((tdo) => {
+                    const mappedTodos = steps.map((tdo) => {
                       if (tdo.id === todo.id && date) {
                         return {
                           ...tdo,
-                          task: todoInput,
-                          note: todoNoteInput,
+                          task: stepInput,
+                          note: stepNoteInput,
                           priority: priority,
                           location: location,
                           remind_at: date,
@@ -472,20 +466,20 @@ const EditTodoDialog = ({
                       } else if (tdo.id === todo.id) {
                         return {
                           ...tdo,
-                          task: todoInput,
-                          note: todoNoteInput,
+                          task: stepInput,
+                          note: stepNoteInput,
                           priority: priority,
                           location: location,
                         };
                       }
                       return tdo;
                     });
-                    setTodos(mappedTodos);
+                    setSteps(mappedTodos);
                   }}
                 >
                   Edit
                 </Button>
-                <Button className="bg-transparent text-foreground sm:order-1 w-24 hover:bg-foreground/5  rounded-full">
+                <Button className="w-24 rounded-full bg-transparent text-foreground hover:bg-foreground/5  sm:order-1">
                   Close
                 </Button>
               </div>
@@ -497,4 +491,4 @@ const EditTodoDialog = ({
   }
 };
 
-export default EditTodoDialog;
+export default EditStepBox;

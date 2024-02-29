@@ -1,23 +1,14 @@
-import Todo from "../Todo";
-import TodoType from "@/types/TodoType";
+import { Settings2 } from "lucide-react";
 
-type Props = {
-  todos: TodoType[];
-  setTodos: React.Dispatch<React.SetStateAction<TodoType[]>>;
-};
-
-const CompletedTab = ({ todos, setTodos }: Props) => {
+const CompletedTab = () => {
   return (
     <div className="flex flex-col gap-2">
-      <h1 className="flex font-bold text-lg border-b-[2px] h-12 items-center">
+      <h1 className="flex h-12 items-center border-b-[2px] text-lg font-bold">
         Settings
       </h1>
-      <div className="flex flex-col gap-2 overflow-x-clip overflow-y-auto px-2 ">
-        {todos
-          .filter((todo) => todo.deleted_at)
-          .map((todo) => (
-            <Todo key={todo.id} todo={todo} todos={todos} setTodos={setTodos} />
-          ))}
+      <div className="flex h-[335px] w-full flex-col items-center justify-center gap-3">
+        <Settings2 size={100} strokeWidth={0.7} />
+        <p>Settings</p>
       </div>
     </div>
   );

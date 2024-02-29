@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import EditTodoDialog from "./EditTodoDialog";
+import EditStepBox from "./EditStepBox";
 import {
   ArrowUpWideNarrow,
   Calendar,
@@ -33,11 +33,11 @@ import TodoType from "@/types/TodoType";
 
 type Props = {
   todo: TodoType;
-  todos: TodoType[];
-  setTodos: React.Dispatch<React.SetStateAction<TodoType[]>>;
+  steps: TodoType[];
+  setSteps: React.Dispatch<React.SetStateAction<TodoType[]>>;
 };
 
-const Todo = ({ todo, todos, setTodos }: Props) => {
+const Step = ({ todo, steps, setSteps }: Props) => {
   const [isPinned, setIsPinned] = useState<boolean>(todo.is_pin);
   const [isChecked, setIsChecked] = useState<boolean>(todo.is_complete);
   const [isOpen, setIsOpen] = useState(false);
@@ -65,39 +65,39 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
     <div
       key={todo.id}
       className={[
-        "shrink-0  p-3 rounded-xl flex border-[0.7px] justify-between  overflow-clip",
+        "flex  shrink-0 justify-between overflow-clip rounded-xl border-[0.7px]  p-3",
         isPinned && "bg-secondary",
         isChecked &&
           !todo.is_complete &&
           !todo.deleted_at &&
-          "delay-1000 translate-x-48 duration-700 transition-all",
+          "translate-x-48 transition-all delay-1000 duration-700",
       ].join(" ")}
     >
       <div
         className={[
-          "flex items-start gap-2 flex-auto",
+          "flex flex-auto items-start gap-2",
           isChecked &&
             !todo.is_complete &&
             !todo.deleted_at &&
-            "delay-1000 translate-x-48 duration-700 transition-all",
+            "translate-x-48 transition-all delay-1000 duration-700",
         ].join(" ")}
       >
         <Checkbox
           className={["accent-foreground", todo.deleted_at && "hidden"].join(
-            " "
+            " ",
           )}
           checked={isChecked}
           onCheckedChange={() => {
             axios.put(
-              `${import.meta.env.VITE_API_BASE_URL}/api/todos/${todo.id}`,
+              `${import.meta.env.VITE_API_BASE_URL}/api/steps/${todo.id}`,
               {
                 is_complete: !todo.is_complete,
-              }
+              },
             );
             if (!todo.is_complete) {
               setTimeout(
                 () =>
-                  setTodos((prevTodos) =>
+                  setSteps((prevTodos) =>
                     prevTodos.map((tdo) => {
                       if (tdo.id === todo.id) {
                         return {
@@ -107,12 +107,12 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
                         };
                       }
                       return tdo;
-                    })
+                    }),
                   ),
-                1200
+                1200,
               );
             } else {
-              setTodos((prevTodos) =>
+              setSteps((prevTodos) =>
                 prevTodos.map((tdo) => {
                   if (tdo.id === todo.id) {
                     return {
@@ -121,20 +121,20 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
                     };
                   }
                   return tdo;
-                })
+                }),
               );
             }
             setIsChecked(!isChecked);
           }}
           name="todo"
         />
-        <div className={["flex flex-col flex-auto gap-2"].join(" ")}>
+        <div className={["flex flex-auto flex-col gap-2"].join(" ")}>
           <p
             className={[
-              "text-foreground flex-auto leading-none",
+              "flex-auto leading-none text-foreground",
               isChecked &&
                 !todo.deleted_at &&
-                "line-through text-foreground/80",
+                "text-foreground/80 line-through",
             ].join(" ")}
             key={todo.id}
           >
@@ -162,7 +162,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
                   {todo.remind_at && (
                     <div
                       className={[
-                        "flex gap-1 items-center leading-none text-xs text-foreground/70",
+                        "flex items-center gap-1 text-xs leading-none text-foreground/70",
                         isRemindDatePassed && "text-red-500",
                       ].join(" ")}
                     >
@@ -175,7 +175,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
                   {todo.note && (
                     <div
                       className={[
-                        "flex gap-1 items-center leading-none text-xs text-foreground/70",
+                        "flex items-center gap-1 text-xs leading-none text-foreground/70",
                       ].join(" ")}
                     >
                       <PencilLine size={13} />
@@ -184,7 +184,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
                   {todo.location && (
                     <div
                       className={[
-                        "flex gap-1 items-center leading-none text-xs text-foreground/70",
+                        "flex items-center gap-1 text-xs leading-none text-foreground/70",
                       ].join(" ")}
                     >
                       <MapPin size={13} />
@@ -193,7 +193,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
                   {todo.priority !== "none" && (
                     <div
                       className={[
-                        "flex gap-1 items-center leading-none text-xs text-foreground/70",
+                        "flex items-center gap-1 text-xs leading-none text-foreground/70",
                       ].join(" ")}
                     >
                       <ArrowUpWideNarrow size={13} />
@@ -203,18 +203,18 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
                 {todo.priority !== "none" && (
                   <div
                     className={[
-                      "flex gap-1 items-center leading-none text-xs text-foreground/70",
+                      "flex items-center gap-1 text-xs leading-none text-foreground/70",
                     ].join(" ")}
                   >
                     <div
                       className={[
-                        "px-2 py-1 rounded-full font-semibold text-[10px]",
+                        "rounded-full px-2 py-1 text-[10px] font-semibold",
                         todo.priority === "low" &&
-                          "text-yellow-500 bg-yellow-400/20",
+                          "bg-yellow-400/20 text-yellow-500",
                         todo.priority === "medium" &&
-                          "text-orange-500 bg-orange-400/20",
+                          "bg-orange-400/20 text-orange-500",
                         todo.priority === "high" &&
-                          "text-red-500 bg-red-400/20",
+                          "bg-red-400/20 text-red-500",
                       ].join(" ")}
                     >
                       {todo.priority}
@@ -225,10 +225,10 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
             )}
         </div>
       </div>
-      <EditTodoDialog
+      <EditStepBox
         todo={todo}
-        todos={todos}
-        setTodos={setTodos}
+        steps={steps}
+        setSteps={setSteps}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
       />
@@ -238,7 +238,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
             <MoreHorizontal size={16} />
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="flex flex-col w-fit rounded-xl">
+        <DropdownMenuContent className="flex w-fit flex-col rounded-xl">
           <DropdownMenuItem
             className={[
               "flex gap-2",
@@ -246,12 +246,12 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
             ].join(" ")}
             onClick={() => {
               axios.put(
-                `${import.meta.env.VITE_API_BASE_URL}/api/todos/${todo.id}`,
+                `${import.meta.env.VITE_API_BASE_URL}/api/steps/${todo.id}`,
                 {
                   is_pin: !todo.is_pin,
-                }
+                },
               );
-              const mapTodos = todos.map((tdo) => {
+              const mapTodos = steps.map((tdo) => {
                 if (tdo.id === todo.id) {
                   return {
                     ...tdo,
@@ -260,7 +260,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
                 }
                 return tdo;
               });
-              setTodos(mapTodos);
+              setSteps(mapTodos);
               setIsPinned(!isPinned);
             }}
           >
@@ -281,17 +281,17 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
           </DropdownMenuItem>
           <DropdownMenuItem
             className={[
-              "hidden focus:bg-green-400/10 focus:text-green-500 transition-all",
+              "hidden transition-all focus:bg-green-400/10 focus:text-green-500",
               todo.deleted_at && "flex gap-2",
             ].join(" ")}
             onClick={() => {
               axios.put(
-                `${import.meta.env.VITE_API_BASE_URL}/api/todos/${todo.id}`,
+                `${import.meta.env.VITE_API_BASE_URL}/api/steps/${todo.id}`,
                 {
                   deleted_at: null,
-                }
+                },
               );
-              const mapTodos = todos.map((tdo) => {
+              const mapTodos = steps.map((tdo) => {
                 if (tdo.id === todo.id) {
                   return {
                     ...tdo,
@@ -300,7 +300,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
                 }
                 return tdo;
               });
-              setTodos(mapTodos);
+              setSteps(mapTodos);
             }}
           >
             <Undo2 size={15} />
@@ -310,17 +310,17 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
             className={[
               "flex gap-2",
               todo.deleted_at &&
-                "focus:bg-red-400/10 focus:text-red-500 transition-all",
+                "transition-all focus:bg-red-400/10 focus:text-red-500",
             ].join(" ")}
             color="blue"
             onClick={() => {
               axios.put(
-                `${import.meta.env.VITE_API_BASE_URL}/api/todos/${todo.id}`,
+                `${import.meta.env.VITE_API_BASE_URL}/api/steps/${todo.id}`,
                 {
                   deleted_at: new Date(),
-                }
+                },
               );
-              const mapTodos = todos.map((tdo) => {
+              const mapTodos = steps.map((tdo) => {
                 if (tdo.id === todo.id) {
                   return {
                     ...tdo,
@@ -329,7 +329,7 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
                 }
                 return tdo;
               });
-              setTodos(mapTodos);
+              setSteps(mapTodos);
             }}
           >
             <Trash size={15} />
@@ -341,4 +341,4 @@ const Todo = ({ todo, todos, setTodos }: Props) => {
   );
 };
 
-export default Todo;
+export default Step;

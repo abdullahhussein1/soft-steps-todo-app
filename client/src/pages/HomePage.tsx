@@ -1,5 +1,5 @@
 import Menu from "../components/Menu";
-import TodoList from "../components/TodoList";
+import AppPanel from "../components/AppPanel";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { User } from "@supabase/supabase-js";
@@ -81,7 +81,7 @@ const HomePage = () => {
           <Menu user={user} />
         </div>
         <div className="container flex h-[590px] max-w-xl flex-col rounded-[30px] bg-background p-5 shadow-2xl shadow-gray-950/20">
-          <TodoList user={user} />
+          <AppPanel user={user} />
         </div>
       </div>
     </div>

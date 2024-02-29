@@ -55,16 +55,16 @@ import TodoType from "@/types/TodoType";
 import UserType from "@/types/UserType";
 
 type Props = {
-  todos: TodoType[];
-  setTodos: React.Dispatch<React.SetStateAction<TodoType[]>>;
+  steps: TodoType[];
+  setSteps: React.Dispatch<React.SetStateAction<TodoType[]>>;
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   user: UserType;
 };
 
-const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
-  const [todoInput, setTodoInput] = useState<string | null>();
-  const [todoNoteInput, setTodoNoteInput] = useState<string | null>();
+const NewStepBox = ({ steps, setSteps, isOpen, setIsOpen, user }: Props) => {
+  const [stepInput, setStepInput] = useState<string | null>();
+  const [stepNoteInput, setStepNoteInput] = useState<string | null>();
   const [date, setDate] = React.useState<Date | null>(null);
   const [priority, setPriority] = useState<TodoType["priority"] | null>("none");
   const [location, setLocation] = useState<TodoType["location"] | null>();
@@ -76,8 +76,8 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
         open={isOpen}
         onOpenChange={(value) => {
           setIsOpen(value);
-          setTodoInput(null);
-          setTodoNoteInput(null);
+          setStepInput(null);
+          setStepNoteInput(null);
           setPriority("none");
           setDate(null);
           setLocation(null);
@@ -85,7 +85,7 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
       >
         <DialogContent className="sm:rounded-3xl">
           <DialogHeader>
-            <DialogTitle>Add Todo</DialogTitle>
+            <DialogTitle>New Step</DialogTitle>
           </DialogHeader>
           <div className="mt-3 flex flex-col gap-5">
             <div className="flex flex-col gap-[6px]">
@@ -98,9 +98,9 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
               </label>
               <Input
                 type="text"
-                value={todoInput ?? ""}
+                value={stepInput ?? ""}
                 placeholder="I want to..."
-                onChange={(e) => setTodoInput(e.target.value)}
+                onChange={(e) => setStepInput(e.target.value)}
                 className="rounded-xl border-[0.7px]"
                 id="title"
               />
@@ -114,9 +114,9 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
                 <p>Note</p>
               </label>
               <Textarea
-                value={todoNoteInput ?? ""}
+                value={stepNoteInput ?? ""}
                 placeholder="Add note"
-                onChange={(e) => setTodoNoteInput(e.target.value)}
+                onChange={(e) => setStepNoteInput(e.target.value)}
                 className="resize-none rounded-xl border-[0.7px] text-xs text-foreground/60 "
                 id="note"
               />
@@ -213,11 +213,11 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
                   onMouseUp={async (e) => {
                     e.preventDefault();
                     const response = await axios.post(
-                      `${import.meta.env.VITE_API_BASE_URL}/api/todos`,
+                      `${import.meta.env.VITE_API_BASE_URL}/api/steps`,
                       {
                         user_id: user?.id,
-                        task: todoInput,
-                        note: todoNoteInput,
+                        task: stepInput,
+                        note: stepNoteInput,
                         remind_at: date ? new Date(date) : null,
                         priority,
                         location,
@@ -225,9 +225,9 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
                     );
 
                     const newTodo = response.data;
-                    setTodos([...todos, newTodo]);
-                    setTodoInput(null);
-                    setTodoNoteInput(null);
+                    setSteps([...steps, newTodo]);
+                    setStepInput(null);
+                    setStepNoteInput(null);
                     setPriority(null);
                     setLocation(null);
                   }}
@@ -249,8 +249,8 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
         open={isOpen}
         onOpenChange={(value) => {
           setIsOpen(value);
-          setTodoInput(null);
-          setTodoNoteInput(null);
+          setStepInput(null);
+          setStepNoteInput(null);
           setPriority("none");
           setDate(null);
           setLocation(null);
@@ -258,7 +258,7 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
       >
         <DrawerContent className="rounded-t-3xl px-4">
           <DrawerHeader>
-            <DrawerTitle>Add Todo</DrawerTitle>
+            <DrawerTitle>New Step</DrawerTitle>
           </DrawerHeader>
           <div className="mt-3 flex flex-col gap-5">
             <div className="flex flex-col gap-[6px]">
@@ -271,9 +271,9 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
               </label>
               <Input
                 type="text"
-                value={todoInput ?? ""}
+                value={stepInput ?? ""}
                 placeholder="I want to..."
-                onChange={(e) => setTodoInput(e.target.value)}
+                onChange={(e) => setStepInput(e.target.value)}
                 className="rounded-xl border-[0.7px]"
                 id="title"
               />
@@ -287,9 +287,9 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
                 <p>Note</p>
               </label>
               <Textarea
-                value={todoNoteInput ?? ""}
+                value={stepNoteInput ?? ""}
                 placeholder="Add note"
-                onChange={(e) => setTodoNoteInput(e.target.value)}
+                onChange={(e) => setStepNoteInput(e.target.value)}
                 className="resize-none rounded-xl border-[0.7px] text-xs text-foreground/60 "
                 id="note"
               />
@@ -387,11 +387,11 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
                     e.preventDefault();
                     try {
                       const response = await axios.post(
-                        `${import.meta.env.VITE_API_BASE_URL}/api/todos`,
+                        `${import.meta.env.VITE_API_BASE_URL}/api/steps`,
                         {
                           user_id: user?.id,
-                          task: todoInput,
-                          note: todoNoteInput,
+                          task: stepInput,
+                          note: stepNoteInput,
                           remind_at: date ? new Date(date) : null,
                           priority: priority,
                           location: location,
@@ -399,7 +399,7 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
                       );
 
                       const newTodo = response.data;
-                      setTodos([...todos, newTodo]);
+                      setSteps([...steps, newTodo]);
                     } catch (error) {
                       console.log(error);
                     }
@@ -419,4 +419,4 @@ const AddTodoDialog = ({ todos, setTodos, isOpen, setIsOpen, user }: Props) => {
   }
 };
 
-export default AddTodoDialog;
+export default NewStepBox;

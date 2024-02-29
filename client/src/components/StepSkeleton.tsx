@@ -1,15 +1,10 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
-type Props = {
-  isLoaderVisible: boolean;
-};
-
-const TodoSkeleton = ({ isLoaderVisible }: Props) => {
+const StepSkeleton = () => {
   return (
     <div
       className={[
-        "flex items-start animate-pulse border-[0.7px] p-3 rounded-xl space-x-2",
-        !isLoaderVisible && "hidden",
+        "flex animate-pulse items-start space-x-2 rounded-xl border-[0.7px] p-3",
       ].join(" ")}
     >
       <Skeleton className="h-[14px] w-[14px] rounded-full" />
@@ -22,4 +17,4 @@ const TodoSkeleton = ({ isLoaderVisible }: Props) => {
   );
 };
 
-export default TodoSkeleton;
+export default StepSkeleton;

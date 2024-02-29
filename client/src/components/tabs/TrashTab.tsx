@@ -1,4 +1,4 @@
-import Todo from "../Todo";
+import Todo from "../Step";
 import axios from "axios";
 
 import { Trash } from "lucide-react";
@@ -16,11 +16,13 @@ import { MoreHorizontal } from "lucide-react";
 import TodoType from "@/types/TodoType";
 
 type Props = {
-  todos: TodoType[];
-  setTodos: React.Dispatch<React.SetStateAction<TodoType[]>>;
+  steps: TodoType[];
+  setSteps: React.Dispatch<React.SetStateAction<TodoType[]>>;
 };
 
-const CompletedTab = ({ todos, setTodos }: Props) => {
+const CompletedTab = ({ steps, setSteps }: Props) => {
+  const deletedTodos = steps.filter((todo) => todo.deleted_at);
+
   return (
     <div className="flex flex-col gap-2">
       <div className="flex h-12 items-center justify-between border-b-[2px]">
@@ -35,12 +37,10 @@ const CompletedTab = ({ todos, setTodos }: Props) => {
             <DropdownMenuItem
               className="flex w-full items-center gap-[6px] px-2 transition-all focus:bg-green-400/10 focus:text-green-500"
               onClick={() => {
-                const deletedTodos = todos.filter((todo) => todo.deleted_at);
-
                 if (deletedTodos.length > 0) {
                   for (const todo of deletedTodos) {
                     axios.put(
-                      `${import.meta.env.VITE_API_BASE_URL}/api/todos/${
+                      `${import.meta.env.VITE_API_BASE_URL}/api/steps/${
                         todo.id
                       }`,
                       {
@@ -48,7 +48,7 @@ const CompletedTab = ({ todos, setTodos }: Props) => {
                       },
                     );
 
-                    setTodos((prevTodos) =>
+                    setSteps((prevTodos) =>
                       prevTodos.map((tdo) => {
                         if (tdo.id === todo.id) {
                           return {
@@ -71,16 +71,16 @@ const CompletedTab = ({ todos, setTodos }: Props) => {
             <DropdownMenuItem
               className="flex w-full items-center gap-[6px] px-2 transition-all focus:bg-red-400/10 focus:text-red-500"
               onClick={async () => {
-                const deletedTodos = todos.filter((todo) => todo.deleted_at);
+                const deletedTodos = steps.filter((todo) => todo.deleted_at);
 
                 if (deletedTodos.length > 0) {
-                  setTodos((prevTodos) =>
+                  setSteps((prevTodos) =>
                     prevTodos.filter((todo) => !todo.deleted_at),
                   );
 
                   for (const todo of deletedTodos) {
                     await axios.delete(
-                      `${import.meta.env.VITE_API_BASE_URL}/api/todos/${
+                      `${import.meta.env.VITE_API_BASE_URL}/api/steps/${
                         todo.id
                       }`,
                     );
@@ -96,11 +96,17 @@ const CompletedTab = ({ todos, setTodos }: Props) => {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
+      {deletedTodos.length == 0 && (
+        <div className="flex h-[335px] w-full flex-col items-center justify-center gap-3">
+          <Trash size={100} strokeWidth={0.7} />
+          <p>All Clear</p>
+        </div>
+      )}
       <div className="flex flex-col gap-2 overflow-y-auto overflow-x-clip px-2">
-        {todos
+        {steps
           .filter((todo) => todo.deleted_at)
           .map((todo) => (
-            <Todo key={todo.id} todo={todo} todos={todos} setTodos={setTodos} />
+            <Step key={todo.id} todo={todo} steps={steps} setSteps={setSteps} />
           ))}
       </div>
     </div>

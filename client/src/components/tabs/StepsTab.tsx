@@ -1,11 +1,11 @@
 import { useState } from "react";
-import Todo from "../Todo";
+import Step from "../Step";
 import axios from "axios";
-import { ArrowUpDownIcon } from "lucide-react";
+import { ArrowUpDownIcon, FootprintsIcon } from "lucide-react";
 import { Maximize2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import TodoSkeleton from "../TodoSkeleton";
+import StepSkeleton from "../StepSkeleton";
 import {
   Select,
   SelectContent,
@@ -16,36 +16,36 @@ import {
 
 import TodoType from "@/types/TodoType";
 import UserType from "@/types/UserType";
-import AddTodoDialog from "../AddTodoDialog";
+import NewStepBox from "../NewStepBox";
 
 type Props = {
-  todos: TodoType[];
-  setTodos: React.Dispatch<React.SetStateAction<TodoType[]>>;
+  steps: TodoType[];
+  setSteps: React.Dispatch<React.SetStateAction<TodoType[]>>;
   user: UserType;
   isLoaderVisible: boolean;
 };
 
-const TodosTab = ({ todos, setTodos, user, isLoaderVisible }: Props) => {
-  const [todoInput, setTodoInput] = useState<string>("");
+const StepsTab = ({ steps, setSteps, user, isLoaderVisible }: Props) => {
+  const [stepInput, setStepInput] = useState<string>("");
   const [isAddDialogShown, setIsAddDialogShown] = useState<boolean>(false);
   const [sortByValue, setSortByValue] = useState<string>("dateEdited");
 
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col relative h-[440px]">
-        <div className="flex justify-between border-b-[2px] h-12 items-center">
-          <h1 className="font-bold text-lg">Todos</h1>
+      <div className="relative flex flex-col">
+        <div className="flex h-12 items-center justify-between border-b-[2px]">
+          <h1 className="text-lg font-bold">Steps</h1>
           <Select
             defaultValue="dateEdited"
             onValueChange={(value) => setSortByValue(value)}
           >
-            <SelectTrigger className="flex border-none gap-[6px] hover:bg-border/50 w-20 h-7 items-center  px-2 rounded-full transition-all">
+            <SelectTrigger className="flex h-7 w-20 items-center gap-[6px] rounded-full border-none  px-2 transition-all hover:bg-border/50">
               <p className="whitespace-nowrap text-xs">Sort By</p>
               <div>
                 <ArrowUpDownIcon size={13} />
               </div>
             </SelectTrigger>
-            <SelectContent className="flex flex-col w-fit rounded-xl text-foreground/80">
+            <SelectContent className="flex w-fit flex-col rounded-xl text-foreground/80">
               <SelectGroup>
                 <SelectItem value="dateEdited">Date Edited</SelectItem>
                 <SelectItem value="dateCreated">Date Created</SelectItem>
@@ -55,10 +55,8 @@ const TodosTab = ({ todos, setTodos, user, isLoaderVisible }: Props) => {
             </SelectContent>
           </Select>
         </div>
-        <div className="flex p-2 pb-10 flex-col gap-2 h-[360px] overflow-y-auto overflow-x-clip">
-          <TodoSkeleton isLoaderVisible={isLoaderVisible} />
-          <TodoSkeleton isLoaderVisible={isLoaderVisible} />
-          {todos
+        <div className="flex max-h-96 flex-col gap-2 overflow-y-auto overflow-x-clip p-2 pb-10">
+          {steps
             .filter((todo) => !todo.is_complete && !todo.deleted_at)
             .sort((a, b) => {
               if (a.is_pin && !b.is_pin) {
@@ -87,54 +85,70 @@ const TodosTab = ({ todos, setTodos, user, isLoaderVisible }: Props) => {
               }
             })
             .map((todo) => (
-              <Todo
+              <Step
                 key={todo.id}
                 todo={todo}
-                todos={todos}
-                setTodos={setTodos}
+                steps={steps}
+                setSteps={setSteps}
               />
             ))}
 
-          <div className="w-full h-10 bg-gradient-to-t from-background via-background to-transparent absolute bottom-8 z-10"></div>
+          {isLoaderVisible && (
+            <div className="flex h-96 flex-col gap-2">
+              <StepSkeleton />
+              <StepSkeleton />
+            </div>
+          )}
+
+          {steps.length == 0 && !isLoaderVisible && (
+            <div className="flex h-96 w-full flex-col items-center justify-center gap-3">
+              <FootprintsIcon size={100} strokeWidth={0.7} />
+              <p>Take a new Step</p>
+            </div>
+          )}
+
+          {steps.length > 0 && (
+            <div className="absolute bottom-0 z-10 h-8 w-full bg-gradient-to-t from-background via-background to-transparent"></div>
+          )}
         </div>
       </div>
-      <AddTodoDialog
-        todos={todos}
-        setTodos={setTodos}
+      <NewStepBox
+        steps={steps}
+        setSteps={setSteps}
         isOpen={isAddDialogShown}
         setIsOpen={setIsAddDialogShown}
         user={user}
       />
-      <div className="flex gap-2">
-        <div className="relative flex items-center w-full">
+      <div className="mt-4 flex gap-2">
+        <div className="relative flex w-full items-center">
           <Input
             type="text"
-            value={todoInput}
-            onChange={(e) => setTodoInput(e.target.value)}
+            value={stepInput}
+            onChange={(e) => setStepInput(e.target.value)}
             placeholder="I want to..."
             className="rounded-full text-foreground"
           />
-          <div className="absolute right-1 flex rounded-full bg-background cursor-pointer p-2 hover:text-foreground transition-colors items-center justify-center">
+          <div className="absolute right-1 flex cursor-pointer items-center justify-center rounded-full bg-background p-2 transition-colors hover:text-foreground">
             <Maximize2 size={14} onClick={() => setIsAddDialogShown(true)} />
           </div>
         </div>
         <Button
           className="rounded-full bg-primary text-special"
           onMouseUp={async (e) => {
-            if (todoInput === "") return;
+            if (stepInput === "") return;
 
             e.preventDefault();
-            setTodoInput("");
+            setStepInput("");
             try {
               const response = await axios.post(
-                `${import.meta.env.VITE_API_BASE_URL}/api/todos`,
+                `${import.meta.env.VITE_API_BASE_URL}/api/steps`,
                 {
-                  task: todoInput,
+                  task: stepInput,
                   user_id: user?.id,
-                }
+                },
               );
               const newTodo = response.data;
-              setTodos([...todos, newTodo]);
+              setSteps([...steps, newTodo]);
             } catch (error) {
               console.error("Error adding todo:", error);
             }
@@ -147,4 +161,4 @@ const TodosTab = ({ todos, setTodos, user, isLoaderVisible }: Props) => {
   );
 };
 
-export default TodosTab;
+export default StepsTab;

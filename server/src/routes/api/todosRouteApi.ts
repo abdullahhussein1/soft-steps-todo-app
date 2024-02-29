@@ -40,8 +40,8 @@ router.post("/", async (req: Request, res: Response) => {
       remind_at,
     } = req.body as Todo;
 
-    const { data: newTodo, error }: PostgrestResponse<Todo[]> = await supabase
-      .from("todos")
+    const { data: newTodo, error }: PostgrestResponse<Step[]> = await supabase
+      .from("steps")
       .insert({
         user_id,
         task,
@@ -74,8 +74,8 @@ router.post("/", async (req: Request, res: Response) => {
 router.get("/", async (req: Request, res: Response) => {
   try {
     const { user_id } = req.query;
-    const { data: todos, error }: PostgrestResponse<Todo[]> = await supabase
-      .from("todos")
+    const { data: steps, error }: PostgrestResponse<Step[]> = await supabase
+      .from("steps")
       .select("*")
       .eq("user_id", user_id)
       .order("id", { ascending: true });
@@ -84,7 +84,7 @@ router.get("/", async (req: Request, res: Response) => {
       throw error;
     }
 
-    res.json(todos || []);
+    res.json(steps || []);
   } catch (err) {
     console.error(err);
     if (err instanceof Error) {
@@ -99,8 +99,8 @@ router.get("/", async (req: Request, res: Response) => {
 router.get("/:id", async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { data: todo, error }: PostgrestResponse<Todo[]> = await supabase
-      .from("todos")
+    const { data: todo, error }: PostgrestResponse<Step[]> = await supabase
+      .from("steps")
       .select("*")
       .eq("id", id)
       .single();
@@ -136,9 +136,9 @@ router.put("/:id", async (req: Request, res: Response) => {
       updated_at,
     } = req.body as Todo;
 
-    const { data: updatedTodo, error }: PostgrestResponse<Todo[]> =
+    const { data: updatedTodo, error }: PostgrestResponse<Step[]> =
       await supabase
-        .from("todos")
+        .from("steps")
         .update([
           {
             id,
@@ -175,8 +175,8 @@ router.put("/:id", async (req: Request, res: Response) => {
 router.delete("/:id", async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { data: deletedTodo, error }: PostgrestResponse<Todo[]> =
-      await supabase.from("todos").delete().eq("id", id).single();
+    const { data: deletedTodo, error }: PostgrestResponse<Step[]> =
+      await supabase.from("steps").delete().eq("id", id).single();
 
     if (error) {
       throw error;

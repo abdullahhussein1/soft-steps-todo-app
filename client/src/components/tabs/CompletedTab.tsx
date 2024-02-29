@@ -1,38 +1,38 @@
-import Todo from "../Todo";
+import Todo from "../Step";
 import axios from "axios";
 
-import { Trash } from "lucide-react";
+import { CheckCheck, Trash } from "lucide-react";
 
 import TodoType from "@/types/TodoType";
 
 type Props = {
-  todos: TodoType[];
-  setTodos: React.Dispatch<React.SetStateAction<TodoType[]>>;
+  steps: TodoType[];
+  setSteps: React.Dispatch<React.SetStateAction<TodoType[]>>;
 };
 
-const CompletedTab = ({ todos, setTodos }: Props) => {
+const CompletedTab = ({ steps, setSteps }: Props) => {
+  const completedTodos = steps.filter(
+    (todo) => todo.is_complete && !todo.deleted_at,
+  );
+
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex justify-between border-b-[2px] h-12 items-center">
-        <h1 className="font-bold text-lg">Completed</h1>
+      <div className="flex h-12 items-center justify-between border-b-[2px]">
+        <h1 className="text-lg font-bold">Completed</h1>
         <button
-          className="flex gap-[6px] w-20 h-7 items-center rounded-full hover:bg-red-400/10 px-2 hover:text-red-500 transition-all"
+          className="flex h-7 w-20 items-center gap-[6px] rounded-full px-2 transition-all hover:bg-red-400/10 hover:text-red-500"
           onClick={async () => {
-            const completedTodos = todos.filter(
-              (todo) => todo.is_complete && !todo.deleted_at
-            );
-
             if (completedTodos.length > 0) {
-              setTodos((prevTodos) =>
-                prevTodos.filter((todo) => !todo.is_complete)
+              setSteps((prevTodos) =>
+                prevTodos.filter((todo) => !todo.is_complete),
               );
 
               for (const todo of completedTodos) {
                 await axios.put(
-                  `${import.meta.env.VITE_API_BASE_URL}/api/todos/${todo.id}`,
-                  { deleted_at: new Date() }
+                  `${import.meta.env.VITE_API_BASE_URL}/api/steps/${todo.id}`,
+                  { deleted_at: new Date() },
                 );
-                const mapTodos = todos.map((tdo) => {
+                const mapTodos = steps.map((tdo) => {
                   if (tdo.id === todo.id) {
                     return {
                       ...tdo,
@@ -41,7 +41,7 @@ const CompletedTab = ({ todos, setTodos }: Props) => {
                   }
                   return tdo;
                 });
-                setTodos(mapTodos);
+                setSteps(mapTodos);
               }
             }
           }}
@@ -52,11 +52,17 @@ const CompletedTab = ({ todos, setTodos }: Props) => {
           </div>
         </button>
       </div>
-      <div className="flex flex-col gap-2 overflow-x-clip overflow-y-auto px-2 ">
-        {todos
+      {completedTodos.length == 0 && (
+        <div className="flex h-[335px] w-full flex-col items-center justify-center gap-3">
+          <CheckCheck size={100} strokeWidth={0.7} />
+          <p>All done</p>
+        </div>
+      )}
+      <div className="flex flex-col gap-2 overflow-y-auto overflow-x-clip px-2 ">
+        {steps
           .filter((todo) => todo.is_complete && !todo.deleted_at)
           .map((todo) => (
-            <Todo key={todo.id} todo={todo} todos={todos} setTodos={setTodos} />
+            <Step key={todo.id} todo={todo} steps={steps} setSteps={setSteps} />
           ))}
       </div>
     </div>

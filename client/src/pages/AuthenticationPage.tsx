@@ -70,7 +70,7 @@ const AuthenticationPage: React.FC = () => {
           <div className="flex flex-col gap-1">
             <h1 className="text-xl font-medium">Get started</h1>
             <p className="text-xs font-thin">
-              Sign In/Up to raise your first step to your goals
+              Sign In/Up to take your new steps easier towards your goals
             </p>
           </div>
           <div className="flex w-full flex-col items-center justify-center gap-3 rounded-3xl py-5 md:flex-row">
