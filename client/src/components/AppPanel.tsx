@@ -7,7 +7,7 @@ import ProgressTab from "./tabs/ProgressTab";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import StepType from "@/types/StepType";
 import UserType from "@/types/UserType";
-import { BarChart3Icon, LayoutList, ListChecks, TrashIcon } from "lucide-react";
+import { PieChartIcon, LayoutList, ListChecks, TrashIcon } from "lucide-react";
 
 type params = {
   user: UserType;
@@ -54,7 +54,7 @@ const AppPanel = ({ user }: params) => {
           <TrashIcon size={16} />
         </TabsTrigger>
         <TabsTrigger value="statistics" className="flex gap-2 rounded-full">
-          <BarChart3Icon size={16} />
+          <PieChartIcon size={16} />
         </TabsTrigger>
         <TabsContent value="steps" className="col-span-full">
           <TodosTab

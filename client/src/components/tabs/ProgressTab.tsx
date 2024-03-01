@@ -2,7 +2,7 @@
 
 import useTheme from "@/hooks/useTheme";
 import StepType from "@/types/StepType";
-import { BarChart3Icon } from "lucide-react";
+import { PieChartIcon } from "lucide-react";
 import { PieChart, Pie, Cell } from "recharts";
 
 type props = {
@@ -12,33 +12,29 @@ type props = {
 const ProgressTab = ({ steps }: props) => {
   const { theme } = useTheme();
 
-  const NotCompletedTodos = steps.filter(
-    (todo) => !todo.is_complete && !todo.deleted_at,
-  );
-  const completedTodos = steps.filter(
-    (todo) => todo.is_complete && !todo.deleted_at,
-  );
+  const notCompletedTodos = steps.filter((todo) => !todo.is_complete);
+  const completedTodos = steps.filter((todo) => todo.is_complete);
 
   const data = [
-    { name: "steps", value: NotCompletedTodos.length },
+    { name: "steps", value: notCompletedTodos.length },
     { name: "completed", value: completedTodos.length },
   ];
 
   const themeColors: { [key: string]: string[] } = {
-    blue: ["#69A3FF", "#2962FF"],
-    "blue-dark": ["#001E3C", "#0044CC"],
-    red: ["#FF7171", "#FF3D67"],
-    "red-dark": ["#9B1C31", "#D32F2F"],
-    green: ["#6EE7B7", "#00BFA5"],
-    "green-dark": ["#003D33", "#00897B"],
-    orange: ["#FFA47C", "#FF6F3C"],
-    "orange-dark": ["#B24700", "#E65100"],
-    neutral: ["#CED4DA", "#495057"],
-    "neutral-dark": ["#2E353D", "#8B959E"],
-    purple: ["#B198D4", "#6F05E1"],
-    "purple-dark": ["#3A0CA3", "#7E57C2"],
-    yellow: ["#FFD95B", "#FFC12E"],
-    "yellow-dark": ["#FFAB00", "#FFD600"],
+    blue: ["#2563eb55", "#2563ebee"],
+    "blue-dark": ["#2563eb55", "#2563ebee"],
+    red: ["#dc262655", "#dc2626cc"],
+    "red-dark": ["#dc262655", "#dc2626ee"],
+    green: ["#16a34a55", "#16a34aee"],
+    "green-dark": ["#16a34a55", "#16a34aee"],
+    orange: ["#f9731666", "#f97316ee"],
+    "orange-dark": ["#f9731655", "#f97316ee"],
+    neutral: ["#00000955", "#000009ee"],
+    "neutral-dark": ["#fffff955", "#fffff9ee"],
+    purple: ["#7c3aed66", "#7c3aedee"],
+    "purple-dark": ["#7c3aed55", "#7c3aedee"],
+    yellow: ["#facc15aa", "#facc15dd"],
+    "yellow-dark": ["#facc1577", "#facc15ee"],
   };
 
   const themeKey = theme.toLowerCase();
@@ -52,7 +48,7 @@ const ProgressTab = ({ steps }: props) => {
       </h1>
       {!steps.length && (
         <div className="flex h-[335px] w-full flex-col items-center justify-center gap-3">
-          <BarChart3Icon size={100} strokeWidth={0.7} />
+          <PieChartIcon size={100} strokeWidth={0.7} />
           <p>No Data to Analysis</p>
         </div>
       )}
@@ -66,12 +62,12 @@ const ProgressTab = ({ steps }: props) => {
             cy="50%"
             innerRadius={55}
             outerRadius={80}
-            fill="#82ca9d"
             label
           >
-            {data.map((entry, index) => (
+            {data.map((_entry, index) => (
               <Cell
                 key={`cell-${index}`}
+                strokeWidth={0}
                 fill={COLORS[index % COLORS.length]}
               />
             ))}
@@ -81,16 +77,16 @@ const ProgressTab = ({ steps }: props) => {
           <div className="flex items-center gap-1">
             <div
               className="h-3 w-3 rounded-full"
-              style={{ background: COLORS[1] }}
+              style={{ background: COLORS[0] }}
             ></div>
-            <p>completed</p>
+            <p>Not completed</p>
           </div>
           <div className="flex items-center gap-1">
             <div
               className="h-3 w-3 rounded-full"
-              style={{ background: COLORS[0] }}
+              style={{ background: COLORS[1] }}
             ></div>
-            <p>not completed</p>
+            <p>Completed</p>
           </div>
         </div>
       </div>
