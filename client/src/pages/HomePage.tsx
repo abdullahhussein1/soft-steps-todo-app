@@ -92,13 +92,9 @@ const HomePage = () => {
     updateUserData();
   }, [theme, darkModeState]);
 
-  if (!user) {
-    return <div className="bg-neutral-900/50"></div>;
-  }
-
   return (
     <div className="flex h-[100dvh] flex-col items-center justify-center bg-secondary">
-      <div className="flex w-full max-w-xl flex-col gap-2 p-5">
+      <div className="flex w-full max-w-xl flex-col gap-2 p-3">
         <div className="flex items-center justify-end">
           <Menu user={user} />
         </div>

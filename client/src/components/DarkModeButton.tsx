@@ -71,7 +71,7 @@ export default function DarkModeButton() {
             <SelectValue />
           </div>
         </SelectTrigger>
-        <SelectContent className="flex w-fit flex-col rounded-xl p-2 text-foreground/80">
+        <SelectContent className="flex w-fit flex-col rounded-xl p-1 text-foreground/80">
           <SelectGroup>
             <SelectItem value="light">
               <p>Light</p>

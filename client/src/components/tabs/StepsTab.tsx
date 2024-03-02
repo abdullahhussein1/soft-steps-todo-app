@@ -57,7 +57,7 @@ const StepsTab = ({ steps, setSteps, user, isLoaderVisible }: Props) => {
         </div>
         <div className="flex h-96 flex-col gap-2 overflow-y-auto overflow-x-clip p-2 pb-10">
           {steps
-            .filter((todo) => !todo.is_complete && !todo.deleted_at)
+            .filter((step) => !step.is_complete && !step.deleted_at)
             .sort((a, b) => {
               if (a.is_pin && !b.is_pin) {
                 return -1;
@@ -84,10 +84,10 @@ const StepsTab = ({ steps, setSteps, user, isLoaderVisible }: Props) => {
                 return a.task.localeCompare(b.task);
               }
             })
-            .map((todo) => (
+            .map((step) => (
               <Step
-                key={todo.id}
-                todo={todo}
+                key={step.id}
+                step={step}
                 steps={steps}
                 setSteps={setSteps}
               />
@@ -150,7 +150,7 @@ const StepsTab = ({ steps, setSteps, user, isLoaderVisible }: Props) => {
               const newTodo = response.data;
               setSteps([...steps, newTodo]);
             } catch (error) {
-              console.error("Error adding todo:", error);
+              console.error("Error adding step:", error);
             }
           }}
         >

@@ -23,7 +23,7 @@ type Props = {
 };
 
 const TrashTab = ({ steps, setSteps, isLoaderVisible }: Props) => {
-  const deletedTodos = steps.filter((todo) => todo.deleted_at);
+  const deletedTodos = steps.filter((step) => step.deleted_at);
 
   return (
     <div className="flex flex-col gap-2">
@@ -40,10 +40,10 @@ const TrashTab = ({ steps, setSteps, isLoaderVisible }: Props) => {
               className="flex w-full items-center gap-[6px] px-2 transition-all focus:bg-green-400/10 focus:text-green-500"
               onClick={() => {
                 if (deletedTodos.length > 0) {
-                  for (const todo of deletedTodos) {
+                  for (const step of deletedTodos) {
                     axios.put(
                       `${import.meta.env.VITE_API_BASE_URL}/api/steps/${
-                        todo.id
+                        step.id
                       }`,
                       {
                         deleted_at: null,
@@ -52,7 +52,7 @@ const TrashTab = ({ steps, setSteps, isLoaderVisible }: Props) => {
 
                     setSteps((prevTodos) =>
                       prevTodos.map((tdo) => {
-                        if (tdo.id === todo.id) {
+                        if (tdo.id === step.id) {
                           return {
                             ...tdo,
                             deleted_at: null,
@@ -73,17 +73,17 @@ const TrashTab = ({ steps, setSteps, isLoaderVisible }: Props) => {
             <DropdownMenuItem
               className="flex w-full items-center gap-[6px] px-2 transition-all focus:bg-red-400/10 focus:text-red-500"
               onClick={async () => {
-                const deletedTodos = steps.filter((todo) => todo.deleted_at);
+                const deletedTodos = steps.filter((step) => step.deleted_at);
 
                 if (deletedTodos.length > 0) {
                   setSteps((prevTodos) =>
-                    prevTodos.filter((todo) => !todo.deleted_at),
+                    prevTodos.filter((step) => !step.deleted_at),
                   );
 
-                  for (const todo of deletedTodos) {
+                  for (const step of deletedTodos) {
                     await axios.delete(
                       `${import.meta.env.VITE_API_BASE_URL}/api/steps/${
-                        todo.id
+                        step.id
                       }`,
                     );
                   }
@@ -130,9 +130,9 @@ const TrashTab = ({ steps, setSteps, isLoaderVisible }: Props) => {
       )}
       <div className="flex flex-col gap-2 overflow-y-auto overflow-x-clip px-2">
         {steps
-          .filter((todo) => todo.deleted_at)
-          .map((todo) => (
-            <Step key={todo.id} todo={todo} steps={steps} setSteps={setSteps} />
+          .filter((step) => step.deleted_at)
+          .map((step) => (
+            <Step key={step.id} step={step} steps={steps} setSteps={setSteps} />
           ))}
       </div>
     </div>

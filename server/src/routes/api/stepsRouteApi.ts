@@ -96,7 +96,7 @@ router.get("/", async (req: Request, res: Response) => {
 router.get("/:id", async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { data: todo, error }: PostgrestResponse<Step[]> = await supabase
+    const { data: step, error }: PostgrestResponse<Step[]> = await supabase
       .from("steps")
       .select("*")
       .eq("id", id)
@@ -106,7 +106,7 @@ router.get("/:id", async (req: Request, res: Response) => {
       throw error;
     }
 
-    res.json(todo);
+    res.json(step);
   } catch (err) {
     console.error(err);
     if (err instanceof Error) {

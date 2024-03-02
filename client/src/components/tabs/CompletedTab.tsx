@@ -14,7 +14,7 @@ type Props = {
 
 const CompletedTab = ({ steps, setSteps, isLoaderVisible }: Props) => {
   const completedTodos = steps.filter(
-    (todo) => todo.is_complete && !todo.deleted_at,
+    (step) => step.is_complete && !step.deleted_at,
   );
 
   return (
@@ -26,16 +26,16 @@ const CompletedTab = ({ steps, setSteps, isLoaderVisible }: Props) => {
           onClick={async () => {
             if (completedTodos.length > 0) {
               setSteps((prevTodos) =>
-                prevTodos.filter((todo) => !todo.is_complete),
+                prevTodos.filter((step) => !step.is_complete),
               );
 
-              for (const todo of completedTodos) {
+              for (const step of completedTodos) {
                 await axios.put(
-                  `${import.meta.env.VITE_API_BASE_URL}/api/steps/${todo.id}`,
+                  `${import.meta.env.VITE_API_BASE_URL}/api/steps/${step.id}`,
                   { deleted_at: new Date() },
                 );
                 const mapTodos = steps.map((tdo) => {
-                  if (tdo.id === todo.id) {
+                  if (tdo.id === step.id) {
                     return {
                       ...tdo,
                       deleted_at: new Date(),
@@ -86,9 +86,9 @@ const CompletedTab = ({ steps, setSteps, isLoaderVisible }: Props) => {
       )}
       <div className="flex flex-col gap-2 overflow-y-auto overflow-x-clip px-2 ">
         {steps
-          .filter((todo) => todo.is_complete && !todo.deleted_at)
-          .map((todo) => (
-            <Step key={todo.id} todo={todo} steps={steps} setSteps={setSteps} />
+          .filter((step) => step.is_complete && !step.deleted_at)
+          .map((step) => (
+            <Step key={step.id} step={step} steps={steps} setSteps={setSteps} />
           ))}
       </div>
     </div>

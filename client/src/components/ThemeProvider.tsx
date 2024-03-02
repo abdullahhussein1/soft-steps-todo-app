@@ -12,12 +12,11 @@ type ThemeProviderProps = {
 
 export default function ThemeProvider({
   children,
-  defaultTheme = "blue",
   ...props
 }: ThemeProviderProps) {
   const [user, setUser] = useState<UserType>(null);
   const [theme, setTheme] = useState<ColorThemeType>(
-    () => (user?.user_metadata.themeColor as ColorThemeType) ?? defaultTheme,
+    user?.user_metadata.themeColor ?? "blue",
   );
 
   useEffect(() => {
@@ -27,6 +26,7 @@ export default function ThemeProvider({
       } = await supabase.auth.getUser();
 
       setUser(user);
+      setTheme(user?.user_metadata.themeColor);
     };
 
     fetchUser();

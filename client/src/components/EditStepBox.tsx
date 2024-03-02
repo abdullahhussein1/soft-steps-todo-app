@@ -54,22 +54,22 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import StepType from "@/types/StepType";
 
 type Props = {
-  todo: StepType;
+  step: StepType;
   steps: StepType[];
   setSteps: React.Dispatch<React.SetStateAction<StepType[]>>;
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const EditStepBox = ({ todo, steps, setSteps, isOpen, setIsOpen }: Props) => {
-  const [stepInput, setStepInput] = useState(todo.task);
-  const [stepNoteInput, setStepNoteInput] = useState(todo.note);
+const EditStepBox = ({ step, steps, setSteps, isOpen, setIsOpen }: Props) => {
+  const [stepInput, setStepInput] = useState(step.task);
+  const [stepNoteInput, setStepNoteInput] = useState(step.note);
   const [date, setDate] = React.useState<Date | undefined>(
-    todo.remind_at ? new Date(todo.remind_at) : undefined,
+    step.remind_at ? new Date(step.remind_at) : undefined,
   );
-  const [priority, setPriority] = useState<StepType["priority"]>(todo.priority);
+  const [priority, setPriority] = useState<StepType["priority"]>(step.priority);
   const [location, setLocation] = useState<StepType["location"] | undefined>(
-    todo.location,
+    step.location,
   );
 
   const isDesktop = useMediaQuery("(min-width: 640px)");
@@ -80,11 +80,11 @@ const EditStepBox = ({ todo, steps, setSteps, isOpen, setIsOpen }: Props) => {
         open={isOpen}
         onOpenChange={(value) => {
           setIsOpen(value);
-          setStepInput(todo.task);
-          setStepNoteInput(todo.note);
-          setPriority(todo.priority);
-          setDate(todo.remind_at ? new Date(todo.remind_at) : undefined);
-          setLocation(todo.location);
+          setStepInput(step.task);
+          setStepNoteInput(step.note);
+          setPriority(step.priority);
+          setDate(step.remind_at ? new Date(step.remind_at) : undefined);
+          setLocation(step.location);
         }}
       >
         <DialogContent className="sm:rounded-3xl">
@@ -171,7 +171,7 @@ const EditStepBox = ({ todo, steps, setSteps, isOpen, setIsOpen }: Props) => {
               </div>
               <div className="flex flex-col">
                 <Select
-                  defaultValue={todo.priority}
+                  defaultValue={step.priority}
                   onValueChange={(value) =>
                     setPriority(value as StepType["priority"])
                   }
@@ -208,10 +208,10 @@ const EditStepBox = ({ todo, steps, setSteps, isOpen, setIsOpen }: Props) => {
                 </Select>
               </div>
             </div>
-            {todo.updated_at && (
+            {step.updated_at && (
               <p className="-mt-3 text-xs font-light text-foreground/70">
                 {"edited " +
-                  formatDistanceToNow(new Date(todo.updated_at), {
+                  formatDistanceToNow(new Date(step.updated_at), {
                     addSuffix: true,
                   })}
               </p>
@@ -226,36 +226,36 @@ const EditStepBox = ({ todo, steps, setSteps, isOpen, setIsOpen }: Props) => {
                     e.preventDefault();
                     axios.put(
                       `${import.meta.env.VITE_API_BASE_URL}/api/steps/${
-                        todo.id
+                        step.id
                       }`,
                       {
                         task: stepInput,
                         note: stepNoteInput,
                         remind_at:
-                          date && date !== todo.remind_at
+                          date && date !== step.remind_at
                             ? new Date(date)
                             : null,
                         priority,
                         location,
                         updated_at:
-                          date !== todo.remind_at ||
-                          stepInput !== todo.task ||
-                          stepNoteInput !== todo.note ||
-                          priority !== todo.priority ||
-                          location !== todo.location
+                          date !== step.remind_at ||
+                          stepInput !== step.task ||
+                          stepNoteInput !== step.note ||
+                          priority !== step.priority ||
+                          location !== step.location
                             ? new Date()
                             : null,
                       },
                     );
                     const mappedTodos = steps.map((tdo) => {
-                      if (tdo.id === todo.id && date) {
+                      if (tdo.id === step.id && date) {
                         return {
                           ...tdo,
                           task: stepInput,
                           note: stepNoteInput,
                           remind_at: date,
                         };
-                      } else if (tdo.id === todo.id) {
+                      } else if (tdo.id === step.id) {
                         return {
                           ...tdo,
                           task: stepInput,
@@ -286,11 +286,11 @@ const EditStepBox = ({ todo, steps, setSteps, isOpen, setIsOpen }: Props) => {
         open={isOpen}
         onOpenChange={(value) => {
           setIsOpen(value);
-          setStepInput(todo.task);
-          setStepNoteInput(todo.note);
-          setPriority(todo.priority);
-          setDate(todo.remind_at ? new Date(todo.remind_at) : undefined);
-          setLocation(todo.location);
+          setStepInput(step.task);
+          setStepNoteInput(step.note);
+          setPriority(step.priority);
+          setDate(step.remind_at ? new Date(step.remind_at) : undefined);
+          setLocation(step.location);
         }}
       >
         <DrawerContent className="rounded-t-3xl px-4">
@@ -377,7 +377,7 @@ const EditStepBox = ({ todo, steps, setSteps, isOpen, setIsOpen }: Props) => {
               </div>
               <div className="flex flex-col">
                 <Select
-                  defaultValue={todo.priority}
+                  defaultValue={step.priority}
                   onValueChange={(value) =>
                     setPriority(value as StepType["priority"])
                   }
@@ -414,10 +414,10 @@ const EditStepBox = ({ todo, steps, setSteps, isOpen, setIsOpen }: Props) => {
                 </Select>
               </div>
             </div>
-            {todo.updated_at && (
+            {step.updated_at && (
               <p className="-mt-3 text-xs font-light text-foreground/70">
                 {"edited " +
-                  formatDistanceToNow(new Date(todo.updated_at), {
+                  formatDistanceToNow(new Date(step.updated_at), {
                     addSuffix: true,
                   })}
               </p>
@@ -432,29 +432,29 @@ const EditStepBox = ({ todo, steps, setSteps, isOpen, setIsOpen }: Props) => {
                     e.preventDefault();
                     axios.put(
                       `${import.meta.env.VITE_API_BASE_URL}/api/steps/${
-                        todo.id
+                        step.id
                       }`,
                       {
                         task: stepInput,
                         note: stepNoteInput,
                         remind_at:
-                          date && date !== todo.remind_at
+                          date && date !== step.remind_at
                             ? new Date(date)
                             : null,
                         priority: priority,
                         location: location,
                         updated_at:
-                          date !== todo.remind_at ||
-                          stepInput !== todo.task ||
-                          stepNoteInput !== todo.note ||
-                          priority !== todo.priority ||
-                          location !== todo.location
+                          date !== step.remind_at ||
+                          stepInput !== step.task ||
+                          stepNoteInput !== step.note ||
+                          priority !== step.priority ||
+                          location !== step.location
                             ? new Date()
                             : null,
                       },
                     );
                     const mappedTodos = steps.map((tdo) => {
-                      if (tdo.id === todo.id && date) {
+                      if (tdo.id === step.id && date) {
                         return {
                           ...tdo,
                           task: stepInput,
@@ -463,7 +463,7 @@ const EditStepBox = ({ todo, steps, setSteps, isOpen, setIsOpen }: Props) => {
                           location: location,
                           remind_at: date,
                         };
-                      } else if (tdo.id === todo.id) {
+                      } else if (tdo.id === step.id) {
                         return {
                           ...tdo,
                           task: stepInput,

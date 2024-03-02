@@ -7,7 +7,7 @@ import "./App.css";
 
 function App() {
   return (
-    <ThemeProvider defaultTheme="blue">
+    <ThemeProvider>
       <Router>
         <Routes>
           <Route path="/auth" element={<AuthenticationPage />} />

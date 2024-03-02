@@ -19,8 +19,8 @@ type props = {
 const ProgressTab = ({ steps, isLoaderVisible }: props) => {
   const { theme } = useTheme();
 
-  const notCompletedTodos = steps.filter((todo) => !todo.is_complete);
-  const completedTodos = steps.filter((todo) => todo.is_complete);
+  const notCompletedTodos = steps.filter((step) => !step.is_complete);
+  const completedTodos = steps.filter((step) => step.is_complete);
 
   function something() {
     if (completedTodos.length == steps.length) {

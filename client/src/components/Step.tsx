@@ -32,24 +32,24 @@ import { Checkbox } from "./ui/checkbox";
 import StepType from "@/types/StepType";
 
 type Props = {
-  todo: StepType;
+  step: StepType;
   steps: StepType[];
   setSteps: React.Dispatch<React.SetStateAction<StepType[]>>;
 };
 
-const Step = ({ todo, steps, setSteps }: Props) => {
-  const [isPinned, setIsPinned] = useState<boolean>(todo.is_pin);
-  const [isChecked, setIsChecked] = useState<boolean>(todo.is_complete);
+const Step = ({ step, steps, setSteps }: Props) => {
+  const [isPinned, setIsPinned] = useState<boolean>(step.is_pin);
+  const [isChecked, setIsChecked] = useState<boolean>(step.is_complete);
   const [isOpen, setIsOpen] = useState(false);
 
   const isRemindDatePassed =
-    new Date(todo.remind_at) < new Date() && !isToday(new Date(todo.remind_at));
+    new Date(step.remind_at) < new Date() && !isToday(new Date(step.remind_at));
 
   const formatRemindDate = (remindDate: Date) => {
     if (isToday(remindDate)) {
       return "today";
     } else if (isRemindDatePassed) {
-      return formatDistanceToNow(new Date(todo.remind_at), {
+      return formatDistanceToNow(new Date(step.remind_at), {
         addSuffix: true,
       });
     } else if (isTomorrow(remindDate)) {
@@ -63,13 +63,13 @@ const Step = ({ todo, steps, setSteps }: Props) => {
 
   return (
     <div
-      key={todo.id}
+      key={step.id}
       className={[
         "flex  shrink-0 justify-between overflow-clip rounded-xl border-[0.7px]  p-3",
-        isPinned && !todo.is_complete && !todo.deleted_at && "bg-secondary",
+        isPinned && !step.is_complete && !step.deleted_at && "bg-secondary",
         isChecked &&
-          !todo.is_complete &&
-          !todo.deleted_at &&
+          !step.is_complete &&
+          !step.deleted_at &&
           "translate-x-48 transition-all delay-1000 duration-700",
       ].join(" ")}
     >
@@ -77,29 +77,29 @@ const Step = ({ todo, steps, setSteps }: Props) => {
         className={[
           "flex flex-auto items-start gap-2",
           isChecked &&
-            !todo.is_complete &&
-            !todo.deleted_at &&
+            !step.is_complete &&
+            !step.deleted_at &&
             "translate-x-48 transition-all delay-1000 duration-700",
         ].join(" ")}
       >
         <Checkbox
-          className={["accent-foreground", todo.deleted_at && "hidden"].join(
+          className={["accent-foreground", step.deleted_at && "hidden"].join(
             " ",
           )}
           checked={isChecked}
           onCheckedChange={() => {
             axios.put(
-              `${import.meta.env.VITE_API_BASE_URL}/api/steps/${todo.id}`,
+              `${import.meta.env.VITE_API_BASE_URL}/api/steps/${step.id}`,
               {
-                is_complete: !todo.is_complete,
+                is_complete: !step.is_complete,
               },
             );
-            if (!todo.is_complete) {
+            if (!step.is_complete) {
               setTimeout(
                 () =>
                   setSteps((prevTodos) =>
                     prevTodos.map((tdo) => {
-                      if (tdo.id === todo.id) {
+                      if (tdo.id === step.id) {
                         return {
                           ...tdo,
                           is_complete: !tdo.is_complete,
@@ -114,7 +114,7 @@ const Step = ({ todo, steps, setSteps }: Props) => {
             } else {
               setSteps((prevTodos) =>
                 prevTodos.map((tdo) => {
-                  if (tdo.id === todo.id) {
+                  if (tdo.id === step.id) {
                     return {
                       ...tdo,
                       is_complete: !tdo.is_complete,
@@ -126,41 +126,41 @@ const Step = ({ todo, steps, setSteps }: Props) => {
             }
             setIsChecked(!isChecked);
           }}
-          name="todo"
+          name="step"
         />
         <div className={["flex flex-auto flex-col gap-2"].join(" ")}>
           <p
             className={[
               "flex-auto leading-none text-foreground",
               isChecked &&
-                !todo.deleted_at &&
+                !step.deleted_at &&
                 "text-foreground/80 line-through",
-              todo.deleted_at && "text-foreground/50",
+              step.deleted_at && "text-foreground/50",
             ].join(" ")}
-            key={todo.id}
+            key={step.id}
           >
-            {todo.task}
+            {step.task}
           </p>
-          {!todo.is_complete && !todo.deleted_at && todo.note && (
+          {!step.is_complete && !step.deleted_at && step.note && (
             <div
               className={[
                 " text-[10px] leading-none text-foreground/70",
               ].join()}
             >
-              {todo.note.length < 20
-                ? todo.note
-                : todo.note.slice(0, 20) + "..."}
+              {step.note.length < 20
+                ? step.note
+                : step.note.slice(0, 20) + "..."}
             </div>
           )}
-          {(todo.note ||
-            todo.location ||
-            todo.remind_at ||
-            todo.priority !== "none") &&
-            !todo.is_complete &&
-            !todo.deleted_at && (
+          {(step.note ||
+            step.location ||
+            step.remind_at ||
+            step.priority !== "none") &&
+            !step.is_complete &&
+            !step.deleted_at && (
               <div className="flex justify-between">
                 <div className="flex items-center gap-2">
-                  {todo.remind_at && (
+                  {step.remind_at && (
                     <div
                       className={[
                         "flex items-center gap-1 text-xs leading-none text-foreground/70",
@@ -169,11 +169,11 @@ const Step = ({ todo, steps, setSteps }: Props) => {
                     >
                       <Calendar size={13} />
                       <p className="text-[10px]">
-                        {formatRemindDate(new Date(todo.remind_at))}
+                        {formatRemindDate(new Date(step.remind_at))}
                       </p>
                     </div>
                   )}
-                  {todo.note && (
+                  {step.note && (
                     <div
                       className={[
                         "flex items-center gap-1 text-xs leading-none text-foreground/70",
@@ -182,7 +182,7 @@ const Step = ({ todo, steps, setSteps }: Props) => {
                       <PencilLine size={13} />
                     </div>
                   )}
-                  {todo.location && (
+                  {step.location && (
                     <div
                       className={[
                         "flex items-center gap-1 text-xs leading-none text-foreground/70",
@@ -191,7 +191,7 @@ const Step = ({ todo, steps, setSteps }: Props) => {
                       <MapPin size={13} />
                     </div>
                   )}
-                  {todo.priority !== "none" && (
+                  {step.priority !== "none" && (
                     <div
                       className={[
                         "flex items-center gap-1 text-xs leading-none text-foreground/70",
@@ -201,7 +201,7 @@ const Step = ({ todo, steps, setSteps }: Props) => {
                     </div>
                   )}
                 </div>
-                {todo.priority !== "none" && (
+                {step.priority !== "none" && (
                   <div
                     className={[
                       "flex items-center gap-1 text-xs leading-none text-foreground/70",
@@ -210,15 +210,15 @@ const Step = ({ todo, steps, setSteps }: Props) => {
                     <div
                       className={[
                         "rounded-full px-2 py-1 text-[10px] font-semibold",
-                        todo.priority === "low" &&
+                        step.priority === "low" &&
                           "bg-yellow-400/20 text-yellow-500",
-                        todo.priority === "medium" &&
+                        step.priority === "medium" &&
                           "bg-orange-400/20 text-orange-500",
-                        todo.priority === "high" &&
+                        step.priority === "high" &&
                           "bg-red-400/20 text-red-500",
                       ].join(" ")}
                     >
-                      {todo.priority}
+                      {step.priority}
                     </div>
                   </div>
                 )}
@@ -227,7 +227,7 @@ const Step = ({ todo, steps, setSteps }: Props) => {
         </div>
       </div>
       <EditStepBox
-        todo={todo}
+        step={step}
         steps={steps}
         setSteps={setSteps}
         isOpen={isOpen}
@@ -243,17 +243,17 @@ const Step = ({ todo, steps, setSteps }: Props) => {
           <DropdownMenuItem
             className={[
               "flex gap-2",
-              (isChecked || todo.deleted_at) && "hidden",
+              (isChecked || step.deleted_at) && "hidden",
             ].join(" ")}
             onClick={() => {
               axios.put(
-                `${import.meta.env.VITE_API_BASE_URL}/api/steps/${todo.id}`,
+                `${import.meta.env.VITE_API_BASE_URL}/api/steps/${step.id}`,
                 {
-                  is_pin: !todo.is_pin,
+                  is_pin: !step.is_pin,
                 },
               );
               const mapTodos = steps.map((tdo) => {
-                if (tdo.id === todo.id) {
+                if (tdo.id === step.id) {
                   return {
                     ...tdo,
                     is_pin: !tdo.is_pin,
@@ -271,7 +271,7 @@ const Step = ({ todo, steps, setSteps }: Props) => {
           <DropdownMenuItem
             className={[
               "flex gap-2",
-              (isChecked || todo.deleted_at) && "hidden",
+              (isChecked || step.deleted_at) && "hidden",
             ].join(" ")}
             onClick={() => {
               setIsOpen(true);
@@ -283,17 +283,17 @@ const Step = ({ todo, steps, setSteps }: Props) => {
           <DropdownMenuItem
             className={[
               "hidden transition-all focus:bg-green-400/10 focus:text-green-500",
-              todo.deleted_at && "flex gap-2",
+              step.deleted_at && "flex gap-2",
             ].join(" ")}
             onClick={() => {
               axios.put(
-                `${import.meta.env.VITE_API_BASE_URL}/api/steps/${todo.id}`,
+                `${import.meta.env.VITE_API_BASE_URL}/api/steps/${step.id}`,
                 {
                   deleted_at: null,
                 },
               );
               const mapTodos = steps.map((tdo) => {
-                if (tdo.id === todo.id) {
+                if (tdo.id === step.id) {
                   return {
                     ...tdo,
                     deleted_at: null,
@@ -310,19 +310,19 @@ const Step = ({ todo, steps, setSteps }: Props) => {
           <DropdownMenuItem
             className={[
               "flex gap-2",
-              todo.deleted_at &&
+              step.deleted_at &&
                 "transition-all focus:bg-red-400/10 focus:text-red-500",
             ].join(" ")}
             color="blue"
             onClick={() => {
               axios.put(
-                `${import.meta.env.VITE_API_BASE_URL}/api/steps/${todo.id}`,
+                `${import.meta.env.VITE_API_BASE_URL}/api/steps/${step.id}`,
                 {
                   deleted_at: new Date(),
                 },
               );
               const mapTodos = steps.map((tdo) => {
-                if (tdo.id === todo.id) {
+                if (tdo.id === step.id) {
                   return {
                     ...tdo,
                     deleted_at: new Date(),
@@ -334,7 +334,7 @@ const Step = ({ todo, steps, setSteps }: Props) => {
             }}
           >
             <Trash size={15} />
-            <p>{todo.deleted_at ? "Delete" : "Remove"}</p>
+            <p>{step.deleted_at ? "Delete" : "Remove"}</p>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
