@@ -39,7 +39,7 @@ const AppPanel = ({ user }: params) => {
     };
 
     fetchTodos();
-  }, []);
+  }, [user?.id]);
 
   return (
     <Tabs defaultValue="steps">
