@@ -19,40 +19,34 @@ const HomePage = () => {
   const systemThemeDark = window.matchMedia("(prefers-color-scheme: dark)");
 
   useEffect(() => {
-    if (darkModeState !== "System") return;
+    const handleSystemThemeChange = (evt: MediaQueryListEvent) => {
+      if (darkModeState !== "System") return;
 
-    if (systemThemeDark.matches) {
-      const newTheme = theme.includes("-dark")
-        ? theme
-        : ((theme + "-dark") as ColorThemeType);
-
-      setTheme(newTheme);
-    } else {
-      const newTheme = theme.includes("-dark")
-        ? (theme.replace("-dark", "") as ColorThemeType)
-        : theme;
+      const newTheme = evt.matches
+        ? theme.includes("-dark")
+          ? theme
+          : ((theme + "-dark") as ColorThemeType)
+        : theme.includes("-dark")
+          ? (theme.replace("-dark", "") as ColorThemeType)
+          : theme;
 
       setTheme(newTheme);
+    };
+
+    if (darkModeState === "System") {
+      systemThemeDark.addEventListener("change", handleSystemThemeChange);
+      handleSystemThemeChange({
+        matches: systemThemeDark.matches,
+      } as MediaQueryListEvent);
     }
-  }, []);
 
-  // This callback will fire if the perferred color scheme changes without a reload
-  systemThemeDark.addEventListener("change", (evt) => {
-    if (darkModeState !== "System") return;
-    if (evt.matches) {
-      const newTheme = theme.includes("-dark")
-        ? theme
-        : ((theme + "-dark") as ColorThemeType);
-
-      setTheme(newTheme);
-    } else {
-      const newTheme = theme.includes("-dark")
-        ? (theme.replace("-dark", "") as ColorThemeType)
-        : theme;
-
-      setTheme(newTheme);
-    }
-  });
+    return () => {
+      // Cleanup the event listener when the component unmounts
+      if (darkModeState === "System") {
+        systemThemeDark.removeEventListener("change", handleSystemThemeChange);
+      }
+    };
+  }, [darkModeState, theme, setTheme, systemThemeDark]);
 
   useEffect(() => {
     const fetchUser = async () => {

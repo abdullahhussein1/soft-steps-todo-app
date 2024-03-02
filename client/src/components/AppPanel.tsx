@@ -17,27 +17,27 @@ const AppPanel = ({ user }: params) => {
   const [steps, setSteps] = useState<StepType[]>([]);
   const [isLoaderVisible, setIsLoaderVisible] = useState<boolean>(true);
 
-  const fetchTodos = async () => {
-    try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/api/steps`,
-        {
-          params: {
-            user_id: user?.id,
-          },
-        },
-      );
-
-      const result = response.data;
-      setIsLoaderVisible(false);
-      setSteps(result);
-    } catch (error) {
-      console.error("Error fetching steps:", error);
-      setIsLoaderVisible(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchTodos = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/api/steps`,
+          {
+            params: {
+              user_id: user?.id,
+            },
+          },
+        );
+
+        const result = response.data;
+        setIsLoaderVisible(false);
+        setSteps(result);
+      } catch (error) {
+        console.error("Error fetching steps:", error);
+        setIsLoaderVisible(false);
+      }
+    };
+
     fetchTodos();
   }, []);
 
