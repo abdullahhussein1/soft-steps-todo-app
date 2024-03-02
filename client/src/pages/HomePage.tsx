@@ -14,13 +14,11 @@ const HomePage = () => {
   const { theme, setTheme } = useTheme();
   const { darkModeState } = useDarkMode();
 
-  console.log(darkModeState);
-
   const systemThemeDark = window.matchMedia("(prefers-color-scheme: dark)");
 
   useEffect(() => {
     const handleSystemThemeChange = (evt: MediaQueryListEvent) => {
-      if (darkModeState !== "System") return;
+      if (darkModeState !== "system") return;
 
       const newTheme = evt.matches
         ? theme.includes("-dark")
@@ -33,7 +31,7 @@ const HomePage = () => {
       setTheme(newTheme);
     };
 
-    if (darkModeState === "System") {
+    if (darkModeState === "system") {
       systemThemeDark.addEventListener("change", handleSystemThemeChange);
       handleSystemThemeChange({
         matches: systemThemeDark.matches,
@@ -42,7 +40,7 @@ const HomePage = () => {
 
     return () => {
       // Cleanup the event listener when the component unmounts
-      if (darkModeState === "System") {
+      if (darkModeState === "system") {
         systemThemeDark.removeEventListener("change", handleSystemThemeChange);
       }
     };
@@ -63,6 +61,36 @@ const HomePage = () => {
 
     fetchUser();
   }, [navigate]);
+
+  useEffect(() => {
+    const updateUserData = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (user) {
+        const updatedMetadata = {
+          ...user.user_metadata,
+          themeColor: theme,
+          darkMode: darkModeState,
+        };
+
+        // Update the user's metadata
+        const { data: updateData, error } = await supabase.auth.updateUser({
+          data: updatedMetadata,
+        });
+
+        if (error) {
+          console.error("Error updating user metadata:", error.message);
+        } else {
+          console.log("User metadata updated successfully:", updateData);
+        }
+      }
+    };
+
+    // Call the function to update user metadata
+    updateUserData();
+  }, [theme, darkModeState]);
 
   if (!user) {
     return <div className="bg-neutral-900/50"></div>;

@@ -21,7 +21,7 @@ export default function DarkModeButton() {
 
   function handleDarkModeValueChange(value: DarkModeStateType) {
     setDarkModeState(value);
-    if (value === "System") {
+    if (value === "system") {
       if (systemThemeDark.matches) {
         const newTheme = theme.includes("-dark")
           ? theme
@@ -35,7 +35,7 @@ export default function DarkModeButton() {
 
         setTheme(newTheme);
       }
-    } else if (value === "Dark") {
+    } else if (value === "dark") {
       const newTheme = theme.includes("-dark")
         ? theme
         : ((theme + "-dark") as ColorThemeType);
@@ -61,9 +61,9 @@ export default function DarkModeButton() {
       >
         <SelectTrigger className="flex h-7 w-fit items-center justify-between rounded-full border-none bg-secondary/70 text-xs font-normal transition-all hover:bg-border/20">
           <div className="mr-2 flex items-center gap-1">
-            {darkModeState === "Light" ? (
+            {darkModeState === "light" ? (
               <Sun size={12} />
-            ) : darkModeState === "System" ? (
+            ) : darkModeState === "system" ? (
               <Monitor size={12} />
             ) : (
               <Moon size={12} />
@@ -73,11 +73,11 @@ export default function DarkModeButton() {
         </SelectTrigger>
         <SelectContent className="flex w-fit flex-col rounded-xl p-2 text-foreground/80">
           <SelectGroup>
-            <SelectItem value="Light">
+            <SelectItem value="light">
               <p>Light</p>
             </SelectItem>
-            <SelectItem value="Dark">Dark</SelectItem>
-            <SelectItem value="System">System</SelectItem>
+            <SelectItem value="dark">Dark</SelectItem>
+            <SelectItem value="system">System</SelectItem>
           </SelectGroup>
         </SelectContent>
       </Select>

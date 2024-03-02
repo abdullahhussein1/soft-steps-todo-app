@@ -1,3 +1,3 @@
-type DarkModeStateType = "System" | "Dark" | "Light";
+type DarkModeStateType = "system" | "dark" | "light";
 
 export default DarkModeStateType;

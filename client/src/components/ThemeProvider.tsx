@@ -1,6 +1,7 @@
 import ThemeProviderContext from "@/context/ThemeProviderContext";
 import { useEffect, useState } from "react";
 import ColorThemeType from "@/types/ColorThemeType";
+import supabase from "@/supabase/supabase";
 
 type ThemeProviderProps = {
   children: React.ReactNode;
@@ -8,15 +9,20 @@ type ThemeProviderProps = {
   storageKey?: string;
 };
 
+const {
+  data: { user },
+} = await supabase.auth.getUser();
+
 export default function ThemeProvider({
   children,
   defaultTheme = "blue",
   storageKey = "vite-ui-theme",
   ...props
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<ColorThemeType>(
-    () => (localStorage.getItem(storageKey) as ColorThemeType) || defaultTheme,
-  );
+  const [theme, setTheme] =
+    useState<ColorThemeType>(
+      () => user?.user_metadata.themeColor as ColorThemeType,
+    ) || defaultTheme;
 
   useEffect(() => {
     const root = window.document.documentElement;
