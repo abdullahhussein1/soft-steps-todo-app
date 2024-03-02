@@ -48,7 +48,6 @@ export default function DarkModeButton() {
 
       setTheme(newTheme);
     }
-    localStorage.setItem("selectedTheme", value);
   }
 
   return (
