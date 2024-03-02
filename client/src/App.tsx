@@ -7,7 +7,7 @@ import "./App.css";
 
 function App() {
   return (
-    <ThemeProvider defaultTheme="blue" storageKey="vite-ui-theme">
+    <ThemeProvider defaultTheme="blue">
       <Router>
         <Routes>
           <Route path="/auth" element={<AuthenticationPage />} />
