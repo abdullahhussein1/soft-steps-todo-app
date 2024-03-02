@@ -14,13 +14,15 @@ import {
 import { MoreHorizontal } from "lucide-react";
 
 import StepType from "@/types/StepType";
+import { Skeleton } from "../ui/skeleton";
 
 type Props = {
   steps: StepType[];
   setSteps: React.Dispatch<React.SetStateAction<StepType[]>>;
+  isLoaderVisible: boolean;
 };
 
-const TrashTab = ({ steps, setSteps }: Props) => {
+const TrashTab = ({ steps, setSteps, isLoaderVisible }: Props) => {
   const deletedTodos = steps.filter((todo) => todo.deleted_at);
 
   return (
@@ -96,7 +98,31 @@ const TrashTab = ({ steps, setSteps }: Props) => {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      {deletedTodos.length == 0 && (
+      {isLoaderVisible && (
+        <div className="flex h-96 flex-col gap-2">
+          <div
+            className={[
+              "flex animate-pulse items-start space-x-2 rounded-xl border-[0.7px] p-3",
+            ].join(" ")}
+          >
+            <Skeleton className="h-[14px] w-[14px] rounded-full" />
+            <div className="flex-auto space-y-3">
+              <Skeleton className="h-4 w-11/12" />
+            </div>
+          </div>
+          <div
+            className={[
+              "flex animate-pulse items-start space-x-2 rounded-xl border-[0.7px] p-3",
+            ].join(" ")}
+          >
+            <Skeleton className="h-[14px] w-[14px] rounded-full" />
+            <div className="flex-auto space-y-3">
+              <Skeleton className="h-4 w-11/12" />
+            </div>
+          </div>
+        </div>
+      )}
+      {!isLoaderVisible && deletedTodos.length == 0 && (
         <div className="flex h-[335px] w-full flex-col items-center justify-center gap-3">
           <Trash size={100} strokeWidth={0.7} />
           <p>All Clear</p>

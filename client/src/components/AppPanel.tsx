@@ -65,13 +65,21 @@ const AppPanel = ({ user }: params) => {
           />
         </TabsContent>
         <TabsContent value="completed" className=" col-span-full">
-          <CompletedTab steps={steps} setSteps={setSteps} />
+          <CompletedTab
+            steps={steps}
+            setSteps={setSteps}
+            isLoaderVisible={isLoaderVisible}
+          />
         </TabsContent>
         <TabsContent value="deleted" className=" col-span-full">
-          <TrashTab steps={steps} setSteps={setSteps} />
+          <TrashTab
+            steps={steps}
+            setSteps={setSteps}
+            isLoaderVisible={isLoaderVisible}
+          />
         </TabsContent>
         <TabsContent value="statistics" className=" col-span-full">
-          <ProgressTab steps={steps} />
+          <ProgressTab steps={steps} isLoaderVisible={isLoaderVisible} />
         </TabsContent>
       </TabsList>
     </Tabs>

@@ -55,7 +55,7 @@ const StepsTab = ({ steps, setSteps, user, isLoaderVisible }: Props) => {
             </SelectContent>
           </Select>
         </div>
-        <div className="flex max-h-96 flex-col gap-2 overflow-y-auto overflow-x-clip p-2 pb-10">
+        <div className="flex h-96 flex-col gap-2 overflow-y-auto overflow-x-clip p-2 pb-10">
           {steps
             .filter((todo) => !todo.is_complete && !todo.deleted_at)
             .sort((a, b) => {

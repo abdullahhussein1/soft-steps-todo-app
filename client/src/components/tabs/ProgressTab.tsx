@@ -4,12 +4,14 @@ import useTheme from "@/hooks/useTheme";
 import StepType from "@/types/StepType";
 import { PieChartIcon } from "lucide-react";
 import { PieChart, Pie, Cell } from "recharts";
+import { Oval } from "react-loader-spinner";
 
 type props = {
   steps: StepType[];
+  isLoaderVisible: boolean;
 };
 
-const ProgressTab = ({ steps }: props) => {
+const ProgressTab = ({ steps, isLoaderVisible }: props) => {
   const { theme } = useTheme();
 
   const notCompletedTodos = steps.filter((todo) => !todo.is_complete);
@@ -46,14 +48,27 @@ const ProgressTab = ({ steps }: props) => {
       <h1 className="flex h-12 items-center border-b-[2px] text-lg font-bold">
         Progress
       </h1>
-      {!steps.length && (
+      {isLoaderVisible && (
+        <div className="flex h-96 items-center justify-center">
+          <Oval
+            visible={true}
+            height="40"
+            width="40"
+            strokeWidth={4}
+            color={COLORS[1]}
+            secondaryColor={COLORS[0]}
+            ariaLabel="oval-loading"
+          />
+        </div>
+      )}
+      {!isLoaderVisible && !steps.length && (
         <div className="flex h-[335px] w-full flex-col items-center justify-center gap-3">
           <PieChartIcon size={100} strokeWidth={0.7} />
           <p>No Data to Analysis</p>
         </div>
       )}
       <div className="flex flex-col items-center justify-center self-center justify-self-center">
-        <PieChart width={730} height={350}>
+        <PieChart width={330} height={350}>
           <Pie
             data={data}
             dataKey="value"

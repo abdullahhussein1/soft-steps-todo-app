@@ -4,13 +4,15 @@ import { CheckCheck, Trash } from "lucide-react";
 
 import StepType from "@/types/StepType";
 import Step from "../Step";
+import { Skeleton } from "../ui/skeleton";
 
 type Props = {
   steps: StepType[];
   setSteps: React.Dispatch<React.SetStateAction<StepType[]>>;
+  isLoaderVisible: boolean;
 };
 
-const CompletedTab = ({ steps, setSteps }: Props) => {
+const CompletedTab = ({ steps, setSteps, isLoaderVisible }: Props) => {
   const completedTodos = steps.filter(
     (todo) => todo.is_complete && !todo.deleted_at,
   );
@@ -52,7 +54,31 @@ const CompletedTab = ({ steps, setSteps }: Props) => {
           </div>
         </button>
       </div>
-      {completedTodos.length == 0 && (
+      {isLoaderVisible && (
+        <div className="flex h-96 flex-col gap-2">
+          <div
+            className={[
+              "flex animate-pulse items-start space-x-2 rounded-xl border-[0.7px] p-3",
+            ].join(" ")}
+          >
+            <Skeleton className="h-[14px] w-[14px] rounded-full" />
+            <div className="flex-auto space-y-3">
+              <Skeleton className="h-4 w-11/12" />
+            </div>
+          </div>
+          <div
+            className={[
+              "flex animate-pulse items-start space-x-2 rounded-xl border-[0.7px] p-3",
+            ].join(" ")}
+          >
+            <Skeleton className="h-[14px] w-[14px] rounded-full" />
+            <div className="flex-auto space-y-3">
+              <Skeleton className="h-4 w-11/12" />
+            </div>
+          </div>
+        </div>
+      )}
+      {!isLoaderVisible && completedTodos.length == 0 && (
         <div className="flex h-[335px] w-full flex-col items-center justify-center gap-3">
           <CheckCheck size={100} strokeWidth={0.7} />
           <p>All done</p>
