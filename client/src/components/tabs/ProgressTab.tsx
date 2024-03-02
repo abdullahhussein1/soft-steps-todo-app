@@ -2,7 +2,12 @@
 
 import useTheme from "@/hooks/useTheme";
 import StepType from "@/types/StepType";
-import { PieChartIcon } from "lucide-react";
+import {
+  CheckCheckIcon,
+  DumbbellIcon,
+  FlameIcon,
+  PieChartIcon,
+} from "lucide-react";
 import { PieChart, Pie, Cell } from "recharts";
 import { Oval } from "react-loader-spinner";
 
@@ -16,6 +21,31 @@ const ProgressTab = ({ steps, isLoaderVisible }: props) => {
 
   const notCompletedTodos = steps.filter((todo) => !todo.is_complete);
   const completedTodos = steps.filter((todo) => todo.is_complete);
+
+  function something() {
+    if (completedTodos.length == steps.length) {
+      return (
+        <div className="flex flex-col items-center">
+          <CheckCheckIcon size={40} strokeWidth={1.5} color={COLORS[1]} />
+          <p className="text-xs">All Done!</p>
+        </div>
+      );
+    } else if (completedTodos.length >= steps.length / 2) {
+      return (
+        <div className="flex flex-col items-center gap-1">
+          <FlameIcon size={30} strokeWidth={1.5} color={COLORS[1]} />
+          <p className="text-xs">Great Job!</p>
+        </div>
+      );
+    } else if (completedTodos.length <= steps.length / 2) {
+      return (
+        <div className="flex flex-col items-center gap-1">
+          <DumbbellIcon size={30} strokeWidth={1.5} color={COLORS[1]} />
+          <p className="text-xs">On The Way!</p>
+        </div>
+      );
+    }
+  }
 
   const data = [
     { name: "steps", value: notCompletedTodos.length },
@@ -68,26 +98,31 @@ const ProgressTab = ({ steps, isLoaderVisible }: props) => {
         </div>
       )}
       <div className="flex flex-col items-center justify-center self-center justify-self-center">
-        <PieChart width={330} height={350}>
-          <Pie
-            data={data}
-            dataKey="value"
-            nameKey="name"
-            cx="50%"
-            cy="50%"
-            innerRadius={55}
-            outerRadius={80}
-            label
-          >
-            {data.map((_entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                strokeWidth={0}
-                fill={COLORS[index % COLORS.length]}
-              />
-            ))}
-          </Pie>
-        </PieChart>
+        <div className="relative flex items-center justify-center">
+          <p className="absolute">{something()}</p>
+          <PieChart width={250} height={350}>
+            <Pie
+              data={data}
+              dataKey="value"
+              nameKey="name"
+              cx="50%"
+              cy="50%"
+              innerRadius={55}
+              outerRadius={80}
+              label
+              startAngle={90}
+              endAngle={450}
+            >
+              {data.map((_entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  strokeWidth={0}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))}
+            </Pie>
+          </PieChart>
+        </div>
         <div className="flex gap-5">
           <div className="flex items-center gap-1">
             <div

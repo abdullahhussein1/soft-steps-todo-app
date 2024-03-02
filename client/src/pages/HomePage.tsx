@@ -34,25 +34,25 @@ const HomePage = () => {
 
       setTheme(newTheme);
     }
-
-    // This callback will fire if the perferred color scheme changes without a reload
-    systemThemeDark.addEventListener("change", (evt) => {
-      if (darkModeState !== "System") return;
-      if (evt.matches) {
-        const newTheme = theme.includes("-dark")
-          ? theme
-          : ((theme + "-dark") as ColorThemeType);
-
-        setTheme(newTheme);
-      } else {
-        const newTheme = theme.includes("-dark")
-          ? (theme.replace("-dark", "") as ColorThemeType)
-          : theme;
-
-        setTheme(newTheme);
-      }
-    });
   }, []);
+
+  // This callback will fire if the perferred color scheme changes without a reload
+  systemThemeDark.addEventListener("change", (evt) => {
+    if (darkModeState !== "System") return;
+    if (evt.matches) {
+      const newTheme = theme.includes("-dark")
+        ? theme
+        : ((theme + "-dark") as ColorThemeType);
+
+      setTheme(newTheme);
+    } else {
+      const newTheme = theme.includes("-dark")
+        ? (theme.replace("-dark", "") as ColorThemeType)
+        : theme;
+
+      setTheme(newTheme);
+    }
+  });
 
   useEffect(() => {
     const fetchUser = async () => {

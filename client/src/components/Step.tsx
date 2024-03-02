@@ -66,7 +66,7 @@ const Step = ({ todo, steps, setSteps }: Props) => {
       key={todo.id}
       className={[
         "flex  shrink-0 justify-between overflow-clip rounded-xl border-[0.7px]  p-3",
-        isPinned && "bg-secondary",
+        isPinned && !todo.is_complete && !todo.deleted_at && "bg-secondary",
         isChecked &&
           !todo.is_complete &&
           !todo.deleted_at &&
@@ -135,6 +135,7 @@ const Step = ({ todo, steps, setSteps }: Props) => {
               isChecked &&
                 !todo.deleted_at &&
                 "text-foreground/80 line-through",
+              todo.deleted_at && "text-foreground/50",
             ].join(" ")}
             key={todo.id}
           >
