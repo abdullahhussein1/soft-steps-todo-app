@@ -37,7 +37,7 @@ const TrashTab = ({ steps, setSteps, isLoaderVisible }: Props) => {
           </DropdownMenuTrigger>
           <DropdownMenuContent className="flex w-fit flex-col rounded-xl">
             <DropdownMenuItem
-              className="flex w-full items-center gap-[6px] px-2 transition-all focus:bg-green-400/10 focus:text-green-500"
+              className="flex w-full items-center gap-[6px] px-2 transition-all"
               onClick={() => {
                 if (deletedTodos.length > 0) {
                   for (const step of deletedTodos) {
@@ -71,7 +71,7 @@ const TrashTab = ({ steps, setSteps, isLoaderVisible }: Props) => {
               <p className="whitespace-nowrap">Recover All</p>
             </DropdownMenuItem>
             <DropdownMenuItem
-              className="flex w-full items-center gap-[6px] px-2 transition-all focus:bg-red-400/10 focus:text-red-500"
+              className="flex w-full items-center gap-[6px] px-2 transition-all"
               onClick={async () => {
                 const deletedTodos = steps.filter((step) => step.deleted_at);
 
@@ -123,12 +123,12 @@ const TrashTab = ({ steps, setSteps, isLoaderVisible }: Props) => {
         </div>
       )}
       {!isLoaderVisible && deletedTodos.length == 0 && (
-        <div className="flex h-[335px] w-full flex-col items-center justify-center gap-3">
+        <div className="flex h-[63dvh] w-full flex-col items-center justify-center gap-3">
           <Trash size={100} strokeWidth={0.7} />
           <p>All Clear</p>
         </div>
       )}
-      <div className="flex flex-col gap-2 overflow-y-auto overflow-x-clip px-2">
+      <div className="flex h-[63dvh] flex-col gap-2 overflow-y-auto overflow-x-clip px-2">
         {steps
           .filter((step) => step.deleted_at)
           .map((step) => (

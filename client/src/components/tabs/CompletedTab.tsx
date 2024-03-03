@@ -79,12 +79,12 @@ const CompletedTab = ({ steps, setSteps, isLoaderVisible }: Props) => {
         </div>
       )}
       {!isLoaderVisible && completedTodos.length == 0 && (
-        <div className="flex h-[335px] w-full flex-col items-center justify-center gap-3">
+        <div className="flex h-[63dvh] w-full flex-col items-center justify-center gap-3">
           <CheckCheck size={100} strokeWidth={0.7} />
           <p>All done</p>
         </div>
       )}
-      <div className="flex flex-col gap-2 overflow-y-auto overflow-x-clip px-2 ">
+      <div className="flex h-[63dvh] flex-col gap-2 overflow-y-auto overflow-x-clip px-2 ">
         {steps
           .filter((step) => step.is_complete && !step.deleted_at)
           .map((step) => (

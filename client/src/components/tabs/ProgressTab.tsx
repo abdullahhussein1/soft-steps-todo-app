@@ -90,7 +90,7 @@ const ProgressTab = ({ steps, isLoaderVisible }: props) => {
         </div>
       )}
       {!isLoaderVisible && !steps.length && (
-        <div className="flex h-[335px] w-full flex-col items-center justify-center gap-3">
+        <div className="flex h-[63dvh] w-full flex-col items-center justify-center gap-3">
           <PieChartIcon size={100} strokeWidth={0.7} />
           <p>No Data to Analysis</p>
         </div>

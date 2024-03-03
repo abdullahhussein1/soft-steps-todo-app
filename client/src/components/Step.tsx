@@ -65,7 +65,7 @@ const Step = ({ step, steps, setSteps }: Props) => {
     <div
       key={step.id}
       className={[
-        "flex  shrink-0 justify-between overflow-clip rounded-xl border-[0.7px]  p-3",
+        "flex shrink-0 justify-between overflow-clip rounded-xl border-[0.7px]  p-3",
         isPinned && !step.is_complete && !step.deleted_at && "bg-secondary",
         isChecked &&
           !step.is_complete &&

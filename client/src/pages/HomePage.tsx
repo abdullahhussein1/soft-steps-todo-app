@@ -39,7 +39,6 @@ const HomePage = () => {
     }
 
     return () => {
-      // Cleanup the event listener when the component unmounts
       if (darkModeState === "system") {
         systemThemeDark.removeEventListener("change", handleSystemThemeChange);
       }
@@ -69,7 +68,6 @@ const HomePage = () => {
       } = await supabase.auth.getUser();
 
       if (user) {
-        // Update the user's metadata
         const { data: updateData, error } = await supabase.auth.updateUser({
           data: {
             color_theme: theme,
@@ -85,13 +83,12 @@ const HomePage = () => {
       }
     };
 
-    // Call the function to update user metadata
     updateUserData();
   }, [theme, darkModeState]);
 
   return (
     <div className="flex h-[100dvh] items-center justify-center bg-secondary landscape:h-full">
-      <div className="flex w-full max-w-xl flex-col items-center justify-end gap-2 px-2 sm:justify-center">
+      <div className="flex h-full w-full max-w-xl flex-col items-center justify-end gap-1 px-2 sm:justify-center">
         <div className="flex w-full items-center justify-end">
           <Menu user={user} />
         </div>
