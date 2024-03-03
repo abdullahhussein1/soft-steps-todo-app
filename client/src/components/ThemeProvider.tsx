@@ -1,36 +1,22 @@
 import ThemeProviderContext from "@/context/ThemeProviderContext";
 import { useEffect, useState } from "react";
 import ColorThemeType from "@/types/ColorThemeType";
-import supabase from "@/supabase/supabase";
 import UserType from "@/types/UserType";
 
 type ThemeProviderProps = {
   children: React.ReactNode;
-  defaultTheme?: ColorThemeType;
+  user?: UserType;
   storageKey?: string;
 };
 
 export default function ThemeProvider({
   children,
+  user,
   ...props
 }: ThemeProviderProps) {
-  const [user, setUser] = useState<UserType>(null);
   const [theme, setTheme] = useState<ColorThemeType>(
-    user?.user_metadata.themeColor ?? "blue",
+    user?.user_metadata.color_theme,
   );
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      setUser(user);
-      setTheme(user?.user_metadata.themeColor);
-    };
-
-    fetchUser();
-  }, []);
 
   useEffect(() => {
     const root = window.document.documentElement;

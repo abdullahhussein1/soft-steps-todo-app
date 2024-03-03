@@ -1,11 +1,10 @@
-import React from "react";
 import supabase from "@/supabase/supabase";
 import github from "../assets/images/github.png";
 import google from "../assets/images/google.png";
 import favIcon from "../assets/images/favicon.png";
 import palestineCountryFilledIcon from "../assets/images/palestineCountryFilled.png";
 
-const AuthenticationPage: React.FC = () => {
+const AuthenticationPage = () => {
   supabase.auth.onAuthStateChange((event, session) => {
     if (session && session.provider_token) {
       window.localStorage.setItem(
@@ -28,24 +27,20 @@ const AuthenticationPage: React.FC = () => {
   });
 
   async function handleSignInWithGoogle() {
-    const { data } = await supabase.auth.signInWithOAuth({
+    await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
         redirectTo: import.meta.env.VITE_BASE_URL as string,
       },
     });
-
-    console.log(data);
   }
   async function handleSignInWithGithub() {
-    const { data } = await supabase.auth.signInWithOAuth({
+    await supabase.auth.signInWithOAuth({
       provider: "github",
       options: {
         redirectTo: import.meta.env.VITE_BASE_URL as string,
       },
     });
-
-    console.log(data);
   }
 
   return (

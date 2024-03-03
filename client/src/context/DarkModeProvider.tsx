@@ -1,6 +1,5 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import DarkModeStateType from "@/types/DarkModeStateType";
-import supabase from "@/supabase/supabase";
 import UserType from "@/types/UserType";
 
 type DarkModeContextType = {
@@ -12,27 +11,15 @@ export const DarkModeContext = createContext<DarkModeContextType | undefined>(
   undefined,
 );
 
-export const DarkModeProvider: React.FC<{ children: ReactNode }> = ({
-  children,
-}) => {
-  const [user, setUser] = useState<UserType>(null);
+type Props = {
+  user: UserType;
+  children: React.ReactNode;
+};
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      setUser(user);
-    };
-
-    fetchUser();
-  }, []);
-
-  const darkMode = user?.user_metadata.darkMode as DarkModeStateType;
-  const [darkModeState, setDarkModeState] = useState<DarkModeStateType>(
-    darkMode || "system",
-  );
+export const DarkModeProvider = ({ user, children }: Props) => {
+  const darkMode = user?.user_metadata.dark_mode as DarkModeStateType;
+  const [darkModeState, setDarkModeState] =
+    useState<DarkModeStateType>(darkMode);
 
   const contextValue: DarkModeContextType = {
     darkModeState,

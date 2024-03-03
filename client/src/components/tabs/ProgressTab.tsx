@@ -1,5 +1,3 @@
-// import { BarChart3Icon } from "lucide-react";
-
 import useTheme from "@/hooks/useTheme";
 import StepType from "@/types/StepType";
 import {

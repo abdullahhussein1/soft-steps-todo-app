@@ -69,15 +69,12 @@ const HomePage = () => {
       } = await supabase.auth.getUser();
 
       if (user) {
-        const updatedMetadata = {
-          ...user.user_metadata,
-          themeColor: theme,
-          darkMode: darkModeState,
-        };
-
         // Update the user's metadata
         const { data: updateData, error } = await supabase.auth.updateUser({
-          data: updatedMetadata,
+          data: {
+            color_theme: theme,
+            dark_mode: darkModeState,
+          },
         });
 
         if (error) {
