@@ -31,7 +31,7 @@ const StepsTab = ({ steps, setSteps, user, isLoaderVisible }: Props) => {
   const [sortByValue, setSortByValue] = useState<string>("dateEdited");
 
   return (
-    <div className="flex flex-col">
+    <div className="flex h-full flex-col justify-between">
       <div className="relative flex flex-col">
         <div className="flex h-12 items-center justify-between border-b-[2px]">
           <h1 className="text-lg font-bold">Steps</h1>
@@ -55,7 +55,7 @@ const StepsTab = ({ steps, setSteps, user, isLoaderVisible }: Props) => {
             </SelectContent>
           </Select>
         </div>
-        <div className="flex h-96 flex-col gap-2 overflow-y-auto overflow-x-clip p-2 pb-10">
+        <div className="flex h-[63dvh] flex-col gap-2 overflow-y-auto overflow-x-clip p-2 pb-10">
           {steps
             .filter((step) => !step.is_complete && !step.deleted_at)
             .sort((a, b) => {
@@ -119,7 +119,7 @@ const StepsTab = ({ steps, setSteps, user, isLoaderVisible }: Props) => {
         setIsOpen={setIsAddDialogShown}
         user={user}
       />
-      <div className="mt-4 flex gap-2">
+      <div className="flex gap-2">
         <div className="relative flex w-full items-center">
           <Input
             type="text"

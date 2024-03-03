@@ -90,12 +90,12 @@ const HomePage = () => {
   }, [theme, darkModeState]);
 
   return (
-    <div className="flex h-[100dvh] flex-col items-center justify-end bg-secondary sm:justify-center landscape:h-full">
-      <div className="flex w-full max-w-xl flex-col gap-2 px-2">
-        <div className="flex items-center justify-end">
+    <div className="flex h-[100dvh] items-center justify-center bg-secondary landscape:h-full">
+      <div className="flex w-full max-w-xl flex-col items-center justify-end gap-2 px-2 sm:justify-center">
+        <div className="flex w-full items-center justify-end">
           <Menu user={user} />
         </div>
-        <div className="container flex h-[600px] max-w-xl flex-col rounded-t-[30px] bg-background p-5 shadow-2xl shadow-gray-950/20 sm:rounded-[30px]">
+        <div className="container flex h-[90dvh] max-w-xl flex-col rounded-t-[30px] bg-background px-5 pt-5 shadow-2xl shadow-gray-950/20 sm:rounded-[30px]">
           <AppPanel user={user} />
         </div>
       </div>
