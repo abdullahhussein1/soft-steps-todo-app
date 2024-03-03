@@ -47,13 +47,13 @@ const Menu = ({ user }: props) => {
     return (
       <Dialog>
         <DialogTrigger asChild>
-          <div className="hover:bg-white/10 transition-colors text-foreground/80 p-[6px] rounded-full">
+          <div className="rounded-full p-[6px] text-foreground/80 transition-colors hover:bg-white/10">
             <MenuIcon strokeWidth={1.4} />
           </div>
         </DialogTrigger>
         <DialogContent
           className={[
-            "bg-secondary sm:rounded-3xl h-[505px] px-4",
+            "h-[505px] bg-secondary px-4 sm:rounded-3xl",
             theme.endsWith("-dark") && "bg-background",
           ].join(" ")}
         >
@@ -61,22 +61,22 @@ const Menu = ({ user }: props) => {
             <div className="flex flex-col items-center space-y-6 py-2">
               <div
                 className={[
-                  "flex flex-col font-medium items-center space-y-2 w-full bg-background rounded-3xl p-3",
+                  "flex w-full flex-col items-center space-y-2 rounded-3xl bg-background p-3 font-medium",
                   theme.endsWith("-dark") && "bg-secondary/25",
                 ].join(" ")}
               >
-                <div className="w-20 h-20 rounded-full overflow-clip border-2">
+                <div className="h-20 w-20 overflow-clip rounded-full border-2">
                   <img src={user?.user_metadata.avatar_url} />
                 </div>
                 <p>{user?.user_metadata.full_name}</p>
               </div>
-              <div className="flex flex-col w-full space-y-2">
-                <p className="text-lg font-bold self-start">Appearance</p>
+              <div className="flex w-full flex-col space-y-2">
+                <p className="self-start text-lg font-bold">Appearance</p>
                 <Accordion
                   type="single"
                   collapsible
                   className={[
-                    "flex flex-col font-medium text-foreground/80 items-center space-y-2 w-full bg-background rounded-3xl p-3",
+                    "flex w-full flex-col items-center space-y-2 rounded-3xl bg-background p-3 font-medium text-foreground/80",
                     theme.endsWith("-dark") && "bg-secondary/25",
                   ].join(" ")}
                 >
@@ -107,7 +107,7 @@ const Menu = ({ user }: props) => {
               </div>
               <button
                 className={[
-                  "flex font-medium items-center justify-center space-x-3  transition-colors w-full  rounded-2xl px-6 py-4",
+                  "flex w-full items-center justify-center space-x-3  rounded-2xl px-6  py-4 font-medium transition-colors",
                   theme.endsWith("-dark")
                     ? "bg-secondary/25 text-red-700 hover:bg-red-400/5"
                     : "bg-background text-red-500 hover:bg-red-100",
@@ -126,13 +126,13 @@ const Menu = ({ user }: props) => {
     return (
       <Drawer>
         <DrawerTrigger asChild>
-          <div className="transition-colors text-foreground/80 p-[6px] rounded-full">
+          <div className="rounded-full p-[6px] text-foreground/80 transition-colors">
             <MenuIcon strokeWidth={1.4} />
           </div>
         </DrawerTrigger>
         <DrawerContent
           className={[
-            "bg-secondary rounded-t-3xl h-5/6 px-4",
+            "h-5/6 rounded-t-3xl bg-secondary px-4",
             theme.endsWith("-dark") && "bg-background",
           ].join(" ")}
         >
@@ -140,22 +140,22 @@ const Menu = ({ user }: props) => {
             <div className="flex flex-col items-center space-y-6 py-2">
               <div
                 className={[
-                  "flex flex-col font-medium items-center space-y-2 w-full bg-background rounded-3xl p-3",
+                  "flex w-full flex-col items-center space-y-2 rounded-3xl bg-background p-3 font-medium",
                   theme.endsWith("-dark") && "bg-secondary/25",
                 ].join(" ")}
               >
-                <div className="w-20 h-20 rounded-full overflow-clip border-2">
+                <div className="h-20 w-20 overflow-clip rounded-full border-2">
                   <img src={user?.user_metadata.avatar_url} />
                 </div>
                 <p>{user?.user_metadata.full_name}</p>
               </div>
-              <div className="flex flex-col w-full space-y-2">
-                <p className="text-lg font-bold self-start">Appearance</p>
+              <div className="flex w-full flex-col space-y-2">
+                <p className="self-start text-lg font-bold">Appearance</p>
                 <Accordion
                   type="single"
                   collapsible
                   className={[
-                    "flex flex-col font-medium text-foreground/80 items-center space-y-2 w-full bg-background rounded-3xl p-3",
+                    "flex w-full flex-col items-center space-y-2 rounded-3xl bg-background p-3 font-medium text-foreground/80",
                     theme.endsWith("-dark") && "bg-secondary/25",
                   ].join(" ")}
                 >
@@ -186,7 +186,7 @@ const Menu = ({ user }: props) => {
               </div>
               <button
                 className={[
-                  "flex font-medium items-center justify-center space-x-3  transition-colors w-full  rounded-2xl px-6 py-4",
+                  "flex w-full items-center justify-center space-x-3  rounded-2xl px-6  py-4 font-medium transition-colors",
                   theme.endsWith("-dark")
                     ? "bg-secondary/25 text-red-700 hover:bg-red-400/5"
                     : "bg-background text-red-500 hover:bg-red-100",
