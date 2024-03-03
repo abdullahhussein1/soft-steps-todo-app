@@ -96,7 +96,12 @@ const Menu = ({ user }: props) => {
                     <AccordionTrigger>
                       <div className="flex items-center space-x-3">
                         <GlobeIcon size={18} />
-                        <p>App Icon</p>
+                        <div className="flex items-center gap-2">
+                          <p>App Icon</p>
+                          <p className="text-xs font-light text-foreground/70">
+                            (Theme-Driven Update)
+                          </p>
+                        </div>
                       </div>
                     </AccordionTrigger>
                     <AccordionContent className="flex justify-center px-5 py-1">
@@ -175,7 +180,12 @@ const Menu = ({ user }: props) => {
                     <AccordionTrigger>
                       <div className="flex items-center space-x-3">
                         <GlobeIcon size={18} />
-                        <p>App Icon</p>
+                        <div className="flex items-center gap-2">
+                          <p>App Icon</p>
+                          <p className="text-xs font-light text-foreground/70">
+                            (Theme-Driven Update)
+                          </p>
+                        </div>
                       </div>
                     </AccordionTrigger>
                     <AccordionContent className="flex justify-center px-5 py-1">

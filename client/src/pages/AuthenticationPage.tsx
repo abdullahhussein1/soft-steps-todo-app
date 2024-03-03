@@ -1,7 +1,7 @@
 import supabase from "@/supabase/supabase";
 import github from "../assets/images/github.png";
 import google from "../assets/images/google.png";
-import favIcon from "../assets/images/favicon.png";
+import favIcon from "../assets/images/blue.png";
 import palestineCountryFilledIcon from "../assets/images/palestineCountryFilled.png";
 
 const AuthenticationPage = () => {
@@ -44,7 +44,7 @@ const AuthenticationPage = () => {
   }
 
   return (
-    <div className="h-screen bg-black p-10 text-white">
+    <div className="h-[100dvh] bg-black p-8 text-white">
       <div className="relative mx-auto flex h-full max-w-xl flex-col items-center justify-center">
         <div className="absolute top-0 flex flex-col items-start gap-1 self-start">
           <div className="flex items-center gap-1 text-xl font-semibold">

@@ -7,6 +7,7 @@ import {
   MapPin,
   PencilLine,
   Pin,
+  PinIcon,
   Undo2,
 } from "lucide-react";
 import { MoreHorizontal } from "lucide-react";
@@ -153,6 +154,7 @@ const Step = ({ step, steps, setSteps }: Props) => {
             </div>
           )}
           {(step.note ||
+            step.is_pin ||
             step.location ||
             step.remind_at ||
             step.priority !== "none") &&
@@ -171,6 +173,15 @@ const Step = ({ step, steps, setSteps }: Props) => {
                       <p className="text-[10px]">
                         {formatRemindDate(new Date(step.remind_at))}
                       </p>
+                    </div>
+                  )}
+                  {step.is_pin && (
+                    <div
+                      className={[
+                        "flex items-center gap-1 text-xs leading-none text-foreground/70",
+                      ].join(" ")}
+                    >
+                      <PinIcon size={13} />
                     </div>
                   )}
                   {step.note && (

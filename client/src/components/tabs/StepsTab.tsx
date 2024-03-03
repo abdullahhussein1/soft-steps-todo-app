@@ -99,21 +99,14 @@ const StepsTab = ({ steps, setSteps, user, isLoaderVisible }: Props) => {
               <StepSkeleton />
             </div>
           )}
-
-          {steps.length == 0 && !isLoaderVisible && (
-            <div className="flex h-96 w-full flex-col items-center justify-center gap-3">
-              <FootprintsIcon size={100} strokeWidth={0.7} />
-              <p>Take a new Step</p>
-            </div>
-          )}
-
-          {steps.filter((step) => !step.is_complete && !step.deleted_at)
-            .length == 0 && (
-            <div className="flex h-96 w-full flex-col items-center justify-center gap-3">
-              <FootprintsIcon size={100} strokeWidth={0.7} />
-              <p>Take a new Step</p>
-            </div>
-          )}
+          {!isLoaderVisible &&
+            steps.filter((step) => !step.is_complete && !step.deleted_at)
+              .length == 0 && (
+              <div className="flex h-96 w-full flex-col items-center justify-center gap-3">
+                <FootprintsIcon size={100} strokeWidth={0.7} />
+                <p>Take a new Step</p>
+              </div>
+            )}
 
           {steps.length > 0 && (
             <div className="absolute bottom-0 z-10 h-8 w-full bg-gradient-to-t from-background via-background to-transparent"></div>

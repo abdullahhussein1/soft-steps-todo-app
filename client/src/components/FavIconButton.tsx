@@ -17,7 +17,7 @@ type Props = {
 const FavIconButton = ({ favicon }: Props) => {
   return (
     <button
-      className="w-12 h-12 rounded-2xl border flex items-center justify-center overflow-clip"
+      className="flex h-12 w-12 items-center justify-center overflow-clip rounded-2xl border"
       onClick={() => changeFavicon(favicon)}
     >
       <img src={favicon} alt="favicon" className="object-cover" />

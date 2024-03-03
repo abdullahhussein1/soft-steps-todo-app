@@ -1,4 +1,4 @@
-import { MoreHorizontal } from "lucide-react";
+import { ArrowUpWideNarrow, Calendar, MoreHorizontal, Pin } from "lucide-react";
 import DarkModeButton from "./DarkModeButton";
 import ColorThemeButton from "./ColorThemeButton";
 import { useState } from "react";
@@ -9,56 +9,66 @@ const ColorThemeContent = () => {
   const [isChecked, setIsChecked] = useState(false);
 
   return (
-    <div className="flex items-center flex-col space-y-6 px-5 py-1">
+    <div className="flex flex-col items-center space-y-6 px-5 py-1">
       <div className="flex flex-col space-y-1">
         <p className="text-xs font-light text-foreground/60">preview</p>
-        <div className="flex flex-col justify-between w-[65vw] sm:w-96 h-24 px-3 bg-background py-2 border rounded-t-2xl">
+        <div className="flex h-24 w-[65vw] flex-col justify-between rounded-t-2xl border bg-background px-3 py-2 sm:w-96">
           <div
             className={[
-              "flex items-start border-[0.7px] rounded-xl px-3 py-2 space-x-2",
+              "flex items-start space-x-2 rounded-xl border-[0.7px] px-3 py-2",
               !isChecked && "bg-secondary",
             ].join(" ")}
           >
             <Checkbox
               checked={isChecked}
               onCheckedChange={() => setIsChecked(!isChecked)}
-              className="h-[10px] w-[10px] flex items-center justify-center accent-primary"
+              className="flex h-[10px] w-[10px] items-center justify-center accent-primary"
             />
-            <div className="flex-auto space-y-2">
+            <div className="flex-auto space-y-3">
               <div
                 className={[
                   "h-2 w-11/12 text-[10px] leading-none",
-                  isChecked && "line-through text-foreground/80",
+                  isChecked && "text-foreground/80 line-through",
                 ].join(" ")}
               >
-                Pray for Palestinians
+                Pray for Palestinians 🇵🇸
               </div>
               {!isChecked && (
-                <div className="h-[6px] w-2/5 flex text-foreground/70 items-center gap-[3px] text-[8px]">
-                  <p className="mt-[2px]">tomorrow</p>
+                <div className="flex h-[6px] w-full items-center justify-between gap-[3px] text-[8px] text-foreground/70">
+                  <div className="flex items-center gap-1">
+                    <Calendar size={8} />
+                    <p>right now</p>
+                    <Pin size={8} />
+                    <ArrowUpWideNarrow size={8} />
+                  </div>
+                  <div className="flex items-center gap-1 text-xs leading-none text-foreground/70">
+                    <div className="rounded-full bg-red-400/20 px-1 py-[1.5px] text-[6px] font-semibold text-red-500">
+                      high
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
             <MoreHorizontal size={10} />
           </div>
           <div className="flex h-6 space-x-1">
-            <div className="flex items-center w-full rounded-full border p-2 text-[9px] text-foreground/40">
+            <div className="flex w-full items-center rounded-full border p-2 text-[9px] text-foreground/40">
               I want to...
             </div>
-            <div className="flex items-center justify-center text-[9px] text-special bg-primary w-10 h-6 rounded-full border">
+            <div className="flex h-6 w-10 items-center justify-center rounded-full border bg-primary text-[9px] text-special">
               add
             </div>
           </div>
         </div>
-        <ScrollArea className="w-[65vw] sm:w-96 rounded-b-2xl border">
-          <div className="flex p-2 space-x-3">
-            <ColorThemeButton color="green" />
+        <ScrollArea className="w-[65vw] rounded-b-2xl border sm:w-96">
+          <div className="flex space-x-3 p-2">
             <ColorThemeButton color="blue" />
-            <ColorThemeButton color="purple" />
-            <ColorThemeButton color="neutral" />
+            <ColorThemeButton color="green" />
             <ColorThemeButton color="red" />
-            <ColorThemeButton color="orange" />
+            <ColorThemeButton color="neutral" />
+            <ColorThemeButton color="purple" />
             <ColorThemeButton color="yellow" />
+            <ColorThemeButton color="orange" />
           </div>
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
