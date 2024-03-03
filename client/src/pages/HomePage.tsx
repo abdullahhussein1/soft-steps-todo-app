@@ -90,7 +90,7 @@ const HomePage = () => {
   }, [theme, darkModeState]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-end bg-secondary sm:justify-center">
+    <div className="flex h-[100dvh] flex-col items-center justify-end bg-secondary sm:justify-center landscape:h-full">
       <div className="flex w-full max-w-xl flex-col gap-2 px-2">
         <div className="flex items-center justify-end">
           <Menu user={user} />
