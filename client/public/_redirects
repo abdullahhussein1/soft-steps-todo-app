@@ -1,1 +1,11 @@
-/ /* /auth
+# Redirect from / to /index.html (assuming it's your main entry point)
+
+/ /index.html 200
+
+# Redirect from /auth to /auth/index.html (if /auth is also an entry point)
+
+/auth /index.html 200
+
+# Redirect all other paths to /index.html (for client-side routing in SPAs)
+
+/\* /index.html 200
