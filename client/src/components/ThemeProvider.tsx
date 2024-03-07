@@ -21,6 +21,10 @@ export default function ThemeProvider({
     root.className = theme;
   }, [theme]);
 
+  useEffect(() => {
+    setTheme(themeColor);
+  }, [themeColor]);
+
   const value = {
     theme,
     setTheme: (theme: ColorThemeType) => {

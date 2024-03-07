@@ -1,16 +1,20 @@
 import Menu from "../components/Menu";
 import AppPanel from "../components/AppPanel";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { User } from "@supabase/supabase-js";
 import supabase from "@/supabase/supabase";
 import useTheme from "@/hooks/useTheme";
 import useDarkMode from "@/hooks/useDarkMode";
 import ColorThemeType from "@/types/ColorThemeType";
 import { changeFavIcon, getFavIcon } from "@/utils/utils";
+import UserType from "@/types/UserType";
 
-const HomePage = () => {
-  const [user, setUser] = useState<User | null>(null);
+type props = {
+  user: UserType;
+  setUser: React.Dispatch<React.SetStateAction<UserType>>;
+};
+
+const HomePage = ({ user, setUser }: props) => {
   const navigate = useNavigate();
   const { theme, setTheme } = useTheme();
   const { darkModeState } = useDarkMode();
@@ -49,20 +53,13 @@ const HomePage = () => {
   }, [darkModeState, theme, setTheme, systemThemeDark]);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (user) {
-        setUser(user);
-      } else {
-        setUser(null);
-        navigate("/auth");
-      }
-    };
-
-    fetchUser();
-  }, [navigate]);
+    if (user) {
+      setUser(user);
+    } else {
+      setUser(null);
+      navigate("/auth");
+    }
+  }, [user, setUser, navigate]);
 
   useEffect(() => {
     const updateUserData = async () => {

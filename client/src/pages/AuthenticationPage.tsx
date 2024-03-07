@@ -3,9 +3,16 @@ import github from "../assets/images/github.png";
 import google from "../assets/images/google.png";
 import favIcon from "../assets/images/blue.png";
 import palestineCountryFilledIcon from "../assets/images/palestineCountryFilled.png";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Session } from "@supabase/supabase-js";
 
 const AuthenticationPage = () => {
+  const navigate = useNavigate();
+
+  const [session, setSession] = useState<Session | null>();
   supabase.auth.onAuthStateChange((event, session) => {
+    setSession(session);
     if (session && session.provider_token) {
       window.localStorage.setItem(
         "oauth_provider_token",
@@ -42,6 +49,11 @@ const AuthenticationPage = () => {
       },
     });
   }
+
+  useEffect(() => {
+    console.log(session);
+    if (session) navigate("/");
+  }, [session, navigate]);
 
   return (
     <div className="h-[100dvh] bg-black p-8 text-white">

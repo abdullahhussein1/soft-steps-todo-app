@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import AuthenticationPage from "./pages/AuthenticationPage";
 import ThemeProvider from "@/components/ThemeProvider";
@@ -6,25 +6,24 @@ import { DarkModeProvider } from "./context/DarkModeProvider";
 import supabase from "./supabase/supabase";
 import "./App.css";
 import { useEffect, useState } from "react";
-import ColorThemeType from "./types/ColorThemeType";
-import DarkModeStateType from "./types/DarkModeStateType";
+import UserType from "./types/UserType";
+import { Oval } from "react-loader-spinner";
 
 function App() {
-  const [themeColor, setThemeColor] = useState<ColorThemeType>("blue");
-  const [darkMode, setDarkMode] = useState<DarkModeStateType>("system");
+  const [user, setUser] = useState<UserType>(null);
+  const [loading, setLoading] = useState(true);
 
   const fetchUser = async () => {
     const {
       data: { user },
     } = await supabase.auth.getUser();
     if (user) {
-      setThemeColor(user?.user_metadata.color_theme);
-      setDarkMode(user?.user_metadata.dark_mode);
+      setUser(user);
     }
   };
 
   useEffect(() => {
-    fetchUser();
+    fetchUser().then(() => setLoading(false));
   }, []);
 
   return (
@@ -34,11 +33,43 @@ function App() {
         <Route
           path="/"
           element={
-            <ThemeProvider themeColor={themeColor}>
-              <DarkModeProvider darkMode={darkMode}>
-                <HomePage />
-              </DarkModeProvider>
-            </ThemeProvider>
+            loading ? (
+              <div className="flex h-screen w-full items-center justify-center bg-black">
+                <Oval
+                  visible={true}
+                  height="40"
+                  width="40"
+                  color="white"
+                  strokeWidth={4}
+                  secondaryColor="black"
+                  ariaLabel="oval-loading"
+                />
+              </div>
+            ) : (
+              <ThemeProvider
+                themeColor={user?.user_metadata.color_theme ?? "blue"}
+              >
+                <DarkModeProvider
+                  darkMode={user?.user_metadata.dark_mode ?? "system"}
+                >
+                  <HomePage user={user} setUser={setUser} />
+                </DarkModeProvider>
+              </ThemeProvider>
+            )
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <div className="flex h-screen flex-col items-center justify-center">
+              <h1 className="mb-4 text-4xl font-bold">404 Not Found</h1>
+              <p className="mb-8 text-lg">
+                Oops! The page you are looking for does not exist.
+              </p>
+              <Link to="/" className="text-blue-500 hover:underline">
+                Go back to the homepage
+              </Link>
+            </div>
           }
         />
       </Routes>
