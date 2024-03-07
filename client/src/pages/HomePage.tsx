@@ -1,5 +1,4 @@
 import Menu from "../components/Menu";
-import AppPanel from "../components/AppPanel";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import supabase from "@/supabase/supabase";
@@ -8,6 +7,7 @@ import useDarkMode from "@/hooks/useDarkMode";
 import ColorThemeType from "@/types/ColorThemeType";
 import { changeFavIcon, getFavIcon } from "@/utils/utils";
 import UserType from "@/types/UserType";
+import AppBoard from "../components/AppBoard";
 
 type props = {
   user: UserType;
@@ -93,7 +93,7 @@ const HomePage = ({ user, setUser }: props) => {
           <Menu user={user} />
         </div>
         <div className="container flex h-[90dvh] max-w-xl flex-col rounded-t-[30px] bg-background px-5 pt-5 shadow-2xl shadow-gray-950/20 sm:rounded-[30px]">
-          <AppPanel user={user} />
+          <AppBoard user={user} />
         </div>
       </div>
     </div>

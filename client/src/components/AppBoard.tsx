@@ -13,7 +13,7 @@ type params = {
   user: UserType;
 };
 
-const AppPanel = ({ user }: params) => {
+const AppBoard = ({ user }: params) => {
   const [steps, setSteps] = useState<StepType[]>([]);
   const [isLoaderVisible, setIsLoaderVisible] = useState<boolean>(true);
 
@@ -50,10 +50,10 @@ const AppPanel = ({ user }: params) => {
         <TabsTrigger value="completed" className="flex gap-2 rounded-full">
           <ListChecks size={16} />
         </TabsTrigger>
-        <TabsTrigger value="deleted" className="flex gap-2 rounded-full">
+        <TabsTrigger value="trash" className="flex gap-2 rounded-full">
           <TrashIcon size={16} />
         </TabsTrigger>
-        <TabsTrigger value="statistics" className="flex gap-2 rounded-full">
+        <TabsTrigger value="progress" className="flex gap-2 rounded-full">
           <PieChartIcon size={16} />
         </TabsTrigger>
         <TabsContent value="steps" className="col-span-full">
@@ -71,14 +71,14 @@ const AppPanel = ({ user }: params) => {
             isLoaderVisible={isLoaderVisible}
           />
         </TabsContent>
-        <TabsContent value="deleted" className=" col-span-full">
+        <TabsContent value="trash" className=" col-span-full">
           <TrashTab
             steps={steps}
             setSteps={setSteps}
             isLoaderVisible={isLoaderVisible}
           />
         </TabsContent>
-        <TabsContent value="statistics" className=" col-span-full">
+        <TabsContent value="progress" className=" col-span-full">
           <ProgressTab steps={steps} isLoaderVisible={isLoaderVisible} />
         </TabsContent>
       </TabsList>
@@ -86,4 +86,4 @@ const AppPanel = ({ user }: params) => {
   );
 };
 
-export default AppPanel;
+export default AppBoard;
