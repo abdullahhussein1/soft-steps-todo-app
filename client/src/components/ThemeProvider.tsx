@@ -1,22 +1,19 @@
 import ThemeProviderContext from "@/context/ThemeProviderContext";
 import { useEffect, useState } from "react";
 import ColorThemeType from "@/types/ColorThemeType";
-import UserType from "@/types/UserType";
 
 type ThemeProviderProps = {
   children: React.ReactNode;
-  user?: UserType;
+  themeColor: ColorThemeType;
   storageKey?: string;
 };
 
 export default function ThemeProvider({
   children,
-  user,
+  themeColor,
   ...props
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<ColorThemeType>(
-    user?.user_metadata.color_theme,
-  );
+  const [theme, setTheme] = useState<ColorThemeType>(themeColor);
 
   useEffect(() => {
     const root = window.document.documentElement;

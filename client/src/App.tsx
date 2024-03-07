@@ -5,43 +5,27 @@ import ThemeProvider from "@/components/ThemeProvider";
 import { DarkModeProvider } from "./context/DarkModeProvider";
 import supabase from "./supabase/supabase";
 import "./App.css";
-import { User } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
-import { Oval } from "react-loader-spinner";
+import ColorThemeType from "./types/ColorThemeType";
+import DarkModeStateType from "./types/DarkModeStateType";
 
 function App() {
-  const [user, setUser] = useState<User | null>(null);
+  const [themeColor, setThemeColor] = useState<ColorThemeType>("blue");
+  const [darkMode, setDarkMode] = useState<DarkModeStateType>("system");
 
   const fetchUser = async () => {
     const {
       data: { user },
     } = await supabase.auth.getUser();
     if (user) {
-      setUser(user);
-    } else {
-      setUser(null);
+      setThemeColor(user?.user_metadata.color_theme);
+      setDarkMode(user?.user_metadata.dark_mode);
     }
   };
 
   useEffect(() => {
     fetchUser();
   }, []);
-
-  if (!user) {
-    return (
-      <div className="flex h-screen w-full items-center justify-center bg-black">
-        <Oval
-          visible={true}
-          height="40"
-          width="40"
-          color="white"
-          strokeWidth={4}
-          secondaryColor="black"
-          ariaLabel="oval-loading"
-        />
-      </div>
-    );
-  }
 
   return (
     <Router>
@@ -50,8 +34,8 @@ function App() {
         <Route
           path="/"
           element={
-            <ThemeProvider user={user}>
-              <DarkModeProvider user={user}>
+            <ThemeProvider themeColor={themeColor}>
+              <DarkModeProvider darkMode={darkMode}>
                 <HomePage />
               </DarkModeProvider>
             </ThemeProvider>

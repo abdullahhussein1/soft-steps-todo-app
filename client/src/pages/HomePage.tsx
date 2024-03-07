@@ -7,13 +7,7 @@ import supabase from "@/supabase/supabase";
 import useTheme from "@/hooks/useTheme";
 import useDarkMode from "@/hooks/useDarkMode";
 import ColorThemeType from "@/types/ColorThemeType";
-import blue from "@/assets/images/blue.png";
-import red from "@/assets/images/red.png";
-import green from "@/assets/images/green.png";
-import orange from "@/assets/images/orange.png";
-import purple from "@/assets/images/purple.png";
-import neutral from "@/assets/images/neutral.png";
-import yellow from "@/assets/images/yellow.png";
+import { changeFavIcon, getFavIcon } from "@/utils/utils";
 
 const HomePage = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -22,42 +16,6 @@ const HomePage = () => {
   const { darkModeState } = useDarkMode();
 
   const systemThemeDark = window.matchMedia("(prefers-color-scheme: dark)");
-
-  const changeFavicon = (link: string): void => {
-    let $favicon = document.querySelector(
-      'link[rel="icon"]',
-    ) as HTMLLinkElement;
-    if ($favicon !== null) {
-      $favicon.href = link;
-    } else {
-      $favicon = document.createElement("link");
-      $favicon.rel = "icon";
-      $favicon.href = link;
-      document.head.appendChild($favicon);
-    }
-  };
-
-  function getFavIcon(theme: string) {
-    const newTheme = theme.split("-")[0];
-    switch (newTheme) {
-      case "blue":
-        return blue;
-      case "red":
-        return red;
-      case "green":
-        return green;
-      case "purple":
-        return purple;
-      case "orange":
-        return orange;
-      case "yellow":
-        return yellow;
-      case "neutral":
-        return neutral;
-      case "default":
-        return blue;
-    }
-  }
 
   useEffect(() => {
     const handleSystemThemeChange = (evt: MediaQueryListEvent) => {
@@ -74,7 +32,7 @@ const HomePage = () => {
       setTheme(newTheme);
     };
 
-    changeFavicon(getFavIcon(theme) as string);
+    changeFavIcon(getFavIcon(theme) as string);
 
     if (darkModeState === "system") {
       systemThemeDark.addEventListener("change", handleSystemThemeChange);
