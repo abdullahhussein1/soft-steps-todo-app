@@ -13,6 +13,10 @@ function App() {
   const [user, setUser] = useState<UserType>(null);
   const [loading, setLoading] = useState(true);
 
+  const systemThemeDark = window.matchMedia(
+    "(prefers-color-scheme: dark)",
+  ).matches;
+
   const fetchUser = async () => {
     const {
       data: { user },
@@ -34,14 +38,19 @@ function App() {
           path="/"
           element={
             loading ? (
-              <div className="flex h-screen w-full items-center justify-center bg-black">
+              <div
+                className={[
+                  "flex h-screen w-full items-center justify-center",
+                  systemThemeDark ? "bg-black" : "bg-white",
+                ].join(" ")}
+              >
                 <Oval
                   visible={true}
                   height="40"
                   width="40"
-                  color="white"
+                  color={systemThemeDark ? "white" : "black"}
                   strokeWidth={4}
-                  secondaryColor="black"
+                  secondaryColor={systemThemeDark ? "black" : "dark"}
                   ariaLabel="oval-loading"
                 />
               </div>

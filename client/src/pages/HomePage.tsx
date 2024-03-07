@@ -87,7 +87,7 @@ const HomePage = ({ user, setUser }: props) => {
   }, [theme, darkModeState]);
 
   return (
-    <div className="flex h-[100dvh] items-center justify-center bg-secondary landscape:h-full">
+    <div className="flex h-[100dvh] items-center justify-center bg-secondary">
       <div className="flex h-full w-full max-w-xl flex-col items-center justify-end gap-1 px-2 sm:justify-center">
         <div className="flex w-full items-center justify-end">
           <Menu user={user} />
