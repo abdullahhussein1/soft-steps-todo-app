@@ -20,7 +20,7 @@ const ProgressTab = ({ steps, isLoaderVisible }: props) => {
   const notCompletedTodos = steps.filter((step) => !step.is_complete);
   const completedTodos = steps.filter((step) => step.is_complete);
 
-  function something() {
+  function getProgressIcon() {
     if (completedTodos.length == steps.length) {
       return (
         <div className="flex flex-col items-center">
@@ -97,7 +97,7 @@ const ProgressTab = ({ steps, isLoaderVisible }: props) => {
       )}
       <div className="flex flex-col items-center justify-center self-center justify-self-center">
         <div className="relative flex items-center justify-center">
-          <p className="absolute">{something()}</p>
+          <p className="absolute">{!isLoaderVisible && getProgressIcon()}</p>
           <PieChart width={250} height={350}>
             <Pie
               data={data}

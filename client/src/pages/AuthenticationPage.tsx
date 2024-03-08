@@ -96,7 +96,7 @@ const AuthenticationPage = () => {
               "flex w-full items-center justify-center gap-2 rounded-2xl border  p-3 backdrop-blur-md transition-colors",
               systemThemeDark
                 ? "border-neutral-900 hover:bg-neutral-900/60"
-                : "border-neutral-300 hover:bg-neutral-300/60",
+                : "border-neutral-300 hover:bg-neutral-200/60",
             ].join(" ")}
             onClick={handleSignInWithGoogle}
           >
@@ -115,7 +115,7 @@ const AuthenticationPage = () => {
               "flex w-full items-center justify-center gap-2 rounded-2xl border  p-3 backdrop-blur-md transition-colors",
               systemThemeDark
                 ? "border-neutral-900 hover:bg-neutral-900/60"
-                : "border-neutral-300 hover:bg-neutral-300/50",
+                : "border-neutral-300 hover:bg-neutral-200/50",
             ].join(" ")}
             onClick={handleSignInWithGithub}
           >
