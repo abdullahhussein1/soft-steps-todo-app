@@ -102,7 +102,7 @@ const StepsTab = ({ steps, setSteps, user, isLoaderVisible }: Props) => {
           {!isLoaderVisible &&
             steps.filter((step) => !step.is_complete && !step.deleted_at)
               .length == 0 && (
-              <div className="flex h-96 w-full flex-col items-center justify-center gap-3">
+              <div className="flex h-[63dvh] w-full flex-col items-center justify-center gap-3">
                 <FootprintsIcon size={100} strokeWidth={0.7} />
                 <p>Take a new Step</p>
               </div>
