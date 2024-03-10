@@ -11,10 +11,10 @@ import { Oval } from "react-loader-spinner";
 
 type props = {
   steps: StepType[];
-  isLoaderVisible: boolean;
+  loading: boolean;
 };
 
-const ProgressTab = ({ steps, isLoaderVisible }: props) => {
+const ProgressTab = ({ steps, loading }: props) => {
   const { theme } = useTheme();
 
   const notCompletedTodos = steps.filter((step) => !step.is_complete);
@@ -76,7 +76,7 @@ const ProgressTab = ({ steps, isLoaderVisible }: props) => {
       <h1 className="flex h-12 items-center border-b-[2px] text-lg font-bold">
         Progress
       </h1>
-      {isLoaderVisible && (
+      {loading && (
         <div className="flex h-96 items-center justify-center">
           <Oval
             visible={true}
@@ -89,55 +89,57 @@ const ProgressTab = ({ steps, isLoaderVisible }: props) => {
           />
         </div>
       )}
-      {!isLoaderVisible && !steps.length && (
+      {!loading && !steps.length && (
         <div className="flex h-[63dvh] w-full flex-col items-center justify-center gap-3">
           <PieChartIcon size={100} strokeWidth={0.7} />
           <p>No Data to Analysis</p>
         </div>
       )}
-      <div className="flex flex-col items-center justify-center self-center justify-self-center">
-        <div className="relative flex items-center justify-center">
-          <p className="absolute">{!isLoaderVisible && getProgressIcon()}</p>
-          <PieChart width={250} height={350}>
-            <Pie
-              data={data}
-              dataKey="value"
-              nameKey="name"
-              cx="50%"
-              cy="50%"
-              innerRadius={55}
-              outerRadius={80}
-              label
-              startAngle={90}
-              endAngle={450}
-            >
-              {data.map((_entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  strokeWidth={0}
-                  fill={COLORS[index % COLORS.length]}
-                />
-              ))}
-            </Pie>
-          </PieChart>
-        </div>
-        <div className="flex gap-5">
-          <div className="flex items-center gap-1">
-            <div
-              className="h-3 w-3 rounded-full"
-              style={{ background: COLORS[0] }}
-            ></div>
-            <p>Not completed</p>
+      {!loading && steps.length && (
+        <div className="flex flex-col items-center justify-center self-center justify-self-center">
+          <div className="relative flex items-center justify-center">
+            <p className="absolute">{!loading && getProgressIcon()}</p>
+            <PieChart width={250} height={350}>
+              <Pie
+                data={data}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                innerRadius={55}
+                outerRadius={80}
+                label
+                startAngle={90}
+                endAngle={450}
+              >
+                {data.map((_entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    strokeWidth={0}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
+            </PieChart>
           </div>
-          <div className="flex items-center gap-1">
-            <div
-              className="h-3 w-3 rounded-full"
-              style={{ background: COLORS[1] }}
-            ></div>
-            <p>Completed</p>
+          <div className="flex gap-5">
+            <div className="flex items-center gap-1">
+              <div
+                className="h-3 w-3 rounded-full"
+                style={{ background: COLORS[0] }}
+              ></div>
+              <p>Not completed</p>
+            </div>
+            <div className="flex items-center gap-1">
+              <div
+                className="h-3 w-3 rounded-full"
+                style={{ background: COLORS[1] }}
+              ></div>
+              <p>Completed</p>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

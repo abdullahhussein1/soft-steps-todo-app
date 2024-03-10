@@ -62,7 +62,7 @@ type Props = {
   user: UserType;
 };
 
-const NewStepBox = ({ steps, setSteps, isOpen, setIsOpen, user }: Props) => {
+const NewStepModal = ({ steps, setSteps, isOpen, setIsOpen, user }: Props) => {
   const [stepInput, setStepInput] = useState<string | null>();
   const [stepNoteInput, setStepNoteInput] = useState<string | null>();
   const [date, setDate] = React.useState<Date | null>(null);
@@ -419,4 +419,4 @@ const NewStepBox = ({ steps, setSteps, isOpen, setIsOpen, user }: Props) => {
   }
 };
 
-export default NewStepBox;
+export default NewStepModal;

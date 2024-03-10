@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import EditStepBox from "./EditStepBox";
+import EditStepModal from "./EditStepModal";
 import {
   ArrowUpWideNarrow,
   Calendar,
@@ -237,7 +237,7 @@ const Step = ({ step, steps, setSteps }: Props) => {
             )}
         </div>
       </div>
-      <EditStepBox
+      <EditStepModal
         step={step}
         steps={steps}
         setSteps={setSteps}

@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import AuthenticationPage from "./pages/AuthenticationPage";
-import ThemeProvider from "@/components/ThemeProvider";
+import ThemeProvider from "@/context/ThemeProvider";
 import { DarkModeProvider } from "./context/DarkModeProvider";
 import supabase from "./supabase/supabase";
 import "./App.css";

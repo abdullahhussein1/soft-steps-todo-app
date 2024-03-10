@@ -61,7 +61,7 @@ type Props = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const EditStepBox = ({ step, steps, setSteps, isOpen, setIsOpen }: Props) => {
+const EditStepModal = ({ step, steps, setSteps, isOpen, setIsOpen }: Props) => {
   const [stepInput, setStepInput] = useState(step.task);
   const [stepNoteInput, setStepNoteInput] = useState(step.note);
   const [date, setDate] = React.useState<Date | undefined>(
@@ -491,4 +491,4 @@ const EditStepBox = ({ step, steps, setSteps, isOpen, setIsOpen }: Props) => {
   }
 };
 
-export default EditStepBox;
+export default EditStepModal;

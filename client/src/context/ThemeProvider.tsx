@@ -1,5 +1,5 @@
-import ThemeProviderContext from "@/context/ThemeProviderContext";
 import { useEffect, useState } from "react";
+import { createContext } from "react";
 import ColorThemeType from "@/types/ColorThemeType";
 
 type ThemeProviderProps = {
@@ -38,3 +38,16 @@ export default function ThemeProvider({
     </ThemeProviderContext.Provider>
   );
 }
+
+type ThemeProviderState = {
+  theme: ColorThemeType;
+  setTheme: (theme: ColorThemeType) => void;
+};
+
+const initialState: ThemeProviderState = {
+  theme: "blue",
+  setTheme: () => null,
+};
+
+export const ThemeProviderContext =
+  createContext<ThemeProviderState>(initialState);

@@ -16,16 +16,16 @@ import {
 
 import StepType from "@/types/StepType";
 import UserType from "@/types/UserType";
-import NewStepBox from "../NewStepBox";
+import NewStepModal from "../NewStepModal";
 
 type Props = {
   steps: StepType[];
   setSteps: React.Dispatch<React.SetStateAction<StepType[]>>;
   user: UserType;
-  isLoaderVisible: boolean;
+  loading: boolean;
 };
 
-const StepsTab = ({ steps, setSteps, user, isLoaderVisible }: Props) => {
+const StepsTab = ({ steps, setSteps, user, loading }: Props) => {
   const [stepInput, setStepInput] = useState<string>("");
   const [isAddDialogShown, setIsAddDialogShown] = useState<boolean>(false);
   const [sortByValue, setSortByValue] = useState<string>("dateEdited");
@@ -93,13 +93,13 @@ const StepsTab = ({ steps, setSteps, user, isLoaderVisible }: Props) => {
               />
             ))}
 
-          {isLoaderVisible && (
+          {loading && (
             <div className="flex h-96 flex-col gap-2">
               <StepSkeleton />
               <StepSkeleton />
             </div>
           )}
-          {!isLoaderVisible &&
+          {!loading &&
             steps.filter((step) => !step.is_complete && !step.deleted_at)
               .length == 0 && (
               <div className="flex h-[63dvh] w-full flex-col items-center justify-center gap-3">
@@ -113,7 +113,7 @@ const StepsTab = ({ steps, setSteps, user, isLoaderVisible }: Props) => {
           )}
         </div>
       </div>
-      <NewStepBox
+      <NewStepModal
         steps={steps}
         setSteps={setSteps}
         isOpen={isAddDialogShown}

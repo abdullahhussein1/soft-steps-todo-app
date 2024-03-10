@@ -19,10 +19,10 @@ import { Skeleton } from "../ui/skeleton";
 type Props = {
   steps: StepType[];
   setSteps: React.Dispatch<React.SetStateAction<StepType[]>>;
-  isLoaderVisible: boolean;
+  loading: boolean;
 };
 
-const TrashTab = ({ steps, setSteps, isLoaderVisible }: Props) => {
+const TrashTab = ({ steps, setSteps, loading }: Props) => {
   const deletedTodos = steps.filter((step) => step.deleted_at);
 
   return (
@@ -98,8 +98,8 @@ const TrashTab = ({ steps, setSteps, isLoaderVisible }: Props) => {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      {isLoaderVisible && (
-        <div className="flex h-96 flex-col gap-2">
+      {loading && (
+        <div className="flex h-[63dvh] flex-col gap-2">
           <div
             className={[
               "flex animate-pulse items-start space-x-2 rounded-xl border-[0.7px] p-3",
@@ -122,19 +122,26 @@ const TrashTab = ({ steps, setSteps, isLoaderVisible }: Props) => {
           </div>
         </div>
       )}
-      {!isLoaderVisible && deletedTodos.length == 0 && (
+      {!loading && deletedTodos.length == 0 && (
         <div className="flex h-[63dvh] w-full flex-col items-center justify-center gap-3">
           <Trash size={100} strokeWidth={0.7} />
           <p>All Clear</p>
         </div>
       )}
-      <div className="flex h-[63dvh] flex-col gap-2 overflow-y-auto overflow-x-clip px-2">
-        {steps
-          .filter((step) => step.deleted_at)
-          .map((step) => (
-            <Step key={step.id} step={step} steps={steps} setSteps={setSteps} />
-          ))}
-      </div>
+      {!loading && deletedTodos.length != 0 && (
+        <div className="flex h-[63dvh] flex-col gap-2 overflow-y-auto overflow-x-clip px-2">
+          {steps
+            .filter((step) => step.deleted_at)
+            .map((step) => (
+              <Step
+                key={step.id}
+                step={step}
+                steps={steps}
+                setSteps={setSteps}
+              />
+            ))}
+        </div>
+      )}
     </div>
   );
 };

@@ -15,7 +15,7 @@ type params = {
 
 const AppBoard = ({ user }: params) => {
   const [steps, setSteps] = useState<StepType[]>([]);
-  const [isLoaderVisible, setIsLoaderVisible] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchTodos = async () => {
@@ -30,11 +30,11 @@ const AppBoard = ({ user }: params) => {
         );
 
         const result = response.data;
-        setIsLoaderVisible(false);
+        setLoading(false);
         setSteps(result);
       } catch (error) {
         console.error("Error fetching steps:", error);
-        setIsLoaderVisible(false);
+        setLoading(false);
       }
     };
 
@@ -61,25 +61,17 @@ const AppBoard = ({ user }: params) => {
             steps={steps}
             setSteps={setSteps}
             user={user}
-            isLoaderVisible={isLoaderVisible}
+            loading={loading}
           />
         </TabsContent>
         <TabsContent value="completed" className=" col-span-full">
-          <CompletedTab
-            steps={steps}
-            setSteps={setSteps}
-            isLoaderVisible={isLoaderVisible}
-          />
+          <CompletedTab steps={steps} setSteps={setSteps} loading={loading} />
         </TabsContent>
         <TabsContent value="trash" className=" col-span-full">
-          <TrashTab
-            steps={steps}
-            setSteps={setSteps}
-            isLoaderVisible={isLoaderVisible}
-          />
+          <TrashTab steps={steps} setSteps={setSteps} loading={loading} />
         </TabsContent>
         <TabsContent value="progress" className=" col-span-full">
-          <ProgressTab steps={steps} isLoaderVisible={isLoaderVisible} />
+          <ProgressTab steps={steps} loading={loading} />
         </TabsContent>
       </TabsList>
     </Tabs>

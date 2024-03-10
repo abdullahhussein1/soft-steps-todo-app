@@ -1,4 +1,4 @@
-import FavIconButton from "./FavIconButton";
+import { changeFavIcon, getFavIcon } from "@/utils/utils";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 
 const AppIconContent = () => (
@@ -22,5 +22,20 @@ const AppIconContent = () => (
     <ScrollBar orientation="horizontal" />
   </ScrollArea>
 );
+
+type favIconButtonType = {
+  favicon: string;
+};
+
+const FavIconButton = ({ favicon }: favIconButtonType) => {
+  return (
+    <button
+      className="flex h-12 w-12 items-center justify-center overflow-clip rounded-2xl border"
+      onClick={() => changeFavIcon(getFavIcon(favicon))}
+    >
+      <img src={getFavIcon(favicon)} alt="favicon" className="object-cover" />
+    </button>
+  );
+};
 
 export default AppIconContent;
