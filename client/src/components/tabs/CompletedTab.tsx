@@ -13,7 +13,7 @@ type Props = {
 };
 
 const CompletedTab = ({ steps, setSteps, loading }: Props) => {
-  const completedTodos = steps.filter(
+  const completedSteps = steps.filter(
     (step) => step.is_complete && !step.deleted_at,
   );
 
@@ -23,29 +23,27 @@ const CompletedTab = ({ steps, setSteps, loading }: Props) => {
         <h1 className="text-lg font-bold">Completed</h1>
         <button
           className="flex h-7 w-20 items-center gap-[6px] rounded-full px-2 transition-all hover:bg-red-400/10 hover:text-red-500"
-          onClick={async () => {
-            if (completedTodos.length > 0) {
-              setSteps((prevTodos) =>
-                prevTodos.filter((step) => !step.is_complete),
+          onClick={() => {
+            completedSteps.forEach((step) => {
+              axios.put(
+                `${import.meta.env.VITE_API_BASE_URL}/api/steps/${step.id}`,
+                {
+                  deleted_at: new Date(),
+                },
               );
+            });
 
-              for (const step of completedTodos) {
-                await axios.put(
-                  `${import.meta.env.VITE_API_BASE_URL}/api/steps/${step.id}`,
-                  { deleted_at: new Date() },
-                );
-                const mapTodos = steps.map((tdo) => {
-                  if (tdo.id === step.id) {
-                    return {
-                      ...tdo,
-                      deleted_at: new Date(),
-                    };
-                  }
-                  return tdo;
-                });
-                setSteps(mapTodos);
+            const updatedSteps = steps.map((tdo) => {
+              if (tdo.is_complete == true) {
+                return {
+                  ...tdo,
+                  deleted_at: new Date(),
+                };
               }
-            }
+              return tdo;
+            });
+
+            setSteps(updatedSteps);
           }}
         >
           <p className="whitespace-nowrap text-xs">Clear All</p>
@@ -78,13 +76,13 @@ const CompletedTab = ({ steps, setSteps, loading }: Props) => {
           </div>
         </div>
       )}
-      {!loading && completedTodos.length == 0 && (
+      {!loading && completedSteps.length == 0 && (
         <div className="flex h-[63dvh] w-full flex-col items-center justify-center gap-3">
           <CheckCheck size={100} strokeWidth={0.7} />
           <p>All done</p>
         </div>
       )}
-      {!loading && completedTodos.length != 0 && (
+      {!loading && completedSteps.length != 0 && (
         <div className="flex h-[63dvh] flex-col gap-2 overflow-y-auto overflow-x-clip px-2 ">
           {steps
             .filter((step) => step.is_complete && !step.deleted_at)

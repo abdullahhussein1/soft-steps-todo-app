@@ -18,24 +18,24 @@ const ProgressTab = ({ steps, loading }: props) => {
   const { theme } = useTheme();
 
   const notCompletedTodos = steps.filter((step) => !step.is_complete);
-  const completedTodos = steps.filter((step) => step.is_complete);
+  const completedSteps = steps.filter((step) => step.is_complete);
 
   function getProgressIcon() {
-    if (completedTodos.length == steps.length) {
+    if (completedSteps.length == steps.length) {
       return (
         <div className="flex flex-col items-center">
           <CheckCheckIcon size={40} strokeWidth={1.5} color={COLORS[1]} />
           <p className="text-xs">All Done!</p>
         </div>
       );
-    } else if (completedTodos.length >= steps.length / 2) {
+    } else if (completedSteps.length >= steps.length / 2) {
       return (
         <div className="flex flex-col items-center gap-1">
           <FlameIcon size={30} strokeWidth={1.5} color={COLORS[1]} />
           <p className="text-xs">Great Job!</p>
         </div>
       );
-    } else if (completedTodos.length <= steps.length / 2) {
+    } else if (completedSteps.length <= steps.length / 2) {
       return (
         <div className="flex flex-col items-center gap-1">
           <DumbbellIcon size={30} strokeWidth={1.5} color={COLORS[1]} />
@@ -47,7 +47,7 @@ const ProgressTab = ({ steps, loading }: props) => {
 
   const data = [
     { name: "steps", value: notCompletedTodos.length },
-    { name: "completed", value: completedTodos.length },
+    { name: "completed", value: completedSteps.length },
   ];
 
   const themeColors: { [key: string]: string[] } = {

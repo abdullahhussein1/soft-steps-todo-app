@@ -263,7 +263,7 @@ const Step = ({ step, steps, setSteps }: Props) => {
                   is_pin: !step.is_pin,
                 },
               );
-              const mapTodos = steps.map((tdo) => {
+              const mapSteps = steps.map((tdo) => {
                 if (tdo.id === step.id) {
                   return {
                     ...tdo,
@@ -272,7 +272,7 @@ const Step = ({ step, steps, setSteps }: Props) => {
                 }
                 return tdo;
               });
-              setSteps(mapTodos);
+              setSteps(mapSteps);
               setIsPinned(!isPinned);
             }}
           >
@@ -292,10 +292,7 @@ const Step = ({ step, steps, setSteps }: Props) => {
             <p>Edit</p>
           </DropdownMenuItem>
           <DropdownMenuItem
-            className={[
-              "hidden transition-all focus:bg-green-400/10 focus:text-green-500",
-              step.deleted_at && "flex gap-2",
-            ].join(" ")}
+            className={["hidden", step.deleted_at && "flex gap-2"].join(" ")}
             onClick={() => {
               axios.put(
                 `${import.meta.env.VITE_API_BASE_URL}/api/steps/${step.id}`,
@@ -303,7 +300,7 @@ const Step = ({ step, steps, setSteps }: Props) => {
                   deleted_at: null,
                 },
               );
-              const mapTodos = steps.map((tdo) => {
+              const mapSteps = steps.map((tdo) => {
                 if (tdo.id === step.id) {
                   return {
                     ...tdo,
@@ -312,18 +309,14 @@ const Step = ({ step, steps, setSteps }: Props) => {
                 }
                 return tdo;
               });
-              setSteps(mapTodos);
+              setSteps(mapSteps);
             }}
           >
             <Undo2 size={15} />
             <p>Recover</p>
           </DropdownMenuItem>
           <DropdownMenuItem
-            className={[
-              "flex gap-2",
-              step.deleted_at &&
-                "transition-all focus:bg-red-400/10 focus:text-red-500",
-            ].join(" ")}
+            className={["flex gap-2"].join(" ")}
             color="blue"
             onClick={() => {
               axios.put(
@@ -332,7 +325,7 @@ const Step = ({ step, steps, setSteps }: Props) => {
                   deleted_at: new Date(),
                 },
               );
-              const mapTodos = steps.map((tdo) => {
+              const mapSteps = steps.map((tdo) => {
                 if (tdo.id === step.id) {
                   return {
                     ...tdo,
@@ -341,7 +334,7 @@ const Step = ({ step, steps, setSteps }: Props) => {
                 }
                 return tdo;
               });
-              setSteps(mapTodos);
+              setSteps(mapSteps);
             }}
           >
             <Trash size={15} />

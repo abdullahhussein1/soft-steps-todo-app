@@ -23,7 +23,7 @@ type Props = {
 };
 
 const TrashTab = ({ steps, setSteps, loading }: Props) => {
-  const deletedTodos = steps.filter((step) => step.deleted_at);
+  const deletedSteps = steps.filter((step) => step.deleted_at);
 
   return (
     <div className="flex flex-col gap-2">
@@ -39,8 +39,8 @@ const TrashTab = ({ steps, setSteps, loading }: Props) => {
             <DropdownMenuItem
               className="flex w-full items-center gap-[6px] px-2 transition-all"
               onClick={() => {
-                if (deletedTodos.length > 0) {
-                  for (const step of deletedTodos) {
+                if (deletedSteps.length > 0) {
+                  for (const step of deletedSteps) {
                     axios.put(
                       `${import.meta.env.VITE_API_BASE_URL}/api/steps/${
                         step.id
@@ -73,14 +73,14 @@ const TrashTab = ({ steps, setSteps, loading }: Props) => {
             <DropdownMenuItem
               className="flex w-full items-center gap-[6px] px-2 transition-all"
               onClick={async () => {
-                const deletedTodos = steps.filter((step) => step.deleted_at);
+                const deletedSteps = steps.filter((step) => step.deleted_at);
 
-                if (deletedTodos.length > 0) {
+                if (deletedSteps.length > 0) {
                   setSteps((prevTodos) =>
                     prevTodos.filter((step) => !step.deleted_at),
                   );
 
-                  for (const step of deletedTodos) {
+                  for (const step of deletedSteps) {
                     await axios.delete(
                       `${import.meta.env.VITE_API_BASE_URL}/api/steps/${
                         step.id
@@ -122,13 +122,13 @@ const TrashTab = ({ steps, setSteps, loading }: Props) => {
           </div>
         </div>
       )}
-      {!loading && deletedTodos.length == 0 && (
+      {!loading && deletedSteps.length == 0 && (
         <div className="flex h-[63dvh] w-full flex-col items-center justify-center gap-3">
           <Trash size={100} strokeWidth={0.7} />
           <p>All Clear</p>
         </div>
       )}
-      {!loading && deletedTodos.length != 0 && (
+      {!loading && deletedSteps.length != 0 && (
         <div className="flex h-[63dvh] flex-col gap-2 overflow-y-auto overflow-x-clip px-2">
           {steps
             .filter((step) => step.deleted_at)

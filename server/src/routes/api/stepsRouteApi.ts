@@ -11,6 +11,7 @@ type Step = {
   location?: string;
   is_complete: boolean;
   is_pin: boolean;
+  deleted_at: Date;
   created_at: Date;
   updated_at: Date;
   remind_at: Date;
@@ -127,6 +128,7 @@ router.put("/:id", async (req: Request, res: Response) => {
       priority,
       location,
       is_complete,
+      deleted_at,
       is_pin,
       remind_at,
       updated_at,
@@ -137,12 +139,12 @@ router.put("/:id", async (req: Request, res: Response) => {
         .from("steps")
         .update([
           {
-            id,
             task,
             note,
             priority,
             location,
             is_complete,
+            deleted_at,
             is_pin,
             remind_at,
             updated_at,
