@@ -57,7 +57,6 @@ const AuthenticationPage = () => {
   }
 
   useEffect(() => {
-    console.log(session);
     if (session) navigate("/");
   }, [session, navigate]);
 

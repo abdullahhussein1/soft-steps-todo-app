@@ -68,7 +68,7 @@ const HomePage = ({ user, setUser }: props) => {
       } = await supabase.auth.getUser();
 
       if (user) {
-        const { data: updateData, error } = await supabase.auth.updateUser({
+        const { error } = await supabase.auth.updateUser({
           data: {
             color_theme: theme,
             dark_mode: darkModeState,
@@ -77,8 +77,6 @@ const HomePage = ({ user, setUser }: props) => {
 
         if (error) {
           console.error("Error updating user metadata:", error.message);
-        } else {
-          console.log("User metadata updated successfully:", updateData);
         }
       }
     };
