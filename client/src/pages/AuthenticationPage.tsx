@@ -130,7 +130,7 @@ const AuthenticationPage = () => {
             <p>Continue With Github</p>
           </button>
         </div>
-        <p className="absolute bottom-0 text-justify text-[10px] font-light text-neutral-500 sm:text-xs">
+        <p className="absolute bottom-0 text-justify text-[9px] font-light text-neutral-500 sm:text-xs">
           Believers should not take disbelievers as guardians instead of the
           believers, and whoever does so will have nothing to hope for from
           Allah, unless it is a precaution against their tyranny. And Allah

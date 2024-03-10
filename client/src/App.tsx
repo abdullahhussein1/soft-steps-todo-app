@@ -82,7 +82,7 @@ function App() {
               <h1 className="mb-4 text-4xl font-semibold">
                 404 <span className="font-light">|</span> Not Found
               </h1>
-              <p className="text-md mb-8 font-light">
+              <p className="mb-8 text-sm font-light">
                 Oops! The page you are looking for does not exist.
               </p>
               <Link
