@@ -94,7 +94,7 @@ const StepsTab = ({ steps, setSteps, user, loading }: Props) => {
             ))}
 
           {loading && (
-            <div className="flex h-96 flex-col gap-2">
+            <div className="flex h-[63dvh] flex-col gap-2">
               <StepSkeleton />
               <StepSkeleton />
             </div>
@@ -108,8 +108,8 @@ const StepsTab = ({ steps, setSteps, user, loading }: Props) => {
               </div>
             )}
 
-          {steps.length > 0 && (
-            <div className="absolute bottom-0 z-10 h-8 w-full bg-gradient-to-t from-background via-background to-transparent"></div>
+          {!loading && steps.length > 0 && (
+            <div className="absolute bottom-0 z-10 h-10 w-full bg-gradient-to-t from-background via-background to-transparent"></div>
           )}
         </div>
       </div>
@@ -129,7 +129,7 @@ const StepsTab = ({ steps, setSteps, user, loading }: Props) => {
             placeholder="I want to..."
             className="rounded-full text-foreground"
           />
-          <div className="absolute right-1 flex cursor-pointer items-center justify-center rounded-full bg-background p-2 transition-colors hover:text-foreground">
+          <div className="absolute right-1 flex cursor-pointer items-center justify-center rounded-full p-2 backdrop-blur-md transition-colors hover:text-foreground">
             <Maximize2 size={14} onClick={() => setIsAddDialogShown(true)} />
           </div>
         </div>
