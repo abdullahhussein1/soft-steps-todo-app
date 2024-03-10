@@ -31,7 +31,7 @@ const StepsTab = ({ steps, setSteps, user, loading }: Props) => {
   const [sortByValue, setSortByValue] = useState<string>("dateEdited");
 
   return (
-    <div className="flex flex-col">
+    <div className="flex  flex-col">
       <div className="relative flex flex-col">
         <div className="flex h-12 items-center justify-between border-b-[2px]">
           <h1 className="text-lg font-bold">Steps</h1>
