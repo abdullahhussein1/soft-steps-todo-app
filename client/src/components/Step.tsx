@@ -316,8 +316,7 @@ const Step = ({ step, steps, setSteps }: Props) => {
             <p>Recover</p>
           </DropdownMenuItem>
           <DropdownMenuItem
-            className={["flex gap-2"].join(" ")}
-            color="blue"
+            className={["flex gap-2", step.deleted_at && "hidden"].join(" ")}
             onClick={() => {
               axios.put(
                 `${import.meta.env.VITE_API_BASE_URL}/api/steps/${step.id}`,
@@ -338,7 +337,20 @@ const Step = ({ step, steps, setSteps }: Props) => {
             }}
           >
             <Trash size={15} />
-            <p>{step.deleted_at ? "Delete" : "Remove"}</p>
+            <p>Remove</p>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className={["flex gap-2", !step.deleted_at && "hidden"].join(" ")}
+            onClick={() => {
+              axios.delete(
+                `${import.meta.env.VITE_API_BASE_URL}/api/steps/${step.id}`,
+              );
+              const filterSteps = steps.filter((tdo) => tdo.id !== step.id);
+              setSteps(filterSteps);
+            }}
+          >
+            <Trash size={15} />
+            <p>Delete</p>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
