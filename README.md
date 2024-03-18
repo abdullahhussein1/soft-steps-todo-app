@@ -2,9 +2,7 @@
 
 Welcome to Soft Steps, your simple and serene companion in conquering tasks effortlessly. Embrace the tranquility of productivity with our intuitive todo app designed to guide you through each step of your journey.
 
-Soft Steps offers a seamless and stress-free experience, allowing you to organize your tasks with grace and efficiency. Take gentle strides towards your goals, as Soft Steps empowers you to create, manage, and complete your tasks with ease. Say goodbye to the chaos and hello to the serenity of accomplishment.
-
-Let Soft Steps be your mindful assistant, making your todo list a breeze to navigate. Step into a world where productivity meets peace – welcome to Soft Steps, where every task is a step towards tranquility.
+![Alt text](images/phonto.png)
 
 ## Server
 
