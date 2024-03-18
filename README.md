@@ -1,12 +1,10 @@
-
 # Soft Steps - Your Tranquil Todo App
 
-Welcome to Soft Steps, your simple and serene companion in conquering tasks effortlessly. Embrace the tranquility of productivity with our intuitive todo app designed to guide you through each step of your journey. 
+Welcome to Soft Steps, your simple and serene companion in conquering tasks effortlessly. Embrace the tranquility of productivity with our intuitive todo app designed to guide you through each step of your journey.
 
 Soft Steps offers a seamless and stress-free experience, allowing you to organize your tasks with grace and efficiency. Take gentle strides towards your goals, as Soft Steps empowers you to create, manage, and complete your tasks with ease. Say goodbye to the chaos and hello to the serenity of accomplishment.
 
 Let Soft Steps be your mindful assistant, making your todo list a breeze to navigate. Step into a world where productivity meets peace – welcome to Soft Steps, where every task is a step towards tranquility.
-
 
 ## Server
 
@@ -73,3 +71,27 @@ Let Soft Steps be your mindful assistant, making your todo list a breeze to navi
 
 - The server is running on port `<your_preferred_server_port>` as specified in your `.env` file.
 - Avoid appending additional slashes `/` to the end of the `.env` variables.
+
+## Contributing
+
+Thank you for considering contributing to Soft Steps! Before contributing, please ensure that you have activated GitHub and Google authentication in your Supabase project.
+
+### Prerequisites
+
+- Active GitHub and Google authentication in your Supabase project.
+
+### How to Contribute
+
+1. Fork the repository and clone it locally.
+2. Make your desired changes or additions.
+3. Commit your changes with descriptive commit messages.
+4. Push your changes to your fork.
+5. Submit a pull request to the `main` branch of the original repository.
+
+### Code of Conduct
+
+Please note that by contributing to this project, you agree to abide by the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md).
+
+### License
+
+This project is licensed under the [MIT License](LICENSE).
