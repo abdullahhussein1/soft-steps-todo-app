@@ -1,6 +1,10 @@
+![Alt text](images/Welcome.PNG)
+
 # Soft Steps - Your Tranquil Todo App
 
 Welcome to Soft Steps, your simple and serene companion in conquering tasks effortlessly. Embrace the tranquility of productivity with our intuitive todo app designed to guide you through each step of your journey.
+
+## Preview
 
 ![Alt text](images/phonto.png)
 
