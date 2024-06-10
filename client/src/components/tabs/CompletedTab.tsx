@@ -2,17 +2,13 @@ import axios from "axios";
 
 import { CheckCheck, Trash } from "lucide-react";
 
-import StepType from "@/types/StepType";
 import Step from "../Step";
 import { Skeleton } from "../ui/skeleton";
+import useSteps from "@/hooks/useSteps";
 
-type Props = {
-  steps: StepType[];
-  setSteps: React.Dispatch<React.SetStateAction<StepType[]>>;
-  loading: boolean;
-};
+const CompletedTab = () => {
+  const { steps, setSteps, loading } = useSteps();
 
-const CompletedTab = ({ steps, setSteps, loading }: Props) => {
   const completedSteps = steps.filter(
     (step) => step.is_complete && !step.deleted_at,
   );
@@ -87,12 +83,7 @@ const CompletedTab = ({ steps, setSteps, loading }: Props) => {
           {steps
             .filter((step) => step.is_complete && !step.deleted_at)
             .map((step) => (
-              <Step
-                key={step.id}
-                step={step}
-                steps={steps}
-                setSteps={setSteps}
-              />
+              <Step key={step.id} step={step} />
             ))}
         </div>
       )}

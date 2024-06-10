@@ -14,21 +14,16 @@ import {
   SelectTrigger,
 } from "@/components/ui/select";
 
-import StepType from "@/types/StepType";
-import UserType from "@/types/UserType";
 import NewStepModal from "../NewStepModal";
+import useUser from "@/hooks/useUser";
+import useSteps from "@/hooks/useSteps";
 
-type Props = {
-  steps: StepType[];
-  setSteps: React.Dispatch<React.SetStateAction<StepType[]>>;
-  user: UserType;
-  loading: boolean;
-};
-
-const StepsTab = ({ steps, setSteps, user, loading }: Props) => {
+const StepsTab = () => {
   const [stepInput, setStepInput] = useState<string>("");
   const [isAddDialogShown, setIsAddDialogShown] = useState<boolean>(false);
   const [sortByValue, setSortByValue] = useState<string>("dateEdited");
+  const { steps, setSteps, loading } = useSteps();
+  const { user } = useUser();
 
   return (
     <div className="flex  flex-col">
@@ -85,12 +80,7 @@ const StepsTab = ({ steps, setSteps, user, loading }: Props) => {
               }
             })
             .map((step) => (
-              <Step
-                key={step.id}
-                step={step}
-                steps={steps}
-                setSteps={setSteps}
-              />
+              <Step key={step.id} step={step} />
             ))}
 
           {loading && (
@@ -114,8 +104,6 @@ const StepsTab = ({ steps, setSteps, user, loading }: Props) => {
         </div>
       </div>
       <NewStepModal
-        steps={steps}
-        setSteps={setSteps}
         isOpen={isAddDialogShown}
         setIsOpen={setIsAddDialogShown}
         user={user}

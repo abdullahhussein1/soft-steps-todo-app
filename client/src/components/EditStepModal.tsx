@@ -52,17 +52,17 @@ import {
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 import StepType from "@/types/StepType";
+import useSteps from "@/hooks/useSteps";
 
 type Props = {
   step: StepType;
-  steps: StepType[];
-  setSteps: React.Dispatch<React.SetStateAction<StepType[]>>;
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const EditStepModal = ({ step, steps, setSteps, isOpen, setIsOpen }: Props) => {
+const EditStepModal = ({ step, isOpen, setIsOpen }: Props) => {
   const [stepInput, setStepInput] = useState(step.task);
+  const { steps, setSteps } = useSteps();
   const [stepNoteInput, setStepNoteInput] = useState(step.note);
   const [date, setDate] = React.useState<Date | undefined>(
     step.remind_at ? new Date(step.remind_at) : undefined,

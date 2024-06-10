@@ -1,5 +1,4 @@
 import useTheme from "@/hooks/useTheme";
-import StepType from "@/types/StepType";
 import {
   CheckCheckIcon,
   DumbbellIcon,
@@ -8,13 +7,10 @@ import {
 } from "lucide-react";
 import { PieChart, Pie, Cell } from "recharts";
 import { Oval } from "react-loader-spinner";
+import useSteps from "@/hooks/useSteps";
 
-type props = {
-  steps: StepType[];
-  loading: boolean;
-};
-
-const ProgressTab = ({ steps, loading }: props) => {
+const ProgressTab = () => {
+  const { steps, loading } = useSteps();
   const { theme } = useTheme();
 
   const notCompletedTodos = steps.filter((step) => !step.is_complete);

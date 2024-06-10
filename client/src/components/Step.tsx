@@ -31,14 +31,14 @@ import {
 import { Checkbox } from "./ui/checkbox";
 
 import StepType from "@/types/StepType";
+import useSteps from "@/hooks/useSteps";
 
 type Props = {
   step: StepType;
-  steps: StepType[];
-  setSteps: React.Dispatch<React.SetStateAction<StepType[]>>;
 };
 
-const Step = ({ step, steps, setSteps }: Props) => {
+const Step = ({ step }: Props) => {
+  const { steps, setSteps } = useSteps();
   const [isPinned, setIsPinned] = useState<boolean>(step.is_pin);
   const [isChecked, setIsChecked] = useState<boolean>(step.is_complete);
   const [isOpen, setIsOpen] = useState(false);
@@ -237,13 +237,7 @@ const Step = ({ step, steps, setSteps }: Props) => {
             )}
         </div>
       </div>
-      <EditStepModal
-        step={step}
-        steps={steps}
-        setSteps={setSteps}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-      />
+      <EditStepModal step={step} isOpen={isOpen} setIsOpen={setIsOpen} />
       <DropdownMenu>
         <DropdownMenuTrigger className="flex-initial self-start">
           <div className="px-2">

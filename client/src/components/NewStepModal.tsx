@@ -53,16 +53,16 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 import StepType from "@/types/StepType";
 import UserType from "@/types/UserType";
+import useSteps from "@/hooks/useSteps";
 
 type Props = {
-  steps: StepType[];
-  setSteps: React.Dispatch<React.SetStateAction<StepType[]>>;
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   user: UserType;
 };
 
-const NewStepModal = ({ steps, setSteps, isOpen, setIsOpen, user }: Props) => {
+const NewStepModal = ({ isOpen, setIsOpen, user }: Props) => {
+  const { steps, setSteps } = useSteps();
   const [stepInput, setStepInput] = useState<string | null>();
   const [stepNoteInput, setStepNoteInput] = useState<string | null>();
   const [date, setDate] = React.useState<Date | null>(null);

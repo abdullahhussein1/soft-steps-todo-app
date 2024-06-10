@@ -13,16 +13,12 @@ import {
 
 import { MoreHorizontal } from "lucide-react";
 
-import StepType from "@/types/StepType";
 import { Skeleton } from "../ui/skeleton";
+import useSteps from "@/hooks/useSteps";
 
-type Props = {
-  steps: StepType[];
-  setSteps: React.Dispatch<React.SetStateAction<StepType[]>>;
-  loading: boolean;
-};
+const TrashTab = () => {
+  const { steps, setSteps, loading } = useSteps();
 
-const TrashTab = ({ steps, setSteps, loading }: Props) => {
   const deletedSteps = steps.filter((step) => step.deleted_at);
 
   return (
@@ -133,12 +129,7 @@ const TrashTab = ({ steps, setSteps, loading }: Props) => {
           {steps
             .filter((step) => step.deleted_at)
             .map((step) => (
-              <Step
-                key={step.id}
-                step={step}
-                steps={steps}
-                setSteps={setSteps}
-              />
+              <Step key={step.id} step={step} />
             ))}
         </div>
       )}
