@@ -25,6 +25,9 @@ const StepsTab = () => {
   const { steps, setSteps, loading } = useSteps();
   const { user } = useUser();
 
+  const isEmpty =
+    steps.filter((step) => !step.is_complete && !step.deleted_at).length == 0;
+
   return (
     <div className="flex  flex-col">
       <div className="relative flex flex-col">
@@ -34,7 +37,10 @@ const StepsTab = () => {
             defaultValue="dateEdited"
             onValueChange={(value) => setSortByValue(value)}
           >
-            <SelectTrigger className="flex h-7 w-20 items-center gap-[6px] rounded-full border-none  px-2 transition-all hover:bg-border/50">
+            <SelectTrigger
+              disabled={isEmpty}
+              className="flex h-7 w-20 items-center gap-[6px] rounded-full border-none px-2  transition-all hover:bg-border/50 disabled:cursor-default disabled:hover:bg-transparent"
+            >
               <p className="whitespace-nowrap text-xs">Sort By</p>
               <div>
                 <ArrowUpDownIcon size={13} />

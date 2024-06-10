@@ -85,13 +85,13 @@ const ProgressTab = () => {
           />
         </div>
       )}
-      {!loading && !steps.length && (
+      {!loading && steps.length == 0 && (
         <div className="flex h-[63dvh] w-full flex-col items-center justify-center gap-3">
           <PieChartIcon size={100} strokeWidth={0.7} />
           <p>No Data to Analysis</p>
         </div>
       )}
-      {!loading && steps.length && (
+      {!loading && steps.length > 0 && (
         <div className="flex flex-col items-center justify-center self-center justify-self-center">
           <div className="relative flex items-center justify-center">
             <p className="absolute">{getProgressIcon()}</p>

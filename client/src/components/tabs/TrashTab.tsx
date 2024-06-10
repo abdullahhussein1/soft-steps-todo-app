@@ -33,6 +33,7 @@ const TrashTab = () => {
           </DropdownMenuTrigger>
           <DropdownMenuContent className="flex w-fit flex-col rounded-xl">
             <DropdownMenuItem
+              disabled={deletedSteps.length == 0}
               className="flex w-full items-center gap-[6px] px-2 transition-all"
               onClick={() => {
                 if (deletedSteps.length > 0) {
@@ -67,6 +68,7 @@ const TrashTab = () => {
               <p className="whitespace-nowrap">Recover All</p>
             </DropdownMenuItem>
             <DropdownMenuItem
+              disabled={deletedSteps.length == 0}
               className="flex w-full items-center gap-[6px] px-2 transition-all"
               onClick={async () => {
                 const deletedSteps = steps.filter((step) => step.deleted_at);

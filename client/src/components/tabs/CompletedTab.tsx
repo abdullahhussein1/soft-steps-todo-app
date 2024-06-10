@@ -13,12 +13,16 @@ const CompletedTab = () => {
     (step) => step.is_complete && !step.deleted_at,
   );
 
+  const isEmpty =
+    steps.filter((step) => step.is_complete && !step.deleted_at).length == 0;
+
   return (
     <div className="flex flex-col gap-2">
       <div className="flex h-12 items-center justify-between border-b-[2px]">
         <h1 className="text-lg font-bold">Completed</h1>
         <button
-          className="flex h-7 w-20 items-center gap-[6px] rounded-full px-2 transition-all hover:bg-red-400/10 hover:text-red-500"
+          disabled={isEmpty}
+          className="flex h-7 w-20 items-center gap-[6px] rounded-full px-2 transition-all hover:bg-red-400/10 hover:text-red-500 disabled:text-gray-400/80 disabled:hover:bg-transparent"
           onClick={() => {
             completedSteps.forEach((step) => {
               axios.put(
