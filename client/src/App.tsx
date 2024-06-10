@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import AuthenticationPage from "./pages/AuthenticationPage";
-import ThemeProvider from "@/context/ThemeProvider";
-import DarkModeProvider from "./context/DarkModeProvider";
+import ThemeProvider from "@/providers/ThemeProvider";
+import DarkModeProvider from "./providers/DarkModeProvider";
 import "./App.css";
 import { Oval } from "react-loader-spinner";
 import palestineCountryFilledIcon from "@/assets/images/palestineCountryFilled.png";
