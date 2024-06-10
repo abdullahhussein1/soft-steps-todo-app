@@ -6,14 +6,11 @@ import TrashTab from "./tabs/TrashTab";
 import ProgressTab from "./tabs/ProgressTab";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import StepType from "@/types/StepType";
-import UserType from "@/types/UserType";
 import { PieChartIcon, LayoutList, ListChecks, TrashIcon } from "lucide-react";
+import useUser from "@/hooks/useUser";
 
-type params = {
-  user: UserType;
-};
-
-const AppBoard = ({ user }: params) => {
+const AppBoard = () => {
+  const { user } = useUser();
   const [steps, setSteps] = useState<StepType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 

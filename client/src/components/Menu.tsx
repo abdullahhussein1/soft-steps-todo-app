@@ -21,15 +21,12 @@ import useTheme from "@/hooks/useTheme";
 
 import AppIconContent from "./AppIconContent";
 import ColorThemeContent from "./ColorThemeContent";
-import { User } from "@supabase/supabase-js";
 import supabase from "@/supabase/supabase";
 import { useNavigate } from "react-router-dom";
+import useUser from "@/hooks/useUser";
 
-type props = {
-  user: User | null;
-};
-
-const Menu = ({ user }: props) => {
+const Menu = () => {
+  const { user } = useUser();
   const { theme } = useTheme();
   const isDesktop = useMediaQuery("(min-width: 640px)");
   const navigate = useNavigate();

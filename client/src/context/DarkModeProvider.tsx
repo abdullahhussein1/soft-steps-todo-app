@@ -15,7 +15,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export const DarkModeProvider = ({ darkMode, children }: Props) => {
+const DarkModeProvider = ({ darkMode, children }: Props) => {
   const [darkModeState, setDarkModeState] =
     useState<DarkModeStateType>(darkMode);
 
@@ -32,3 +32,5 @@ export const DarkModeProvider = ({ darkMode, children }: Props) => {
     </DarkModeContext.Provider>
   );
 };
+
+export default DarkModeProvider;

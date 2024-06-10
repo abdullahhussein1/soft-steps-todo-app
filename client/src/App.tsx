@@ -2,36 +2,19 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import AuthenticationPage from "./pages/AuthenticationPage";
 import ThemeProvider from "@/context/ThemeProvider";
-import { DarkModeProvider } from "./context/DarkModeProvider";
-import supabase from "./supabase/supabase";
+import DarkModeProvider from "./context/DarkModeProvider";
 import "./App.css";
-import { useEffect, useState } from "react";
-import UserType from "./types/UserType";
 import { Oval } from "react-loader-spinner";
 import palestineCountryFilledIcon from "@/assets/images/palestineCountryFilled.png";
-
 import { ArrowLeft } from "lucide-react";
+import useUser from "./hooks/useUser";
 
 function App() {
-  const [user, setUser] = useState<UserType>(null);
-  const [loading, setLoading] = useState(true);
+  const { user } = useUser();
 
   const systemThemeDark = window.matchMedia(
     "(prefers-color-scheme: dark)",
   ).matches;
-
-  const fetchUser = async () => {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (user) {
-      setUser(user);
-    }
-  };
-
-  useEffect(() => {
-    fetchUser().then(() => setLoading(false));
-  }, []);
 
   return (
     <Router>
@@ -40,7 +23,7 @@ function App() {
         <Route
           path="/"
           element={
-            loading ? (
+            !user ? (
               <div
                 className={[
                   "flex h-screen w-full items-center justify-center",
@@ -64,7 +47,7 @@ function App() {
                 <DarkModeProvider
                   darkMode={user?.user_metadata.dark_mode ?? "system"}
                 >
-                  <HomePage user={user} setUser={setUser} />
+                  <HomePage />
                 </DarkModeProvider>
               </ThemeProvider>
             )
