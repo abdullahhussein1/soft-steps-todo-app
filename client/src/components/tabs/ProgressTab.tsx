@@ -94,7 +94,7 @@ const ProgressTab = () => {
       {!loading && steps.length > 0 && (
         <div className="flex flex-col items-center justify-center self-center justify-self-center">
           <div className="relative flex items-center justify-center">
-            <p className="absolute">{getProgressIcon()}</p>
+            <div className="absolute">{getProgressIcon()}</div>
             <PieChart width={250} height={350}>
               <Pie
                 data={data}

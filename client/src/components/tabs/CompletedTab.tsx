@@ -7,7 +7,7 @@ import { Skeleton } from "../ui/skeleton";
 import useSteps from "@/hooks/useSteps";
 
 const CompletedTab = () => {
-  const { steps, setSteps, loading } = useSteps();
+  const { steps, dispatch, loading } = useSteps();
 
   const completedSteps = steps.filter(
     (step) => step.is_complete && !step.deleted_at,
@@ -31,19 +31,12 @@ const CompletedTab = () => {
                   deleted_at: new Date(),
                 },
               );
+              dispatch({
+                type: "changed",
+                stepId: step.id,
+                updatedFields: { deleted_at: new Date() },
+              });
             });
-
-            const updatedSteps = steps.map((tdo) => {
-              if (tdo.is_complete == true) {
-                return {
-                  ...tdo,
-                  deleted_at: new Date(),
-                };
-              }
-              return tdo;
-            });
-
-            setSteps(updatedSteps);
           }}
         >
           <p className="whitespace-nowrap text-xs">Clear All</p>

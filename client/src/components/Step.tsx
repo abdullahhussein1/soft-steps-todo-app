@@ -38,7 +38,7 @@ type Props = {
 };
 
 const Step = ({ step }: Props) => {
-  const { steps, setSteps } = useSteps();
+  const { dispatch } = useSteps();
   const [isPinned, setIsPinned] = useState<boolean>(step.is_pin);
   const [isChecked, setIsChecked] = useState<boolean>(step.is_complete);
   const [isOpen, setIsOpen] = useState(false);
@@ -98,32 +98,25 @@ const Step = ({ step }: Props) => {
             if (!step.is_complete) {
               setTimeout(
                 () =>
-                  setSteps((prevTodos) =>
-                    prevTodos.map((tdo) => {
-                      if (tdo.id === step.id) {
-                        return {
-                          ...tdo,
-                          is_complete: !tdo.is_complete,
-                          is_pin: false,
-                        };
-                      }
-                      return tdo;
-                    }),
-                  ),
+                  dispatch({
+                    type: "changed",
+                    stepId: step.id,
+                    updatedFields: {
+                      is_complete: !step.is_complete,
+                      is_pin: false,
+                    },
+                  }),
                 1200,
               );
             } else {
-              setSteps((prevTodos) =>
-                prevTodos.map((tdo) => {
-                  if (tdo.id === step.id) {
-                    return {
-                      ...tdo,
-                      is_complete: !tdo.is_complete,
-                    };
-                  }
-                  return tdo;
-                }),
-              );
+              dispatch({
+                type: "changed",
+                stepId: step.id,
+                updatedFields: {
+                  is_complete: !step.is_complete,
+                  is_pin: false,
+                },
+              });
             }
             setIsChecked(!isChecked);
           }}
@@ -257,16 +250,11 @@ const Step = ({ step }: Props) => {
                   is_pin: !step.is_pin,
                 },
               );
-              const mapSteps = steps.map((tdo) => {
-                if (tdo.id === step.id) {
-                  return {
-                    ...tdo,
-                    is_pin: !tdo.is_pin,
-                  };
-                }
-                return tdo;
+              dispatch({
+                type: "changed",
+                stepId: step.id,
+                updatedFields: { is_pin: !step.is_pin },
               });
-              setSteps(mapSteps);
               setIsPinned(!isPinned);
             }}
           >
@@ -294,16 +282,13 @@ const Step = ({ step }: Props) => {
                   deleted_at: null,
                 },
               );
-              const mapSteps = steps.map((tdo) => {
-                if (tdo.id === step.id) {
-                  return {
-                    ...tdo,
-                    deleted_at: null,
-                  };
-                }
-                return tdo;
+              dispatch({
+                type: "changed",
+                stepId: step.id,
+                updatedFields: {
+                  deleted_at: null,
+                },
               });
-              setSteps(mapSteps);
             }}
           >
             <Undo2 size={15} />
@@ -318,16 +303,13 @@ const Step = ({ step }: Props) => {
                   deleted_at: new Date(),
                 },
               );
-              const mapSteps = steps.map((tdo) => {
-                if (tdo.id === step.id) {
-                  return {
-                    ...tdo,
-                    deleted_at: new Date(),
-                  };
-                }
-                return tdo;
+              dispatch({
+                type: "changed",
+                stepId: step.id,
+                updatedFields: {
+                  deleted_at: new Date(),
+                },
               });
-              setSteps(mapSteps);
             }}
           >
             <Trash size={15} />
@@ -339,8 +321,7 @@ const Step = ({ step }: Props) => {
               axios.delete(
                 `${import.meta.env.VITE_API_BASE_URL}/api/steps/${step.id}`,
               );
-              const filterSteps = steps.filter((tdo) => tdo.id !== step.id);
-              setSteps(filterSteps);
+              dispatch({ type: "deleted", stepId: step.id });
             }}
           >
             <Trash size={15} />

@@ -22,7 +22,7 @@ const StepsTab = () => {
   const [stepInput, setStepInput] = useState<string>("");
   const [isAddDialogShown, setIsAddDialogShown] = useState<boolean>(false);
   const [sortByValue, setSortByValue] = useState<string>("dateEdited");
-  const { steps, setSteps, loading } = useSteps();
+  const { steps, dispatch, loading } = useSteps();
   const { user } = useUser();
 
   const isEmpty =
@@ -142,8 +142,8 @@ const StepsTab = () => {
                   user_id: user?.id,
                 },
               );
-              const newTodo = response.data;
-              setSteps([...steps, newTodo]);
+              const newStep = response.data;
+              dispatch({ type: "added", step: newStep });
             } catch (error) {
               console.error("Error adding step:", error);
             }

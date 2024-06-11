@@ -17,7 +17,7 @@ import { Skeleton } from "../ui/skeleton";
 import useSteps from "@/hooks/useSteps";
 
 const TrashTab = () => {
-  const { steps, setSteps, loading } = useSteps();
+  const { steps, dispatch, loading } = useSteps();
 
   const deletedSteps = steps.filter((step) => step.deleted_at);
 
@@ -47,17 +47,11 @@ const TrashTab = () => {
                       },
                     );
 
-                    setSteps((prevTodos) =>
-                      prevTodos.map((tdo) => {
-                        if (tdo.id === step.id) {
-                          return {
-                            ...tdo,
-                            deleted_at: null,
-                          };
-                        }
-                        return tdo;
-                      }),
-                    );
+                    dispatch({
+                      type: "changed",
+                      stepId: step.id,
+                      updatedFields: { deleted_at: null },
+                    });
                   }
                 }
               }}
@@ -71,13 +65,10 @@ const TrashTab = () => {
               disabled={deletedSteps.length == 0}
               className="flex w-full items-center gap-[6px] px-2 transition-all"
               onClick={async () => {
-                const deletedSteps = steps.filter((step) => step.deleted_at);
-
                 if (deletedSteps.length > 0) {
-                  setSteps((prevTodos) =>
-                    prevTodos.filter((step) => !step.deleted_at),
-                  );
-
+                  for (const step of deletedSteps) {
+                    dispatch({ type: "deleted", stepId: step.id });
+                  }
                   for (const step of deletedSteps) {
                     await axios.delete(
                       `${import.meta.env.VITE_API_BASE_URL}/api/steps/${

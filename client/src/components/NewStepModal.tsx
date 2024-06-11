@@ -62,7 +62,7 @@ type Props = {
 };
 
 const NewStepModal = ({ isOpen, setIsOpen, user }: Props) => {
-  const { steps, setSteps } = useSteps();
+  const { dispatch } = useSteps();
   const [stepInput, setStepInput] = useState<string | null>();
   const [stepNoteInput, setStepNoteInput] = useState<string | null>();
   const [date, setDate] = React.useState<Date | null>(null);
@@ -141,8 +141,7 @@ const NewStepModal = ({ isOpen, setIsOpen, user }: Props) => {
               <div className="flex flex-col">
                 <Popover>
                   <PopoverTrigger asChild>
-                    <Button
-                      variant={"outline"}
+                    <div
                       className={cn(
                         "w-fit justify-start rounded-xl border-none px-3 text-left font-normal",
                         !date && "text-muted-foreground",
@@ -150,7 +149,7 @@ const NewStepModal = ({ isOpen, setIsOpen, user }: Props) => {
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
                       {date ? format(date, "PPP") : <span>Pick a date</span>}
-                    </Button>
+                    </div>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0">
                     <Calendar
@@ -177,8 +176,7 @@ const NewStepModal = ({ isOpen, setIsOpen, user }: Props) => {
                       "flex w-fit items-center justify-start rounded-xl border-none text-left text-sm font-normal",
                     )}
                   >
-                    <Button
-                      variant={"outline"}
+                    <div
                       className={cn(
                         " w-32 justify-start rounded-xl border-none px-3 text-left font-normal",
                         priority === "none" && "text-muted-foreground",
@@ -190,7 +188,7 @@ const NewStepModal = ({ isOpen, setIsOpen, user }: Props) => {
                       ) : (
                         <span>Set priority</span>
                       )}
-                    </Button>
+                    </div>
                   </SelectTrigger>
                   <SelectContent className="flex w-fit flex-col rounded-xl text-foreground/80">
                     <SelectGroup>
@@ -224,8 +222,8 @@ const NewStepModal = ({ isOpen, setIsOpen, user }: Props) => {
                       },
                     );
 
-                    const newTodo = response.data;
-                    setSteps([...steps, newTodo]);
+                    const newStep = response.data;
+                    dispatch({ type: "added", step: newStep });
                     setStepInput(null);
                     setStepNoteInput(null);
                     setPriority(null);
@@ -314,8 +312,7 @@ const NewStepModal = ({ isOpen, setIsOpen, user }: Props) => {
               <div className="flex flex-col">
                 <Popover>
                   <PopoverTrigger asChild>
-                    <Button
-                      variant={"outline"}
+                    <div
                       className={cn(
                         "w-fit justify-start rounded-xl border-none px-3 text-left font-normal",
                         !date && "text-muted-foreground",
@@ -323,7 +320,7 @@ const NewStepModal = ({ isOpen, setIsOpen, user }: Props) => {
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
                       {date ? format(date, "PPP") : <span>Pick a date</span>}
-                    </Button>
+                    </div>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0">
                     <Calendar
@@ -350,8 +347,7 @@ const NewStepModal = ({ isOpen, setIsOpen, user }: Props) => {
                       "flex w-fit items-center justify-start rounded-xl border-none text-left text-sm font-normal",
                     )}
                   >
-                    <Button
-                      variant={"outline"}
+                    <div
                       className={cn(
                         "flex w-fit items-center justify-start rounded-xl border-none px-3 text-left text-sm font-normal",
                         priority === "none" && "text-muted-foreground",
@@ -363,7 +359,7 @@ const NewStepModal = ({ isOpen, setIsOpen, user }: Props) => {
                       ) : (
                         <span>Set priority</span>
                       )}
-                    </Button>
+                    </div>
                   </SelectTrigger>
                   <SelectContent className="flex w-fit flex-col rounded-xl text-foreground/80">
                     <SelectGroup>
@@ -398,8 +394,8 @@ const NewStepModal = ({ isOpen, setIsOpen, user }: Props) => {
                         },
                       );
 
-                      const newTodo = response.data;
-                      setSteps([...steps, newTodo]);
+                      const newStep = response.data;
+                      dispatch({ type: "added", step: newStep });
                     } catch (error) {
                       console.log(error);
                     }

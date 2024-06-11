@@ -4,15 +4,15 @@ import axios from "axios";
 import {
   Dispatch,
   ReactNode,
-  SetStateAction,
   createContext,
   useEffect,
+  useReducer,
   useState,
 } from "react";
 
 type StepsContextType = {
   steps: StepType[];
-  setSteps: Dispatch<SetStateAction<StepType[]>>;
+  dispatch: Dispatch<Action>;
   loading: boolean;
 };
 
@@ -22,7 +22,7 @@ type Props = {
 
 const initialState: StepsContextType = {
   steps: [],
-  setSteps: () => null,
+  dispatch: () => null,
   loading: true,
 };
 
@@ -30,9 +30,8 @@ const initialState: StepsContextType = {
 export const stepsContext = createContext(initialState);
 
 export default function StepsProvider({ children }: Props) {
-  const [steps, setSteps] = useState<StepType[]>([]);
+  const [steps, dispatch] = useReducer(stepsReducer, []);
   const [loading, setLoading] = useState<boolean>(true);
-
   const { user } = useUser();
 
   useEffect(() => {
@@ -48,7 +47,10 @@ export default function StepsProvider({ children }: Props) {
         );
 
         const result = response.data;
-        setSteps(result);
+        dispatch({
+          type: "setted",
+          steps: result,
+        });
       } catch (error) {
         console.error("Error fetching steps:", error);
       } finally {
@@ -60,8 +62,40 @@ export default function StepsProvider({ children }: Props) {
   }, [user?.id]);
 
   return (
-    <stepsContext.Provider value={{ steps, setSteps, loading }}>
+    <stepsContext.Provider value={{ steps, dispatch, loading }}>
       {children}
     </stepsContext.Provider>
   );
+}
+
+type Action =
+  | { type: "setted"; steps: StepType[] }
+  | { type: "added"; step: StepType }
+  | { type: "changed"; stepId: number; updatedFields: Partial<StepType> }
+  | { type: "deleted"; stepId: number };
+
+function stepsReducer(steps: StepType[], action: Action) {
+  switch (action.type) {
+    case "setted": {
+      return action.steps;
+    }
+    case "added": {
+      return [...steps, action.step];
+    }
+    case "changed": {
+      return steps.map((step: StepType) => {
+        if (step.id === action.stepId) {
+          return {
+            ...step,
+            ...action.updatedFields,
+          };
+        } else {
+          return step;
+        }
+      });
+    }
+    case "deleted": {
+      return steps.filter((step) => step.id !== action.stepId);
+    }
+  }
 }

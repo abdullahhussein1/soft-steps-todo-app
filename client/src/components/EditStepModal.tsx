@@ -62,7 +62,7 @@ type Props = {
 
 const EditStepModal = ({ step, isOpen, setIsOpen }: Props) => {
   const [stepInput, setStepInput] = useState(step.task);
-  const { steps, setSteps } = useSteps();
+  const { dispatch } = useSteps();
   const [stepNoteInput, setStepNoteInput] = useState(step.note);
   const [date, setDate] = React.useState<Date | undefined>(
     step.remind_at ? new Date(step.remind_at) : undefined,
@@ -145,16 +145,15 @@ const EditStepModal = ({ step, isOpen, setIsOpen }: Props) => {
               <div className="flex flex-col">
                 <Popover>
                   <PopoverTrigger asChild>
-                    <Button
-                      variant={"outline"}
+                    <div
                       className={cn(
-                        "w-fit justify-start rounded-xl border-none px-3 text-left font-normal",
+                        "flex w-fit items-center justify-start rounded-xl border-none px-3 text-left font-normal",
                         !date && "text-muted-foreground",
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
                       {date ? format(date, "PPP") : <span>Pick a date</span>}
-                    </Button>
+                    </div>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0">
                     <Calendar
@@ -181,10 +180,9 @@ const EditStepModal = ({ step, isOpen, setIsOpen }: Props) => {
                       "flex w-fit items-center justify-start rounded-xl border-none text-left text-sm font-normal",
                     )}
                   >
-                    <Button
-                      variant={"outline"}
+                    <div
                       className={cn(
-                        " w-32 justify-start rounded-xl border-none px-3 text-left font-normal",
+                        "flex w-32 justify-start rounded-xl border-none px-3 text-left font-normal",
                         priority === "none" && "text-muted-foreground",
                       )}
                     >
@@ -194,7 +192,7 @@ const EditStepModal = ({ step, isOpen, setIsOpen }: Props) => {
                       ) : (
                         <span>Set priority</span>
                       )}
-                    </Button>
+                    </div>
                   </SelectTrigger>
                   <SelectContent className="flex w-fit flex-col rounded-xl text-foreground/80">
                     <SelectGroup>
@@ -247,26 +245,20 @@ const EditStepModal = ({ step, isOpen, setIsOpen }: Props) => {
                             : null,
                       },
                     );
-                    const mappedTodos = steps.map((tdo) => {
-                      if (tdo.id === step.id && date) {
-                        return {
-                          ...tdo,
-                          task: stepInput,
-                          note: stepNoteInput,
-                          remind_at: date,
-                        };
-                      } else if (tdo.id === step.id) {
-                        return {
-                          ...tdo,
-                          task: stepInput,
-                          note: stepNoteInput,
-                          priority: priority, // Use the existing priority if not updated
-                          location: location, // Use the existing location if not updated
-                        };
-                      }
-                      return tdo;
+                    dispatch({
+                      type: "changed",
+                      stepId: step.id,
+                      updatedFields: {
+                        task: stepInput,
+                        note: stepNoteInput,
+                        remind_at:
+                          date && date !== step.remind_at
+                            ? new Date(date)
+                            : undefined,
+                        priority,
+                        location,
+                      },
                     });
-                    setSteps(mappedTodos);
                   }}
                 >
                   Edit
@@ -351,16 +343,15 @@ const EditStepModal = ({ step, isOpen, setIsOpen }: Props) => {
               <div className="flex flex-col">
                 <Popover>
                   <PopoverTrigger asChild>
-                    <Button
-                      variant={"outline"}
+                    <div
                       className={cn(
-                        "w-fit justify-start rounded-xl border-none px-3 text-left font-normal",
+                        "flex w-fit items-center justify-start rounded-xl border-none p-2 px-3 text-left font-normal transition-colors hover:bg-gray-200",
                         !date && "text-muted-foreground",
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
                       {date ? format(date, "PPP") : <span>Pick a date</span>}
-                    </Button>
+                    </div>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0">
                     <Calendar
@@ -387,10 +378,9 @@ const EditStepModal = ({ step, isOpen, setIsOpen }: Props) => {
                       "flex w-fit items-center justify-start rounded-xl border-none text-left text-sm font-normal",
                     )}
                   >
-                    <Button
-                      variant={"outline"}
+                    <div
                       className={cn(
-                        " w-32 justify-start rounded-xl border-none px-3 text-left font-normal",
+                        "flex w-32 items-center justify-start rounded-xl border-none px-3 text-left font-normal",
                         priority === "none" && "text-muted-foreground",
                       )}
                     >
@@ -400,7 +390,7 @@ const EditStepModal = ({ step, isOpen, setIsOpen }: Props) => {
                       ) : (
                         <span>Set priority</span>
                       )}
-                    </Button>
+                    </div>
                   </SelectTrigger>
                   <SelectContent className="flex w-fit flex-col rounded-xl text-foreground/80">
                     <SelectGroup>
@@ -453,28 +443,20 @@ const EditStepModal = ({ step, isOpen, setIsOpen }: Props) => {
                             : null,
                       },
                     );
-                    const mappedTodos = steps.map((tdo) => {
-                      if (tdo.id === step.id && date) {
-                        return {
-                          ...tdo,
-                          task: stepInput,
-                          note: stepNoteInput,
-                          priority: priority,
-                          location: location,
-                          remind_at: date,
-                        };
-                      } else if (tdo.id === step.id) {
-                        return {
-                          ...tdo,
-                          task: stepInput,
-                          note: stepNoteInput,
-                          priority: priority,
-                          location: location,
-                        };
-                      }
-                      return tdo;
+                    dispatch({
+                      type: "changed",
+                      stepId: step.id,
+                      updatedFields: {
+                        task: stepInput,
+                        note: stepNoteInput,
+                        remind_at:
+                          date && date !== step.remind_at
+                            ? new Date(date)
+                            : undefined,
+                        priority,
+                        location,
+                      },
                     });
-                    setSteps(mappedTodos);
                   }}
                 >
                   Edit

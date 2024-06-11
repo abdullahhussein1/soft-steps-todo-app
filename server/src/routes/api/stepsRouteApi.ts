@@ -39,7 +39,7 @@ router.post("/", async (req: Request, res: Response) => {
       remind_at,
     } = req.body as Step;
 
-    const { data: newTodo, error }: PostgrestResponse<Step[]> = await supabase
+    const { data: newStep, error }: PostgrestResponse<Step[]> = await supabase
       .from("steps")
       .insert({
         user_id,
@@ -57,7 +57,7 @@ router.post("/", async (req: Request, res: Response) => {
       throw error;
     }
 
-    res.status(201).json(newTodo[0]);
+    res.status(201).json(newStep[0]);
   } catch (err) {
     console.error(err);
     if (err instanceof Error) {
