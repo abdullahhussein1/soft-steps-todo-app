@@ -1,4 +1,4 @@
-import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import HomePage from "./pages/HomePage";
 import AuthenticationPage from "./pages/AuthenticationPage";
@@ -25,6 +25,7 @@ function App() {
   }, [user, navigate]);
 
   return (
+<Router>
     <Routes>
       <Route path="/auth" element={<AuthenticationPage />} />
       <Route
@@ -96,6 +97,7 @@ function App() {
         }
       />
     </Routes>
+</Router>
   );
 }
 
