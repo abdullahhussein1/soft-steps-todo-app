@@ -103,7 +103,7 @@ const EditStepModal = ({ step, isOpen, setIsOpen }: Props) => {
               <Input
                 type="text"
                 value={stepInput ?? ""}
-                placeholder="I want to..."
+                placeholder="Reading..."
                 onChange={(e) => setStepInput(e.target.value)}
                 className="rounded-xl border-[0.7px]"
                 id="title"
@@ -301,7 +301,7 @@ const EditStepModal = ({ step, isOpen, setIsOpen }: Props) => {
               <Input
                 type="text"
                 value={stepInput ?? ""}
-                placeholder="I want to..."
+                placeholder="Reading..."
                 onChange={(e) => setStepInput(e.target.value)}
                 className="rounded-xl border-[0.7px]"
                 id="title"

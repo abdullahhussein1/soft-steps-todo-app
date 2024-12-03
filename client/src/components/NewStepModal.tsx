@@ -99,7 +99,7 @@ const NewStepModal = ({ isOpen, setIsOpen, user }: Props) => {
               <Input
                 type="text"
                 value={stepInput ?? ""}
-                placeholder="I want to..."
+                placeholder="Reading..."
                 onChange={(e) => setStepInput(e.target.value)}
                 className="rounded-xl border-[0.7px]"
                 id="title"
@@ -143,7 +143,7 @@ const NewStepModal = ({ isOpen, setIsOpen, user }: Props) => {
                   <PopoverTrigger asChild>
                     <div
                       className={cn(
-                        "w-fit justify-start rounded-xl border-none px-3 text-left font-normal",
+                        "flex h-full w-fit cursor-pointer items-center rounded-xl border-none px-3 text-sm",
                         !date && "text-muted-foreground",
                       )}
                     >
@@ -178,7 +178,7 @@ const NewStepModal = ({ isOpen, setIsOpen, user }: Props) => {
                   >
                     <div
                       className={cn(
-                        " w-32 justify-start rounded-xl border-none px-3 text-left font-normal",
+                        "flex w-32 items-center rounded-xl border-none px-3 font-normal",
                         priority === "none" && "text-muted-foreground",
                       )}
                     >
@@ -270,7 +270,7 @@ const NewStepModal = ({ isOpen, setIsOpen, user }: Props) => {
               <Input
                 type="text"
                 value={stepInput ?? ""}
-                placeholder="I want to..."
+                placeholder="Reading..."
                 onChange={(e) => setStepInput(e.target.value)}
                 className="rounded-xl border-[0.7px]"
                 id="title"
@@ -309,32 +309,30 @@ const NewStepModal = ({ isOpen, setIsOpen, user }: Props) => {
               />
             </div>
             <div className="grid grid-cols-2">
-              <div className="flex flex-col">
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <div
-                      className={cn(
-                        "w-fit justify-start rounded-xl border-none px-3 text-left font-normal",
-                        !date && "text-muted-foreground",
-                      )}
-                    >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {date ? format(date, "PPP") : <span>Pick a date</span>}
-                    </div>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0">
-                    <Calendar
-                      mode="single"
-                      selected={date ?? new Date()}
-                      fromDate={new Date()}
-                      onSelect={(selectedDate) => {
-                        setDate(selectedDate ?? null);
-                      }}
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
-              </div>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <div
+                    className={cn(
+                      "flex h-full w-fit cursor-pointer items-center rounded-xl border-none px-3 text-sm",
+                      !date && "text-muted-foreground",
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {date ? format(date, "PPP") : <span>Pick a date</span>}
+                  </div>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={date ?? new Date()}
+                    fromDate={new Date()}
+                    onSelect={(selectedDate) => {
+                      setDate(selectedDate ?? null);
+                    }}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
               <div className="flex flex-col">
                 <Select
                   defaultValue="none"
@@ -344,12 +342,12 @@ const NewStepModal = ({ isOpen, setIsOpen, user }: Props) => {
                 >
                   <SelectTrigger
                     className={cn(
-                      "flex w-fit items-center justify-start rounded-xl border-none text-left text-sm font-normal",
+                      "flex w-fit items-center justify-start rounded-xl border-none  text-sm font-normal",
                     )}
                   >
                     <div
                       className={cn(
-                        "flex w-fit items-center justify-start rounded-xl border-none px-3 text-left text-sm font-normal",
+                        "flex w-fit items-center justify-start rounded-xl border-none px-3  text-sm font-normal",
                         priority === "none" && "text-muted-foreground",
                       )}
                     >

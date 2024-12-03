@@ -120,7 +120,7 @@ const StepsTab = () => {
             type="text"
             value={stepInput}
             onChange={(e) => setStepInput(e.target.value)}
-            placeholder="I want to..."
+            placeholder="Reading..."
             className="rounded-full text-foreground"
           />
           <div className="absolute right-1 flex cursor-pointer items-center justify-center rounded-full p-2 backdrop-blur-md transition-colors hover:text-foreground">

@@ -61,7 +61,7 @@ const ColorThemeContent = () => {
           </div>
           <div className="flex h-6 space-x-1">
             <div className="flex w-full items-center rounded-full border p-2 text-[9px] text-foreground/40">
-              I want to...
+              Reading...
             </div>
             <div className="flex h-6 w-10 items-center justify-center rounded-full border bg-primary text-[9px] text-special">
               add
