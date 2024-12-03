@@ -11,6 +11,7 @@ import useTheme from "@/hooks/useTheme";
 import { useState } from "react";
 import { Checkbox } from "./ui/checkbox";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
+import { getButtonColor } from "@/utils/utils";
 
 const ColorThemeContent = () => {
   const [isChecked, setIsChecked] = useState(false);
@@ -68,7 +69,7 @@ const ColorThemeContent = () => {
           </div>
         </div>
         <ScrollArea className="w-[65vw] rounded-b-2xl border sm:w-96">
-          <div className="flex space-x-3 p-2">
+          <div className="flex items-center justify-center space-x-3 p-2">
             <ColorThemeButton color="blue" />
             <ColorThemeButton color="green" />
             <ColorThemeButton color="red" />
@@ -100,25 +101,6 @@ const ColorThemeButton = ({ color }: colorThemeButtonType) => {
     const newTheme = isDarkMode ? `${selectedTheme}-dark` : selectedTheme;
 
     setTheme(newTheme as ColorThemeType);
-  };
-
-  const getButtonColor = (color: string) => {
-    switch (color) {
-      case "blue":
-        return "bg-blue-500";
-      case "green":
-        return "bg-green-500";
-      case "red":
-        return "bg-red-500";
-      case "orange":
-        return "bg-orange-500";
-      case "purple":
-        return "bg-purple-700";
-      case "neutral":
-        return "bg-neutral-600";
-      case "yellow":
-        return "bg-yellow-400";
-    }
   };
 
   return (

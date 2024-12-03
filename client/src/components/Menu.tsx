@@ -50,7 +50,7 @@ const Menu = () => {
         </DialogTrigger>
         <DialogContent
           className={[
-            "h-[505px] bg-secondary px-4 sm:rounded-3xl",
+            "max-h-[90vh] bg-secondary px-4 sm:rounded-3xl",
             theme.endsWith("-dark") && "bg-background",
           ].join(" ")}
         >

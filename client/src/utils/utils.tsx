@@ -57,3 +57,22 @@ export const changeFavIcon = (svgElement: React.ReactElement): void => {
     document.head.appendChild($favicon);
   }
 };
+
+export const getButtonColor = (color: string) => {
+  switch (color) {
+    case "blue":
+      return "bg-blue-500";
+    case "green":
+      return "bg-green-500";
+    case "red":
+      return "bg-red-500";
+    case "orange":
+      return "bg-orange-500";
+    case "purple":
+      return "bg-purple-700";
+    case "neutral":
+      return "bg-neutral-600";
+    case "yellow":
+      return "bg-yellow-400";
+  }
+};
