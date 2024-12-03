@@ -10,37 +10,20 @@ import AuthenticationPage from "./pages/AuthenticationPage";
 import ThemeProvider from "@/providers/ThemeProvider";
 import DarkModeProvider from "./providers/DarkModeProvider";
 import "./App.css";
-import { Oval } from "react-loader-spinner";
 import palestineCountryFilledIcon from "@/assets/images/palestineCountryFilled.png";
 import { ArrowLeft } from "lucide-react";
 import useUser from "./hooks/useUser";
+import { LoadingSpinner } from "./components/LoadingSpinner";
 
 function App() {
-  const { user, isLoading } = useUser();
+  const { user, status } = useUser();
 
   const systemThemeDark = window.matchMedia(
     "(prefers-color-scheme: dark)",
   ).matches;
 
-  if (isLoading) {
-    return (
-      <div
-        className={[
-          "flex h-screen w-full items-center justify-center",
-          systemThemeDark ? "bg-black" : "bg-white",
-        ].join(" ")}
-      >
-        <Oval
-          visible={true}
-          height="40"
-          width="40"
-          color={systemThemeDark ? "white" : "black"}
-          strokeWidth={4}
-          secondaryColor={systemThemeDark ? "black" : "dark"}
-          ariaLabel="oval-loading"
-        />
-      </div>
-    );
+  if (status === "loading") {
+    return <LoadingSpinner isDarkMode={systemThemeDark} />;
   }
 
   return (
@@ -48,12 +31,18 @@ function App() {
       <Routes>
         <Route
           path="/auth"
-          element={user ? <Navigate to="/" replace /> : <AuthenticationPage />}
+          element={
+            status === "authenticated" ? (
+              <Navigate to="/" replace />
+            ) : (
+              <AuthenticationPage />
+            )
+          }
         />
         <Route
           path="/"
           element={
-            user ? (
+            status === "authenticated" ? (
               <ThemeProvider
                 themeColor={user?.user_metadata.color_theme ?? "blue"}
               >

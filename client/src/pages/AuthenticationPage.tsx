@@ -3,22 +3,23 @@ import github from "../assets/images/github.png";
 import githubBlack from "../assets/images/github-black.png";
 import google from "../assets/images/google.png";
 import googleBlack from "../assets/images/google-black.png";
-import favIcon from "../assets/images/blue.png";
 import palestineCountryFilledIcon from "../assets/images/palestineCountryFilled.png";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Session } from "@supabase/supabase-js";
+import useUser from "@/hooks/useUser";
+import { generateSvgUrl, getFavIcon } from "@/utils/utils";
 
 const AuthenticationPage = () => {
   const navigate = useNavigate();
+  const { status } = useUser();
 
   const systemThemeDark = window.matchMedia(
     "(prefers-color-scheme: dark)",
   ).matches;
 
-  const [session, setSession] = useState<Session | null>();
+  const blueSvgUrl = generateSvgUrl(getFavIcon("blue"));
+
   supabase.auth.onAuthStateChange((event, session) => {
-    setSession(session);
     if (session && session.provider_token) {
       window.localStorage.setItem(
         "oauth_provider_token",
@@ -57,8 +58,8 @@ const AuthenticationPage = () => {
   }
 
   useEffect(() => {
-    if (session) navigate("/");
-  }, [session, navigate]);
+    if (status === "authenticated") navigate("/");
+  }, [navigate, status]);
 
   return (
     <div
@@ -70,7 +71,7 @@ const AuthenticationPage = () => {
       <div className="relative mx-auto flex h-full max-w-xl flex-col items-center justify-center">
         <div className="absolute top-0 flex flex-col items-start gap-1 self-start">
           <div className="flex items-center gap-1 text-xl font-semibold">
-            <img src={favIcon} alt="favIcon" className="h-7 w-7" />
+            <img src={blueSvgUrl} alt="favicon" className="h-7 w-7" />
             <h1 className="text-xl font-semibold">Soft Steps</h1>
           </div>
           <p className="text-[10px] font-light text-neutral-500 sm:text-xs">

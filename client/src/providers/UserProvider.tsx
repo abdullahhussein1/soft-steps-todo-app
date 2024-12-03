@@ -1,11 +1,4 @@
-import {
-  createContext,
-  useEffect,
-  useState,
-  ReactNode,
-  Dispatch,
-  SetStateAction,
-} from "react";
+import { createContext, useEffect, useState, ReactNode } from "react";
 import supabase from "@/supabase/supabase";
 import UserType from "@/types/UserType";
 
@@ -13,16 +6,16 @@ type Props = {
   children: ReactNode;
 };
 
+type AuthStatus = "loading" | "authenticated" | "unauthenticated";
+
 type UserContextType = {
   user: UserType | null;
-  setUser: Dispatch<SetStateAction<UserType | null>>;
-  isLoading: boolean;
+  status: AuthStatus;
 };
 
 const initialState: UserContextType = {
   user: null,
-  setUser: () => null,
-  isLoading: false,
+  status: "loading",
 };
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -30,25 +23,32 @@ export const userContext = createContext<UserContextType>(initialState);
 
 export const UserProvider = ({ children }: Props) => {
   const [user, setUser] = useState<UserType | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [status, setStatus] = useState<AuthStatus>("loading");
 
   useEffect(() => {
     const fetchUser = async () => {
-      setIsLoading(true);
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (user) {
-        setUser(user);
+      try {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+
+        if (user) {
+          setUser(user);
+          setStatus("authenticated");
+        } else {
+          setStatus("unauthenticated");
+        }
+      } catch (error) {
+        console.error("Error fetching user:", error);
+        setStatus("unauthenticated");
       }
-      setIsLoading(false);
     };
 
     fetchUser();
   }, []);
 
   return (
-    <userContext.Provider value={{ user, setUser, isLoading }}>
+    <userContext.Provider value={{ user, status }}>
       {children}
     </userContext.Provider>
   );

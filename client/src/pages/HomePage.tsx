@@ -12,7 +12,7 @@ import StepsProvider from "@/providers/StepsProvider";
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const { user, setUser } = useUser();
+  const { status } = useUser();
   const { theme, setTheme } = useTheme();
   const { darkModeState } = useDarkMode();
 
@@ -50,13 +50,10 @@ const HomePage = () => {
   }, [darkModeState, theme, setTheme, systemThemeDark]);
 
   useEffect(() => {
-    if (user) {
-      setUser(user);
-    } else {
-      setUser(null);
+    if (status === "unauthenticated") {
       navigate("/auth");
     }
-  }, [user, setUser, navigate]);
+  }, [status, navigate]);
 
   useEffect(() => {
     const updateUserData = async () => {
