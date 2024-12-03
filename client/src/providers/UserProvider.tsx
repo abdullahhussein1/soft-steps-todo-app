@@ -47,6 +47,32 @@ export const UserProvider = ({ children }: Props) => {
     fetchUser();
   }, []);
 
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (session && session.provider_token) {
+      window.localStorage.setItem(
+        "oauth_provider_token",
+        session.provider_token,
+      );
+    }
+
+    if (session && session.provider_refresh_token) {
+      window.localStorage.setItem(
+        "oauth_provider_refresh_token",
+        session.provider_refresh_token,
+      );
+    }
+
+    if (event === "SIGNED_IN") {
+      setStatus("authenticated");
+    }
+
+    if (event === "SIGNED_OUT") {
+      setStatus("unauthenticated");
+      window.localStorage.removeItem("oauth_provider_token");
+      window.localStorage.removeItem("oauth_provider_refresh_token");
+    }
+  });
+
   return (
     <userContext.Provider value={{ user, status }}>
       {children}
