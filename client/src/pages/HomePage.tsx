@@ -33,7 +33,7 @@ const HomePage = () => {
       setTheme(newTheme);
     };
 
-    changeFavIcon(getFavIcon(theme) as string);
+    changeFavIcon(getFavIcon(theme));
 
     if (darkModeState === "system") {
       systemThemeDark.addEventListener("change", handleSystemThemeChange);
